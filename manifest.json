@@ -2,7 +2,7 @@
     "name": "Amnon",
     "short_name": "Home Auto",
     "display": "standalone",
-    "scope": "/homeautomation/",
+    "scope": "/",
     "start_url": "../index.html",
     "description": "Home Automation",
     "orientation": "portrait"
