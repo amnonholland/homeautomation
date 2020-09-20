@@ -33,7 +33,7 @@
             position: fixed;
             overflow: hidden;
   			        }
-                    table, th, td {border-collapse: collapse;width: 25%; padding: 1px;border-bottom: 1px solid #ddd;}
+table, th, td {border-collapse: collapse;width: 25%; padding: 1px;border-bottom: 1px solid #ddd;}
                    // border: 1px solid black;}
 </style>
 <body ontouchmove="BlockMove(event);" >
@@ -65,7 +65,7 @@
     <td>Slab Circ:   </td> <td><span id="Slab Circ"></span></td>
     
 </table><br><table style="width:50%">
-<tr><td>Garden Lights:  </td> <td> <span id="Garden Lights"></span></td></tr>
+<tr><td>Garden Lights:  </td> <td> <span id="Garden Lights"></span></td>
 <tr><td>AC Unit:  </td> <td> <span id="AC Unit"></span></td></tr>
 <tr><td>ChickFlap:  </td> <td> <span id="ChickFlap"></span></td></tr>
 <tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td></tr>
@@ -73,7 +73,7 @@
 
 </table><br><table style="width:50%">
 <tr><td>On Solar:  </td> <td> <span id="Supply"></span></td></tr>
-<tr><td>Power W:  </td> <td> <span id="Power1"></span></td></tr>
+<tr><td>Power W:  </td> <td> <span id="Power"></span></td></tr>
 <tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td></tr>
 <tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td></tr>
 </table>
@@ -96,7 +96,7 @@ function send(){
     xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
      
   var myArr = JSON.parse(xmlhttp.responseText);
-var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply","Power1"]
+var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Power","Solar","Mains","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply"]
 
  var i;for (i = 0; i < myArr.length; i++) {
 if(isNaN(myArr[i].value)){
@@ -125,6 +125,9 @@ else {document.getElementById(String(name[i])).innerHTML =precisionRound(myArr[i
 {"type": "analogInput","instance": 105,"property": "presentValue"},
 {"type": "analogInput","instance": 106,"property": "presentValue"},
 {"type": "analogInput","instance": 107,"property": "presentValue"},
+{"type": "analogValue","instance": 25,"property": "presentValue"},
+{"type": "analogValue","instance": 28,"property": "presentValue"},
+{"type": "analogValue","instance": 26,"property": "presentValue"},
 {"type": "binaryOutput","instance": 101,"property": "presentValue"},
 {"type": "binaryOutput","instance": 102,"property": "presentValue"},
 {"type": "binaryOutput","instance": 103,"property": "presentValue"},
@@ -133,8 +136,8 @@ else {document.getElementById(String(name[i])).innerHTML =precisionRound(myArr[i
 {"type": "binaryOutput","instance": 106,"property": "presentValue"},
 {"type": "binaryOutput","instance": 107,"property": "presentValue"},
 {"type": "binaryOutput","instance": 108,"property": "presentValue"},
-{"type": "binaryValue","instance": 3,"property": "presentValue"},
-{"type": "analogValue","instance": 25,"property": "presentValue"}
+{"type": "binaryValue","instance": 3,"property": "presentValue"}
+
 
   ]
 };
