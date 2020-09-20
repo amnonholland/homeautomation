@@ -2,8 +2,8 @@
     "name": "Amnon",
     "short_name": "Home Auto",
     "display": "standalone",
-    "scope": "/",
-    "start_url": "../homeautomation/index.html",
+    "scope": "https://amnonholland.github.io/homeautomation/",
+    "start_url": "../index.html",
     "description": "Home Automation",
     "orientation": "portrait"
 
