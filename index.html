@@ -33,12 +33,12 @@
             position: fixed;
             overflow: hidden;
   			        }
-                    table, th, td {border: 1px Solid Gray;}
+                    table, th, td {border: 1px Solid Gray;border-collapse: collapse;}
 </style>
 <body ontouchmove="BlockMove(event);" >
 
 
-<h4>Home Automation</h4>
+<h4>Home Automation &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Time:</h4>
 
 <table style="width:100%">
 <tr>
@@ -63,14 +63,11 @@
 <tr>
     <th>&nbsp;</th>
 </tr>
-<tr>
-    <td>Garden Lights:  <span id="Garden Lights"></span></td>
-    <td>AC Unit:  <span id="AC Unit"></span></td>
-    <td>ChickFlap:  <span id="ChickFlap"></span></td>
-</tr><tr>
+<tr><td>Garden Lights:  <span id="Garden Lights"></span></td></tr>
+<tr><td>AC Unit:  <span id="AC Unit"></span></td></tr>
+<tr><td>ChickFlap:  <span id="ChickFlap"></span></td></tr>
+<tr><td>Rooflouvre:  <span id="Rooflouvre"></span></td></tr>
 
-    <td>Rooflouvre:  <span id="Rooflouvre"></span></td>
-</tr>
 </table>
 
 
@@ -97,7 +94,7 @@ var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","G
 
  var i;for (i = 0; i < myArr.length; i++) {
 if(isNaN(myArr[i].value)){document.getElementById(String(name[i])).innerHTML =myArr[i].value;} 
-else {document.getElementById(String(name[i])).innerHTML =precisionRound(myArr[i].value,2);}
+else {document.getElementById(String(name[i])).innerHTML =precisionRound(myArr[i].value,1);}
 }     
       
       
