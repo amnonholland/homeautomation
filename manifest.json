@@ -3,7 +3,7 @@
     "short_name": "Home Auto",
     "display": "standalone",
     "scope": "/homeautomation/",
-    "start_url": "../index.html",
+    "start_url": "../homeautomation/index.html",
     "description": "Home Automation",
     "orientation": "portrait"
 
