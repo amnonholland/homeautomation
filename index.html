@@ -34,7 +34,7 @@
             position: fixed;
             overflow: hidden;
   			        }
-                    table, th, td {border: 1px Solid Gray;border-collapse: collapse;width: 50%;}
+                    table, th, td {border-collapse: collapse;width: 25%; padding: 1px;border-bottom: 1px solid #ddd;}
 </style>
 <body ontouchmove="BlockMove(event);" >
 
@@ -43,21 +43,26 @@
 
 <table style="width:100%">
 <tr>
-    <td>OAT:  <span id="OAT"></span></td>
-    <td>RMT:  <span id="RMT"></span></td> 
+    <td>OAT:</td> <td> <span id="OAT"></span></td>
+    <td>RMT:</td> <td>  <span id="RMT"></span></td> 
 </tr><tr>    
-    <td>EconFan:  <span id="EconFan"></span></td>
+    <td>EconFan: </td> <td> <span id="EconFan"></span></td>
 </tr><tr>
-    <td>DHW Tank:  <span id="DHW Tank"></span></td>
-    <td>Collector:  <span id="Collector"></span></td>
+    <td>&nbsp;</td>
+</tr><tr>
+    <td>DHW Tank: </td> <td> <span id="DHW Tank"></span></td>
+    <td>Collector: </td> <td> <span id="Collector"></span></td>
 </tr><tr>    
-    <td>Circ Pump:  <span id="Circ Pump"></span></td>
+    <td>Circ Pump:</td> <td>  <span id="Circ Pump"></span></td>
+    <td>DHW Boost: </td> <td> <span id="DHW Boost"></span></td>
 </tr><tr>
-    <td>DHW Boost:  <span id="DHW Boost"></span></td>
-</tr><tr>
+<td>&nbsp;</td>
+</tr>
+</table><table style="width:100%">
+<tr>
     <td>SlabLea:  <span id="SlabLea"></span></td>
     <td>SlabEnt:  <span id="SlabEnt"></span></td>
-</tr><tr>    
+    
     <td>Polypipe:  <span id="Polypipe"></span></td>
 </tr>
 <tr>
