@@ -1,6 +1,6 @@
 const OFFLINE_VERSION = 1;
 const CACHE_NAME = 'offline';
-const OFFLINE_URL = 'index.html';
+const OFFLINE_URL = 'https://amnonholland.github.io/homeautomation/index.html';
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
