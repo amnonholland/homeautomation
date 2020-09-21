@@ -19,14 +19,18 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     
-           const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(OFFLINE_URL);
-        return cachedResponse; 
+
     
     
     event.respondWith((async () => {
-      /*try {
-        const preloadResponse = await event.preloadResponse;
+      try {
+                 const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(OFFLINE_URL);
+        return cachedResponse; 
+      
+      
+      }
+    /*    const preloadResponse = await event.preloadResponse;
         if (preloadResponse) {
           return preloadResponse;
         }
