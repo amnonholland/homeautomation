@@ -18,8 +18,14 @@ self.addEventListener('activate', (event) => {
 });
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
+    
+           const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(OFFLINE_URL);
+        return cachedResponse; 
+    
+    
     event.respondWith((async () => {
-      try {
+      /*try {
         const preloadResponse = await event.preloadResponse;
         if (preloadResponse) {
           return preloadResponse;
@@ -27,7 +33,10 @@ self.addEventListener('fetch', (event) => {
 
         const networkResponse = await fetch(event.request);
         return networkResponse;
-      } catch (error) {
+      }
+   */   
+      
+      catch (error) {
         console.log('Fetch failed; returning offline page instead.', error);
         const cache = await caches.open(CACHE_NAME);
         const cachedResponse = await cache.match(OFFLINE_URL);
