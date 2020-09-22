@@ -35,7 +35,7 @@
   background-color: #e7e7e7;
   border: white;
   color: white;
-  padding: 5px 1px;
+  padding: 5px 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -56,16 +56,18 @@ html {
 <body ontouchmove="BlockMove(event);" >
 
 
-<h4>Home Automationn</h4>
+<h4>Home Automation</h4>
 
 <table style="width:100%">
 <tr>
     <td>OAT:</td> <td> <span id="OAT"></span></td>
     <td>RMT:</td> <td>  <span id="RMT"></span></td> 
-</tr><tr>    
+</tr>
+</table><table style="width:100%">
+<tr>    
     <td>EconFan: </td> <td> <span id="EconFan"></span></td>
     
- <td></td><td>
+ <td>
  <button class="button" id="1" onclick="econA()">AUTO</button>
  <button class="button" id="2" onclick="econO()">OFF</button>
  <button class="button" id="3" onclick="econM()">ON</button></td>
@@ -88,23 +90,23 @@ html {
     <td>SlabLea:  <span id="SlabLea"></span></td>
     <td>SlabEnt:  <span id="SlabEnt"></span></td> 
     <td>Polypipe:  <span id="Polypipe"></span></td>
-     <td>
+     <td><tr></table>
+<table style="width:100%">
+<tr><td>Slab Circ:   </td> <td><span id="Slab Circ"></span></td><td>
      <button class="button" id="4" onclick="slabA()">AUTO</button>
      <button class="button" id="5" onclick="slabO()">OFF</button>
      <button class="button" id="6" onclick="slabM()">ON</button></td>
-</tr><tr>
-    <td>Slab Circ:   </td> <td><span id="Slab Circ"></span></td>
         
     
 </table><br><table style="width:100%">
-<tr><td>Garden Lights:  </td> <td> <span id="Garden Lights"></span></td>
-<tr><td>AC Unit:  </td> <td> <span id="AC Unit"></span></td><td></td>
+<tr><td>Garden Lights:  </td> <td> <span id="Garden Lights"></span></td><td></td><tr>
+<tr><td>AC Unit:  </td> <td> <span id="AC Unit"></span></td>
 <td>
 <button class="button" id="7" onclick="acA()">AUTO</button>
 <button class="button" id="8" onclick="acO()">OFF</button>
 <button class="button" id="9" onclick="acM()">ON</button></td></tr>
 <tr><td>ChickFlap:  </td> <td> <span id="ChickFlap"></span></td></tr>
-<tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td><td></td>
+<tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td>
 <td>
 <button class="button" id="10" onclick="roofA()">AUTO</button>
 <button class="button" id="11" onclick="roofO()">OFF</button>
@@ -112,12 +114,12 @@ html {
 </table>
 
 </table><br><table style="width:100%">
-<tr><td>On Solar:  </td> <td> <span id="Supply"></span></td><td></td><td></td></tr>
-<tr><td>Power W:  </td> <td> <span id="Power"></span></td><td></td><td></td></tr>
-<tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td><td></td><td></td></tr>
-<tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td><td></td><td></td></tr>
+<tr><td>On Solar:  </td> <td> <span id="Supply"></span></td><td></td></tr>
+<tr><td>Power W:  </td> <td> <span id="Power"></span></td><td></td></tr>
+<tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td><td></td></tr>
+<tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td><td></td></tr>
 </table>
-<span id="hello">Hello</span>
+<span id="hello"></span>
 </body>
 </html>
 <script type="text/javascript" language="javascript">
