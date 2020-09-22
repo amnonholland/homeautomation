@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 
@@ -33,6 +31,19 @@
             position: fixed;
             overflow: hidden;
   			        }
+                    .button {
+  background-color: #e7e7e7;
+  border: white;
+  color: white;
+  padding: 3px 3px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  //font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
 table, th, td {border-collapse: collapse;width: 25%; padding: 1px;border-bottom: 1px solid #ddd;}
                    // border: 1px solid black;}
   body,
@@ -53,7 +64,17 @@ html {
     <td>RMT:</td> <td>  <span id="RMT"></span></td> 
 </tr><tr>    
     <td>EconFan: </td> <td> <span id="EconFan"></span></td>
-</table><br><table style="width:100%">
+    <td></td>
+    <td>
+ <button class="button" id="1" onclick="econA()">AUTO</button>
+ <button class="button" id="2" onclick="econO()">OFF</button>
+ <button class="button" id="3" onclick="econM()">ON</button></td>
+
+</table>
+<br>
+
+
+<table style="width:100%">
 </tr><tr>
     <td>DHW Tank: </td> <td> <span id="DHW Tank"></span></td>
     <td>Collector: </td> <td> <span id="Collector"></span></td>
@@ -67,23 +88,36 @@ html {
     <td>SlabLea:  <span id="SlabLea"></span></td>
     <td>SlabEnt:  <span id="SlabEnt"></span></td> 
     <td>Polypipe:  <span id="Polypipe"></span></td>
+     <td>
+     <button class="button" id="4" type="button">AUTO</button>
+     <button class="button" id="5" type="button">OFF</button>
+     <button class="button" id="6" type="button">ON</button></td>
 </tr><tr>
     <td>Slab Circ:   </td> <td><span id="Slab Circ"></span></td>
+        
     
 </table><br><table style="width:100%">
 <tr><td>Garden Lights:  </td> <td> <span id="Garden Lights"></span></td>
-<tr><td>AC Unit:  </td> <td> <span id="AC Unit"></span></td></tr>
+<tr><td>AC Unit:  </td> <td> <span id="AC Unit"></span></td><td></td>
+<td>
+<button class="button" id="7" type="button">AUTO</button>
+<button class="button" id="8" type="button">OFF</button>
+<button class="button" id="9" type="button">ON</button></td></tr>
 <tr><td>ChickFlap:  </td> <td> <span id="ChickFlap"></span></td></tr>
-<tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td></tr>
+<tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td><td></td>
+<td>
+<button class="button" id="10" type="button">AUTO</button>
+<button class="button" id="11" type="button">OFF</button>
+<button class="button" id="12" type="button">ON</button></td></tr>
 </table>
 
 </table><br><table style="width:100%">
-<tr><td>On Solar:  </td> <td> <span id="Supply"></span></td></tr>
-<tr><td>Power W:  </td> <td> <span id="Power"></span></td></tr>
-<tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td></tr>
-<tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td></tr>
+<tr><td>On Solar:  </td> <td> <span id="Supply"></span></td><td></td><td></td></tr>
+<tr><td>Power W:  </td> <td> <span id="Power"></span></td><td></td><td></td></tr>
+<tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td><td></td><td></td></tr>
+<tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td><td></td><td></td></tr>
 </table>
-
+<span id="hello">Hello</span>
 </body>
 </html>
 <script type="text/javascript" language="javascript">
@@ -162,7 +196,38 @@ function precisionRound(number, precision) {
   // Tell Safari not to move the window.
   event.preventDefault() ;
  }
+var ee0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"0"}]};
+var ee1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"1"}]};
+var ee2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"2"}]};
+
+function POSTrequest(stringa){
+    URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/write-property-multiple";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", URL, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+xmlhttp.send(JSON.stringify(stringa));
+}
+
+
+function GETrequest(AVnum){
+var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/analog-value/"+ AVnum +"/properties/present-value";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+    xmlhttp.send(null);
+    var myArr = JSON.parse(xmlhttp.responseText);
+    var num = myArr["value"];
+    document.getElementById("hello").innerHTML = num; 
+return num;
+}
+
+function econA(){POSTrequest(ee0);if(GETrequest(30)==0){document.getElementById(1).style.color ="black";}}
+function econO(){POSTrequest(ee1);if(GETrequest(30)==1){document.getElementById(2).style.color ="black";}}
+function econM(){POSTrequest(ee2);if(GETrequest(30)==2){document.getElementById(3).style.color ="black";}}
+
+
+
+   
 </script>
-
-
- 
