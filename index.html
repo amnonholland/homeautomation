@@ -35,7 +35,7 @@
   background-color: #e7e7e7;
   border: white;
   color: white;
-  padding: 3px 3px;
+  padding: 5px 1px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -238,21 +238,16 @@ function slabM(){POSTrequest(ss2);if(GETrequest(31)==2){w(4);w(5);b(6);}}
 function acA(){POSTrequest(aa0);if(GETrequest(27)==0){b(7);w(8);w(9);}}
 function acO(){POSTrequest(aa1);if(GETrequest(27)==1){w(7);b(8);w(9);}}
 function acM(){POSTrequest(aa2);if(GETrequest(27)==2){w(7);w(8);b(9);}}
-function roofA(){POSTrequest(ee0);if(GETrequest(30)==0){b(10);w(11);w(12);}}
-function roofO(){POSTrequest(ee1);if(GETrequest(30)==1){w(10);b(11);w(12);}}
-function roofM(){POSTrequest(ee2);if(GETrequest(30)==2){w(10);w(11);b(12);}}
+
 
 function w(number){document.getElementById(number).style.color ="white";}
 function b(number){document.getElementById(number).style.color ="black";}
 /*
-if(GETrequest(30)==0){b(1);w(2);w(3);}
-if(GETrequest(30)==1){w(1);b(2);w(3);}
-if(GETrequest(30)==2){w(1);w(2);b(3);}
-if(GETrequest(31)==0){b(4);w(5);w(6);}
-if(GETrequest(31)==1){w(4);b(5);w(6);}
-if(GETrequest(31)==2){w(4);w(5);b(6);}
-if(GETrequest(27)==0){b(7);w(8);w(9);}
-if(GETrequest(27)==1){w(7);b(8);w(9);}
-if(GETrequest(27)==2){w(7);w(8);b(9);}
-*/   
+var EconMSV = GETrequest(30);
+if (EconMSV==0){b(1);w(2);w(3);} else if (EconMSV==0) {w(1);b(2);w(3);} else {w(1);w(2);b(3);}
+var SlabMSV = GETrequest(30);
+if (SlabMSV==0){b(4);w(5);w(6);} else if (SlabMSV==0) {w(1);b(2);w(3);} else {w(4);w(5);b(6);}
+var ACMSV = GETrequest(30);
+if (ACMSV==0){b(7);w(8);w(9);} else if (ACMSV==0) {w(7);b(8);w(9);} else {w(7);w(8);b(9);}
+*/
 </script>
