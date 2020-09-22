@@ -208,6 +208,9 @@ var ss2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","ins
 var aa0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"0"}]};
 var aa1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"1"}]};
 var aa2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"2"}]};
+var rr0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 29,"property": "presentValue","value":"0"}]};
+var rr1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 29,"property": "presentValue","value":"1"}]};
+var rr2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 29,"property": "presentValue","value":"2"}]};
 
 function POSTrequest(stringa){
     URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/write-property-multiple";
@@ -241,7 +244,10 @@ function slabM(){POSTrequest(ss2);if(GETrequest(31)==2){w(4);w(5);b(6);}}
 function acA(){POSTrequest(aa0);if(GETrequest(27)==0){b(7);w(8);w(9);}}
 function acO(){POSTrequest(aa1);if(GETrequest(27)==1){w(7);b(8);w(9);}}
 function acM(){POSTrequest(aa2);if(GETrequest(27)==2){w(7);w(8);b(9);}}
-
+function slabM(){POSTrequest(ss2);if(GETrequest(31)==2){w(4);w(5);b(6);}}
+function roofA(){POSTrequest(rr0);if(GETrequest(29)==0){b(10);w(11);w(12);}}
+function roofO(){POSTrequest(rr1);if(GETrequest(29)==1){w(10);b(11);w(12);}}
+function roofM(){POSTrequest(rr2);if(GETrequest(29)==2){w(10);w(11);b(12);}}
 
 function w(number){document.getElementById(number).style.color ="white";}
 function b(number){document.getElementById(number).style.color ="black";}
