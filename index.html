@@ -35,12 +35,12 @@
   background-color: #e7e7e7;
   border: white;
   color: white;
-  padding: 4px 4px;
+  padding: 3px 3px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   //font-size: 16px;
-  margin: 1px 2px;
+  margin: 1px 1px;
   cursor: pointer;
 }
 
@@ -89,9 +89,9 @@ html {
     <td>SlabEnt:  <span id="SlabEnt"></span></td> 
     <td>Polypipe:  <span id="Polypipe"></span></td>
      <td>
-     <button class="button" id="4" type="button">AUTO</button>
-     <button class="button" id="5" type="button">OFF</button>
-     <button class="button" id="6" type="button">ON</button></td>
+     <button class="button" id="4" onclick="slabA()">AUTO</button>
+     <button class="button" id="5" onclick="slabO()">OFF</button>
+     <button class="button" id="6" onclick="slabM()">ON</button></td>
 </tr><tr>
     <td>Slab Circ:   </td> <td><span id="Slab Circ"></span></td>
         
@@ -100,15 +100,15 @@ html {
 <tr><td>Garden Lights:  </td> <td> <span id="Garden Lights"></span></td>
 <tr><td>AC Unit:  </td> <td> <span id="AC Unit"></span></td><td></td>
 <td>
-<button class="button" id="7" type="button">AUTO</button>
-<button class="button" id="8" type="button">OFF</button>
-<button class="button" id="9" type="button">ON</button></td></tr>
+<button class="button" id="7" onclick="acA()">AUTO</button>
+<button class="button" id="8" onclick="acO()">OFF</button>
+<button class="button" id="9" onclick="acM()">ON</button></td></tr>
 <tr><td>ChickFlap:  </td> <td> <span id="ChickFlap"></span></td></tr>
 <tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td><td></td>
 <td>
-<button class="button" id="10" type="button">AUTO</button>
-<button class="button" id="11" type="button">OFF</button>
-<button class="button" id="12" type="button">ON</button></td></tr>
+<button class="button" id="10" onclick="roofA()">AUTO</button>
+<button class="button" id="11" onclick="roofO()">OFF</button>
+<button class="button" id="12" onclick="roofM()">ON</button></td></tr>
 </table>
 
 </table><br><table style="width:100%">
@@ -199,6 +199,12 @@ function precisionRound(number, precision) {
 var ee0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"0"}]};
 var ee1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"1"}]};
 var ee2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"2"}]};
+var ss0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 31,"property": "presentValue","value":"0"}]};
+var ss1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 31,"property": "presentValue","value":"1"}]};
+var ss2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 31,"property": "presentValue","value":"2"}]};
+var aa0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"0"}]};
+var aa1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"1"}]};
+var aa2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"2"}]};
 
 function POSTrequest(stringa){
     URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/write-property-multiple";
@@ -226,9 +232,27 @@ return num;
 function econA(){POSTrequest(ee0);if(GETrequest(30)==0){b(1);w(2);w(3);}}
 function econO(){POSTrequest(ee1);if(GETrequest(30)==1){w(1);b(2);w(3);}}
 function econM(){POSTrequest(ee2);if(GETrequest(30)==2){w(1);w(2);b(3);}}
+function slabA(){POSTrequest(ss0);if(GETrequest(31)==0){b(4);w(5);w(6);}}
+function slabO(){POSTrequest(ss1);if(GETrequest(31)==1){w(4);b(5);w(6);}}
+function slabM(){POSTrequest(ss2);if(GETrequest(31)==2){w(4);w(5);b(6);}}
+function acA(){POSTrequest(aa0);if(GETrequest(27)==0){b(7);w(8);w(9);}}
+function acO(){POSTrequest(aa1);if(GETrequest(27)==1){w(7);b(8);w(9);}}
+function acM(){POSTrequest(aa2);if(GETrequest(27)==2){w(7);w(8);b(9);}}
+function roofA(){POSTrequest(ee0);if(GETrequest(30)==0){b(10);w(11);w(12);}}
+function roofO(){POSTrequest(ee1);if(GETrequest(30)==1){w(10);b(11);w(12);}}
+function roofM(){POSTrequest(ee2);if(GETrequest(30)==2){w(10);w(11);b(12);}}
 
 function w(number){document.getElementById(number).style.color ="white";}
 function b(number){document.getElementById(number).style.color ="black";}
-
-   
+/*
+if(GETrequest(30)==0){b(1);w(2);w(3);}
+if(GETrequest(30)==1){w(1);b(2);w(3);}
+if(GETrequest(30)==2){w(1);w(2);b(3);}
+if(GETrequest(31)==0){b(4);w(5);w(6);}
+if(GETrequest(31)==1){w(4);b(5);w(6);}
+if(GETrequest(31)==2){w(4);w(5);b(6);}
+if(GETrequest(27)==0){b(7);w(8);w(9);}
+if(GETrequest(27)==1){w(7);b(8);w(9);}
+if(GETrequest(27)==2){w(7);w(8);b(9);}
+*/   
 </script>
