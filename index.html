@@ -32,8 +32,8 @@
             overflow: hidden;
   			        }
                     .button {
-  background-color: #e7e7e7;
-  border: white;
+  background-color: light gray;
+  border: none;
   border-radius: 10px;
   color: white;
   padding: 5px 5px;
@@ -106,7 +106,7 @@ html {
 <button class="button" id="7" onclick="acA()">AUTO</button>
 <button class="button" id="8" onclick="acO()">OFF</button>
 <button class="button" id="9" onclick="acM()">ON</button></td></tr>
-<tr><td>ChickFlap:  </td> <td> <span id="ChickFlap"></span></td></tr>
+<tr><td>ChickFlap:  </td> <td> <span id="ChickFlap"></span></td><td></td></tr>
 <tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td>
 <td>
 <button class="button" id="10" onclick="roofA()">AUTO</button>
@@ -133,12 +133,10 @@ if('serviceWorker' in navigator) {
 
 
 function send(){
-    URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
-    var xmlhttp = new XMLHttpRequest();
-    
-    xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
-     
-  var myArr = JSON.parse(xmlhttp.responseText);
+URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
+var myArr = JSON.parse(xmlhttp.responseText);
 var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Power","Solar","Mains","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply"]
 
  var i;for (i = 0; i < myArr.length; i++) {
@@ -180,16 +178,11 @@ else {document.getElementById(String(name[i])).innerHTML =precisionRound(myArr[i
 {"type": "binaryOutput","instance": 107,"property": "presentValue"},
 {"type": "binaryOutput","instance": 108,"property": "presentValue"},
 {"type": "binaryValue","instance": 3,"property": "presentValue"}
+]};
+xmlhttp.send(JSON.stringify(params));
 
 
-  ]
-};
-    xmlhttp.send(JSON.stringify(params));
-
-
-
-
-}setTimeout('send()', 10);
+}setTimeout('send()', 1000);
 function precisionRound(number, precision) {
   var factor = Math.pow(10, precision);
   return Math.round(number * factor) / factor;
@@ -231,32 +224,29 @@ var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/a
     xmlhttp.send(null);
     var myArr = JSON.parse(xmlhttp.responseText);
     var num = myArr["value"];
-    document.getElementById("hello").innerHTML = num; 
+    
 return num;
 }
+function w(number){document.getElementById(number).style.backgroundColor ="light gray";}
+function b(number){document.getElementById(number).style.backgroundColor ="gray";}
 
-function econA(){POSTrequest(ee0);if(GETrequest(30)==0){b(1);w(2);w(3);}}
-function econO(){POSTrequest(ee1);if(GETrequest(30)==1){w(1);b(2);w(3);}}
-function econM(){POSTrequest(ee2);if(GETrequest(30)==2){w(1);w(2);b(3);}}
-function slabA(){POSTrequest(ss0);if(GETrequest(31)==0){b(4);w(5);w(6);}}
-function slabO(){POSTrequest(ss1);if(GETrequest(31)==1){w(4);b(5);w(6);}}
-function slabM(){POSTrequest(ss2);if(GETrequest(31)==2){w(4);w(5);b(6);}}
-function acA(){POSTrequest(aa0);if(GETrequest(27)==0){b(7);w(8);w(9);}}
-function acO(){POSTrequest(aa1);if(GETrequest(27)==1){w(7);b(8);w(9);}}
-function acM(){POSTrequest(aa2);if(GETrequest(27)==2){w(7);w(8);b(9);}}
-function slabM(){POSTrequest(ss2);if(GETrequest(31)==2){w(4);w(5);b(6);}}
-function roofA(){POSTrequest(rr0);if(GETrequest(29)==0){b(10);w(11);w(12);}}
-function roofO(){POSTrequest(rr1);if(GETrequest(29)==1){w(10);b(11);w(12);}}
-function roofM(){POSTrequest(rr2);if(GETrequest(29)==2){w(10);w(11);b(12);}}
+function econA(){POSTrequest(ee0);b(1);w(2);w(3);}
+function econO(){POSTrequest(ee1);w(1);b(2);w(3);}
+function econM(){POSTrequest(ee2);w(1);w(2);b(3);}
+function slabA(){POSTrequest(ss0);b(4);w(5);w(6);}
+function slabO(){POSTrequest(ss1);w(4);b(5);w(6);}
+function slabM(){POSTrequest(ss2);w(4);w(5);b(6);}
+function acA(){POSTrequest(aa0);b(7);w(8);w(9);}
+function acO(){POSTrequest(aa1);w(7);b(8);w(9);}
+function acM(){POSTrequest(aa2);w(7);w(8);b(9);}
+function roofA(){POSTrequest(rr0);b(10);w(11);w(12);}
+function roofO(){POSTrequest(rr1);w(10);b(11);w(12);}
+function roofM(){POSTrequest(rr2);w(10);w(11);b(12);}
 
-function w(number){document.getElementById(number).style.color ="white";}
-function b(number){document.getElementById(number).style.color ="black";}
-/*
-var EconMSV = GETrequest(30);
-if (EconMSV==0){b(1);w(2);w(3);} else if (EconMSV==0) {w(1);b(2);w(3);} else {w(1);w(2);b(3);}
-var SlabMSV = GETrequest(30);
-if (SlabMSV==0){b(4);w(5);w(6);} else if (SlabMSV==0) {w(1);b(2);w(3);} else {w(4);w(5);b(6);}
-var ACMSV = GETrequest(30);
-if (ACMSV==0){b(7);w(8);w(9);} else if (ACMSV==0) {w(7);b(8);w(9);} else {w(7);w(8);b(9);}
-*/
+
+
+var a1=GETrequest(30); if(a1==0){b(1);w(2);w(3);} else if(a1==1){w(1);b(2);w(3);} else {w(1);w(2);b(3);}
+var a2=GETrequest(31); if(a2==0){b(4);w(5);w(6);} else if(a2==1){w(4);b(5);w(6);} else {w(4);w(5);b(6);}
+var a3=GETrequest(27); if(a3==0){b(7);w(8);w(9);} else if(a3==1){w(7);b(8);w(9);} else {w(7);w(8);b(9);}
+var a4=GETrequest(29); if(a4==0){b(10);w(11);w(12);} else if(a4==1){w(10);b(11);w(12);} else {w(10);w(11);b(12);}
 </script>
