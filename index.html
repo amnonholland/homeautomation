@@ -32,8 +32,9 @@
             overflow: hidden;
   			        }
                     .button {
-  background-color: light gray;
+  background-color: lightgray;
   border: none;
+  outline:none;
   border-radius: 10px;
   color: white;
   padding: 5px 5px;
@@ -227,7 +228,7 @@ var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/a
     
 return num;
 }
-function w(number){document.getElementById(number).style.backgroundColor ="light gray";}
+function w(number){document.getElementById(number).style.backgroundColor ="lightgray";}
 function b(number){document.getElementById(number).style.backgroundColor ="gray";}
 
 function econA(){POSTrequest(ee0);b(1);w(2);w(3);}
@@ -249,4 +250,5 @@ var a1=GETrequest(30); if(a1==0){b(1);w(2);w(3);} else if(a1==1){w(1);b(2);w(3);
 var a2=GETrequest(31); if(a2==0){b(4);w(5);w(6);} else if(a2==1){w(4);b(5);w(6);} else {w(4);w(5);b(6);}
 var a3=GETrequest(27); if(a3==0){b(7);w(8);w(9);} else if(a3==1){w(7);b(8);w(9);} else {w(7);w(8);b(9);}
 var a4=GETrequest(29); if(a4==0){b(10);w(11);w(12);} else if(a4==1){w(10);b(11);w(12);} else {w(10);w(11);b(12);}
+
 </script>
