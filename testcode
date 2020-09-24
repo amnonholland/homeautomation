@@ -81,28 +81,48 @@ html {
 </body>
 </html>
 <script type="text/javascript" language="javascript">
-var EMSV;
+
 function send(){
 URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
 var myArr = JSON.parse(xmlhttp.responseText);
-var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Power","Solar","Mains","EMSV","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply"]
+//var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Power","Solar","Mains","EMSV","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply"]
 
-//var OAT,RMT,DHW Tank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,asd,Garden Lights,AC Unit,Circ Pump,DHW Boost,Slab Circ,EconFan,ChickFlap,Rooflouvre,Supply;
+//var OAT,RMT,DHWtank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,EMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
 
 
 //document.getElementById("hello").innerHTML = string + "myArr[i].value";  
  
  var i;for (i = 0; i < myArr.length; i++) {
-//stringone = stringone + "<br>" + String(myArr[i].value); 
 
-if(String(name[i])=EMSV){EMSV=myArr[i].value;}
+var OAT=myArr[0].value;
+var RMT=myArr[1].value;
+var DHWtank=myArr[2].value;
+var Collector=myArr[3].value;
+var SlabLea=myArr[4].value;
+var SlabEnt=myArr[5].value;
+var Polypipe=myArr[6].value;
+var Power=myArr[7].value;
+var Solar=myArr[8].value;
+var Mains=myArr[9].value;
+var EMSV=myArr[10].value;
+var Gardenlights=myArr[11].value;
+var ACunit=myArr[12].value;
+var Circpump=myArr[13].value;
+var DHWboost=myArr[14].value;
+var Slabcirc=myArr[15].value;
+var Econfan=myArr[16].value;
+var Chickflap=myArr[17].value;
+var Rooflouvre=myArr[18].value;
+var Supply=myArr[19].value;
 
-document.getElementById(String(name[i])).innerHTML = myArr[i].value;
- 
+document.getElementById("OAT").innerHTML = OAT;
+
+//document.getElementById(String(name[i])).innerHTML = myArr[i].value;
+
 }    
-//alert(EMSV);
+
       
   setTimeout('send()', 1500);    
    
