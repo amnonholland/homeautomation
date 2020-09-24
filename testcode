@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+ <style>
+        .labels {
+            border: 1px solid blue;
+            width: 200px;
+            height: 400px;
+            float: left;
+            margin-bottom: 10px;
+            //padding: 0px 5px 0px 5px;
+            touch-action: none;
+            //position: fixed;
+            overflow: hidden;
+  			        }
+        .outputs {
+            border: 1px solid blue;
+            width: 200px;
+            height: 400px;
+            float: right;
+            margin-left: 200px;
+            //padding: 0px 5px 0px 5px;
+            touch-action: none;
+            position: fixed;
+            overflow: hidden;
+  			        }
+                    .button {
+  background-color: lightgray;
+  border: none;
+  outline:none;
+  border-radius: 10px;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  //font-size: 16px;
+  margin: 0px 0px;
+  cursor: pointer;
+}
+
+table, th, td {border-collapse: collapse;width: 25%; padding: 1px;border-bottom: 1px solid #ddd;}
+                   // border: 1px solid black;}
+  body,
+html {
+  position: fixed;
+  width: 100%; 
+  height: 100%
+}
+</style>
+<body>
+
+
+
+<span id="OAT">hi</span><br>
+<span id="RMT">hi</span><br>
+<span id="DHW Tank">hi</span><br>
+<span id="Collector">hi</span><br>
+<span id="SlabLea">hi</span><br>
+<span id="SlabEnt">hi</span><br>
+<span id="Polypipe">hi</span><br>
+<span id="Power">hi</span><br>
+<span id="Solar">hi</span><br>
+<span id="Mains">hi</span><br>
+<span id="asd">hi</span><br><span id="asd">hi</span><br>
+<span id="Garden Lights">hi</span><br>
+<span id="AC Unit">hi</span><br>
+<span id="Circ Pump">hi</span><br>
+<span id="DHW Boost">hi</span><br>
+<span id="Slab Circ">hi</span><br>
+<span id="EconFan">hi</span><br>
+<span id="ChickFlap">hi</span><br>
+<span id="Rooflouvre">hi</span><br>
+<span id="Supply">hi</span><br>
+
+
+
+</body>
+</html>
+<script type="text/javascript" language="javascript">
+
+function send(){
+URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
+var myArr = JSON.parse(xmlhttp.responseText);
+var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Power","Solar","Mains","asd","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply"]
+
+var OAT,RMT,DHW Tank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,asd,asd,Garden Lights,AC Unit,Circ Pump,DHW Boost,Slab Circ,EconFan,ChickFlap,Rooflouvre,Supply;
+
+
+//document.getElementById("hello").innerHTML = string + "myArr[i].value";  
+ 
+ var i;for (i = 0; i < myArr.length; i++) {
+//stringone = stringone + "<br>" + String(myArr[i].value); 
+
+
+document.getElementById(String(name[i])).innerHTML =myArr[i].value;
+ 
+}    
+
+      
+  setTimeout('send()', 1500);    
+   
+      }};
+    
+
+    xmlhttp.open("POST", URL, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+        var params = 
+    {"encode": "text",  "propertyReferences": [
+{"type": "analogInput","instance": 101,"property": "presentValue"},
+{"type": "analogInput","instance": 102,"property": "presentValue"},
+{"type": "analogInput","instance": 103,"property": "presentValue"},
+{"type": "analogInput","instance": 104,"property": "presentValue"},
+{"type": "analogInput","instance": 105,"property": "presentValue"},
+{"type": "analogInput","instance": 106,"property": "presentValue"},
+{"type": "analogInput","instance": 107,"property": "presentValue"},
+{"type": "analogValue","instance": 25,"property": "presentValue"},
+{"type": "analogValue","instance": 28,"property": "presentValue"},
+{"type": "analogValue","instance": 26,"property": "presentValue"},
+{"type": "analogValue","instance": 30,"property": "presentValue"},
+{"type": "binaryOutput","instance": 101,"property": "presentValue"},
+{"type": "binaryOutput","instance": 102,"property": "presentValue"},
+{"type": "binaryOutput","instance": 103,"property": "presentValue"},
+{"type": "binaryOutput","instance": 104,"property": "presentValue"},
+{"type": "binaryOutput","instance": 105,"property": "presentValue"},
+{"type": "binaryOutput","instance": 106,"property": "presentValue"},
+{"type": "binaryOutput","instance": 107,"property": "presentValue"},
+{"type": "binaryOutput","instance": 108,"property": "presentValue"},
+{"type": "binaryValue","instance": 3,"property": "presentValue"}
+]};
+xmlhttp.send(JSON.stringify(params));
+
+
+}setTimeout('send()', 1000);
+function precisionRound(number, precision) {
+  var factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
+
+
+ 
+
+</script>
