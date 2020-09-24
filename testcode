@@ -65,7 +65,7 @@ html {
 <span id="Power">hi</span><br>
 <span id="Solar">hi</span><br>
 <span id="Mains">hi</span><br>
-<span id="asd">hi</span><br><span id="asd">hi</span><br>
+<span id="EMSV">hi</span><br>
 <span id="Garden Lights">hi</span><br>
 <span id="AC Unit">hi</span><br>
 <span id="Circ Pump">hi</span><br>
@@ -81,15 +81,15 @@ html {
 </body>
 </html>
 <script type="text/javascript" language="javascript">
-
+var EMSV;
 function send(){
 URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
 var myArr = JSON.parse(xmlhttp.responseText);
-var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Power","Solar","Mains","asd","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply"]
+var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Power","Solar","Mains","EMSV","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply"]
 
-var OAT,RMT,DHW Tank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,asd,asd,Garden Lights,AC Unit,Circ Pump,DHW Boost,Slab Circ,EconFan,ChickFlap,Rooflouvre,Supply;
+//var OAT,RMT,DHW Tank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,asd,Garden Lights,AC Unit,Circ Pump,DHW Boost,Slab Circ,EconFan,ChickFlap,Rooflouvre,Supply;
 
 
 //document.getElementById("hello").innerHTML = string + "myArr[i].value";  
@@ -97,11 +97,12 @@ var OAT,RMT,DHW Tank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,asd,as
  var i;for (i = 0; i < myArr.length; i++) {
 //stringone = stringone + "<br>" + String(myArr[i].value); 
 
+if(String(name[i])=EMSV){EMSV=myArr[i].value;}
 
-document.getElementById(String(name[i])).innerHTML =myArr[i].value;
+document.getElementById(String(name[i])).innerHTML = myArr[i].value;
  
 }    
-
+//alert(EMSV);
       
   setTimeout('send()', 1500);    
    
