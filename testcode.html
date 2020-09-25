@@ -57,7 +57,7 @@ html {
 
 <span id="OAT">hi</span><br>
 <span id="RMT">hi</span><br>
-<span id="DHW Tank">hi</span><br>
+<span id="DHWtank">hi</span><br>
 <span id="Collector">hi</span><br>
 <span id="SlabLea">hi</span><br>
 <span id="SlabEnt">hi</span><br>
@@ -65,14 +65,14 @@ html {
 <span id="Power">hi</span><br>
 <span id="Solar">hi</span><br>
 <span id="Mains">hi</span><br>
-<span id="EMSV">hi</span><br>
-<span id="Garden Lights">hi</span><br>
-<span id="AC Unit">hi</span><br>
-<span id="Circ Pump">hi</span><br>
-<span id="DHW Boost">hi</span><br>
-<span id="Slab Circ">hi</span><br>
-<span id="EconFan">hi</span><br>
-<span id="ChickFlap">hi</span><br>
+
+<span id="Gardenlights">hi</span><br>
+<span id="ACunit">hi</span><br>
+<span id="Circpump">hi</span><br>
+<span id="DHWboost">hi</span><br>
+<span id="Slabcirc">hi</span><br>
+<span id="Econfan">hi</span><br>
+<span id="Chickflap">hi</span><br>
 <span id="Rooflouvre">hi</span><br>
 <span id="Supply">hi</span><br>
 
@@ -81,46 +81,38 @@ html {
 </body>
 </html>
 <script type="text/javascript" language="javascript">
+var OAT,RMT,DHWtank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
+URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
 function send(){
-URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
 var myArr = JSON.parse(xmlhttp.responseText);
-//var name = ["OAT","RMT","DHW Tank","Collector","SlabLea","SlabEnt","Polypipe","Power","Solar","Mains","EMSV","Garden Lights", "AC Unit", "Circ Pump", "DHW Boost", "Slab Circ", "EconFan", "ChickFlap", "Rooflouvre","Supply"]
 
-//var OAT,RMT,DHWtank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,EMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
-
-
-//document.getElementById("hello").innerHTML = string + "myArr[i].value";  
- 
- var i;for (i = 0; i < myArr.length; i++) {
-
-var OAT=myArr[0].value;
-var RMT=myArr[1].value;
-var DHWtank=myArr[2].value;
-var Collector=myArr[3].value;
-var SlabLea=myArr[4].value;
-var SlabEnt=myArr[5].value;
-var Polypipe=myArr[6].value;
-var Power=myArr[7].value;
-var Solar=myArr[8].value;
-var Mains=myArr[9].value;
-var EMSV=myArr[10].value;
-var Gardenlights=myArr[11].value;
-var ACunit=myArr[12].value;
-var Circpump=myArr[13].value;
-var DHWboost=myArr[14].value;
-var Slabcirc=myArr[15].value;
-var Econfan=myArr[16].value;
-var Chickflap=myArr[17].value;
-var Rooflouvre=myArr[18].value;
-var Supply=myArr[19].value;
-
-document.getElementById("OAT").innerHTML = OAT;
-
-//document.getElementById(String(name[i])).innerHTML = myArr[i].value;
-
+var i;for (i = 0; i < myArr.length; i++) {
+document.getElementById("OAT").innerHTML = OAT =myArr[0].value;
+document.getElementById("RMT").innerHTML = RMT =myArr[1].value;
+document.getElementById("DHWtank").innerHTML = DHWtank =myArr[2].value;
+document.getElementById("Collector").innerHTML = Collector =myArr[3].value;
+document.getElementById("SlabLea").innerHTML = SlabLea=myArr[4].value;
+document.getElementById("SlabEnt").innerHTML = SlabEnt=myArr[5].value;
+document.getElementById("Polypipe").innerHTML = Polypipe=myArr[6].value;
+document.getElementById("Power").innerHTML = Power=myArr[7].value;
+document.getElementById("Solar").innerHTML = Solar=myArr[8].value;
+document.getElementById("Mains").innerHTML = Mains=myArr[9].value;
+AMSV=Number(myArr[10].value);
+RMSV=Number(myArr[11].value);
+EMSV=Number(myArr[12].value);
+SMSV=Number(myArr[13].value);
+document.getElementById("Gardenlights").innerHTML = Gardenlights=myArr[14].value;
+document.getElementById("ACunit").innerHTML = ACunit=myArr[15].value;
+document.getElementById("Circpump").innerHTML = Circpump=myArr[16].value;
+document.getElementById("DHWboost").innerHTML = DHWboost=myArr[17].value;
+document.getElementById("Slabcirc").innerHTML = Slabcirc=myArr[18].value;
+document.getElementById("Econfan").innerHTML = Econfan=myArr[19].value;
+document.getElementById("Chickflap").innerHTML = Chickflap=myArr[20].value;
+document.getElementById("Rooflouvre").innerHTML = Rooflouvre=myArr[21].value;
+document.getElementById("Supply").innerHTML = Supply=myArr[22].value;
 }    
 
       
@@ -144,7 +136,10 @@ document.getElementById("OAT").innerHTML = OAT;
 {"type": "analogValue","instance": 25,"property": "presentValue"},
 {"type": "analogValue","instance": 28,"property": "presentValue"},
 {"type": "analogValue","instance": 26,"property": "presentValue"},
-{"type": "analogValue","instance": 30,"property": "presentValue"},
+{"type": "analogValue","instance": 27,"property": "presentValue"}, //AC
+{"type": "analogValue","instance": 29,"property": "presentValue"},//roof
+{"type": "analogValue","instance": 30,"property": "presentValue"},//econfan
+{"type": "analogValue","instance": 31,"property": "presentValue"},//slabcirc
 {"type": "binaryOutput","instance": 101,"property": "presentValue"},
 {"type": "binaryOutput","instance": 102,"property": "presentValue"},
 {"type": "binaryOutput","instance": 103,"property": "presentValue"},
