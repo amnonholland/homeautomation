@@ -2,6 +2,10 @@
 <html>
 
 <head>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style"content="default" />
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
 
 </head>
  <style>
@@ -51,36 +55,84 @@ html {
   height: 100%
 }
 </style>
-<body>
+<body ontouchmove="BlockMove(event);" >
 
 
+<h4>Home Automation</h4>
 
-<span id="OAT">hi</span><br>
-<span id="RMT">hi</span><br>
-<span id="DHWtank">hi</span><br>
-<span id="Collector">hi</span><br>
-<span id="SlabLea">hi</span><br>
-<span id="SlabEnt">hi</span><br>
-<span id="Polypipe">hi</span><br>
-<span id="Power">hi</span><br>
-<span id="Solar">hi</span><br>
-<span id="Mains">hi</span><br>
+<table style="width:100%">
+<tr>
+    <td>OAT:</td> <td> <span id="OAT"></span></td>
+    <td>RMT:</td> <td>  <span id="RMT"></span></td> 
+</tr>
+</table><table style="width:100%">
+<tr>    
+    <td>EconFan: </td> <td> <span id="Econfan"></span></td>
+    
+ <td>
+ <button class="button" id="1" onclick="econA()">AUTO</button>
+ <button class="button" id="2" onclick="econO()">OFF</button>
+ <button class="button" id="3" onclick="econM()">ON</button></td>
 
-<span id="Gardenlights">hi</span><br>
-<span id="ACunit">hi</span><br>
-<span id="Circpump">hi</span><br>
-<span id="DHWboost">hi</span><br>
-<span id="Slabcirc">hi</span><br>
-<span id="Econfan">hi</span><br>
-<span id="Chickflap">hi</span><br>
-<span id="Rooflouvre">hi</span><br>
-<span id="Supply">hi</span><br>
+</table>
+<br>
 
 
+<table style="width:100%">
+</tr><tr>
+    <td>DHW Tank: </td> <td> <span id="DHWtank"></span></td>
+    <td>Collector: </td> <td> <span id="Collector"></span></td>
+</tr><tr>    
+    <td>Circ Pump:</td> <td>  <span id="Circpump"></span></td>
+    <td>DHW Boost: </td> <td> <span id="DHWboost"></span></td>
+</table><br><table style="width:100%">
+</tr>
+</table><table style="width:100%">
+<tr>
+    <td>SlabLea:  <span id="SlabLea"></span></td>
+    <td>SlabEnt:  <span id="SlabEnt"></span></td> 
+    <td>Polypipe:  <span id="Polypipe"></span></td>
+     <tr></table>
+<table style="width:100%">
+<tr><td>Slab Circ:   </td> <td><span id="Slabcirc"></span></td><td>
+     <button class="button" id="4" onclick="slabA()">AUTO</button>
+     <button class="button" id="5" onclick="slabO()">OFF</button>
+     <button class="button" id="6" onclick="slabM()">ON</button></td>
+        
+    
+</table><br><table style="width:100%">
+<tr><td>Garden Lights:  </td> <td> <span id="Gardenlights"></span></td><td></td><tr>
+<tr><td>AC Unit:  </td> <td> <span id="ACunit"></span></td>
+<td>
+<button class="button" id="7" onclick="acA()">AUTO</button>
+<button class="button" id="8" onclick="acO()">OFF</button>
+<button class="button" id="9" onclick="acM()">ON</button></td></tr>
+<tr><td>ChickFlap:  </td> <td> <span id="Chickflap"></span></td><td></td></tr>
+<tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td>
+<td>
+<button class="button" id="10" onclick="roofA()">AUTO</button>
+<button class="button" id="11" onclick="roofO()">OFF</button>
+<button class="button" id="12" onclick="roofM()">ON</button></td></tr>
+</table>
 
+</table><br><table style="width:100%">
+<tr><td>On Solar:  </td> <td> <span id="Supply"></span></td><td></td></tr>
+<tr><td>Power W:  </td> <td> <span id="Power"></span></td><td></td></tr>
+<tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td><td></td></tr>
+<tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td><td></td></tr>
+</table>
+<span id="hello"></span>
 </body>
 </html>
 <script type="text/javascript" language="javascript">
+
+
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js', {
+    scope: 'https://amnonholland.github.io/homeautomation/'
+  });
+}
+var alreadyrun;
 var OAT,RMT,DHWtank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
 URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
@@ -89,34 +141,35 @@ var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
 var myArr = JSON.parse(xmlhttp.responseText);
 
-var i;for (i = 0; i < myArr.length; i++) {
-document.getElementById("OAT").innerHTML = OAT =myArr[0].value;
-document.getElementById("RMT").innerHTML = RMT =myArr[1].value;
-document.getElementById("DHWtank").innerHTML = DHWtank =myArr[2].value;
-document.getElementById("Collector").innerHTML = Collector =myArr[3].value;
-document.getElementById("SlabLea").innerHTML = SlabLea=myArr[4].value;
-document.getElementById("SlabEnt").innerHTML = SlabEnt=myArr[5].value;
-document.getElementById("Polypipe").innerHTML = Polypipe=myArr[6].value;
-document.getElementById("Power").innerHTML = Power=myArr[7].value;
-document.getElementById("Solar").innerHTML = Solar=myArr[8].value;
-document.getElementById("Mains").innerHTML = Mains=myArr[9].value;
+ var i;for (i = 0; i < myArr.length; i++) {
+document.getElementById("OAT").innerHTML = OAT =precisionRound(myArr[0].value,1);
+document.getElementById("RMT").innerHTML = RMT =precisionRound(myArr[1].value,1);
+document.getElementById("DHWtank").innerHTML = DHWtank =precisionRound(myArr[2].value,1);
+document.getElementById("Collector").innerHTML = Collector =precisionRound(myArr[3].value,1);
+document.getElementById("SlabLea").innerHTML = SlabLea=precisionRound(myArr[4].value,1);
+document.getElementById("SlabEnt").innerHTML = SlabEnt=precisionRound(myArr[5].value,1);
+document.getElementById("Polypipe").innerHTML = Polypipe=precisionRound(myArr[6].value,1);
+document.getElementById("Power").innerHTML = Power=precisionRound(myArr[7].value,1);
+document.getElementById("Solar").innerHTML = Solar=precisionRound(myArr[8].value,1);
+document.getElementById("Mains").innerHTML = Mains=precisionRound(myArr[9].value,1);
 AMSV=Number(myArr[10].value);
 RMSV=Number(myArr[11].value);
 EMSV=Number(myArr[12].value);
 SMSV=Number(myArr[13].value);
-document.getElementById("Gardenlights").innerHTML = Gardenlights=myArr[14].value;
-document.getElementById("ACunit").innerHTML = ACunit=myArr[15].value;
-document.getElementById("Circpump").innerHTML = Circpump=myArr[16].value;
-document.getElementById("DHWboost").innerHTML = DHWboost=myArr[17].value;
-document.getElementById("Slabcirc").innerHTML = Slabcirc=myArr[18].value;
-document.getElementById("Econfan").innerHTML = Econfan=myArr[19].value;
-document.getElementById("Chickflap").innerHTML = Chickflap=myArr[20].value;
-document.getElementById("Rooflouvre").innerHTML = Rooflouvre=myArr[21].value;
-document.getElementById("Supply").innerHTML = Supply=myArr[22].value;
-}    
+Gardenlights=myArr[14].value; if(Gardenlights=="Active"){document.getElementById("Gardenlights").innerHTML=Gardenlights.bold();}else{document.getElementById("Gardenlights").innerHTML=Gardenlights;}
+ACunit=myArr[15].value;if(ACunit=="Active"){document.getElementById("ACunit").innerHTML=ACunit.bold();}else{document.getElementById("ACunit").innerHTML=ACunit;}
+Circpump=myArr[16].value;if(Circpump=="Active"){document.getElementById("Circpump").innerHTML=Circpump.bold();}else{document.getElementById("Circpump").innerHTML=Circpump;}
+DHWboost=myArr[17].value;if(DHWboost=="Active"){document.getElementById("DHWboost").innerHTML=DHWboost.bold();}else{document.getElementById("DHWboost").innerHTML=DHWboost;}
+Slabcirc=myArr[18].value;if(Slabcirc=="Active"){document.getElementById("Slabcirc").innerHTML=Slabcirc.bold();}else{document.getElementById("Slabcirc").innerHTML=Slabcirc;}
+Econfan=myArr[19].value;if(Econfan=="Active"){document.getElementById("Econfan").innerHTML=Econfan.bold();}else{document.getElementById("Econfan").innerHTML=Econfan;}
+Chickflap=myArr[20].value;if(Chickflap=="Active"){document.getElementById("Chickflap").innerHTML=Chickflap.bold();}else{document.getElementById("Chickflap").innerHTML=Chickflap;}
+Rooflouvre=myArr[21].value;if(Rooflouvre=="Active"){document.getElementById("Rooflouvre").innerHTML=Rooflouvre.bold();}else{document.getElementById("Rooflouvre").innerHTML=Rooflouvre;}
+Supply=myArr[22].value;if(Supply=="Active"){document.getElementById("Supply").innerHTML=Supply.bold();}else{document.getElementById("Supply").innerHTML=Supply;}
+}     
 
-      
-  setTimeout('send()', 1500);    
+    
+if(!alreadyrun){initial();}    
+setTimeout('send()', 2000);    
    
       }};
     
@@ -152,14 +205,70 @@ document.getElementById("Supply").innerHTML = Supply=myArr[22].value;
 ]};
 xmlhttp.send(JSON.stringify(params));
 
+if(EMSV==0){b(1);w(2);w(3);} else if(EMSV==1){w(1);b(2);w(3);} else {w(1);w(2);b(3);}
+if(SMSV==0){b(4);w(5);w(6);} else if(SMSV==1){w(4);b(5);w(6);} else {w(4);w(5);b(6);}
+if(AMSV==0){b(7);w(8);w(9);} else if(AMSV==1){w(7);b(8);w(9);} else {w(7);w(8);b(9);}
+if(RMSV==0){b(10);w(11);w(12);} else if(RMSV==1){w(10);b(11);w(12);} else {w(10);w(11);b(12);} 
 
-}setTimeout('send()', 1000);
+}
+send();
+
+//setTimeout('initial()', 1100);
 function precisionRound(number, precision) {
   var factor = Math.pow(10, precision);
   return Math.round(number * factor) / factor;
 }
 
 
- 
 
+var ee0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"0"}]};
+var ee1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"1"}]};
+var ee2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 30,"property": "presentValue","value":"2"}]};
+var ss0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 31,"property": "presentValue","value":"0"}]};
+var ss1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 31,"property": "presentValue","value":"1"}]};
+var ss2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 31,"property": "presentValue","value":"2"}]};
+var aa0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"0"}]};
+var aa1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"1"}]};
+var aa2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 27,"property": "presentValue","value":"2"}]};
+var rr0 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 29,"property": "presentValue","value":"0"}]};
+var rr1 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 29,"property": "presentValue","value":"1"}]};
+var rr2 = {"encode": "text",  "propertyReferences": [{"type": "analogValue","instance": 29,"property": "presentValue","value":"2"}]};
+
+function POSTrequest(stringa){
+    URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/write-property-multiple";
+    var xlhttp = new XMLHttpRequest();
+    xlhttp.open("POST", URL, true);
+    xlhttp.setRequestHeader("Content-Type", "application/json");
+    xlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+xlhttp1.send(JSON.stringify(stringa));
+}
+
+
+function w(number){document.getElementById(number).style.backgroundColor ="lightgray";}
+function b(number){document.getElementById(number).style.backgroundColor ="gray";}
+
+function econA(){POSTrequest(ee0);b(1);w(2);w(3);}
+function econO(){POSTrequest(ee1);w(1);b(2);w(3);}
+function econM(){POSTrequest(ee2);w(1);w(2);b(3);}
+
+function slabA(){POSTrequest(ss0);b(4);w(5);w(6);}
+function slabO(){POSTrequest(ss1);w(4);b(5);w(6);}
+function slabM(){POSTrequest(ss2);w(4);w(5);b(6);}
+function acA(){POSTrequest(aa0);b(7);w(8);w(9);}
+function acO(){POSTrequest(aa1);w(7);b(8);w(9);}
+function acM(){POSTrequest(aa2);w(7);w(8);b(9);}
+function roofA(){POSTrequest(rr0);b(10);w(11);w(12);}
+function roofO(){POSTrequest(rr1);w(10);b(11);w(12);}
+function roofM(){POSTrequest(rr2);w(10);w(11);b(12);}
+
+function initial(){alreadyrun=true;
+if(EMSV==0){b(1);w(2);w(3);} else if(EMSV==1){w(1);b(2);w(3);} else {w(1);w(2);b(3);}
+if(SMSV==0){b(4);w(5);w(6);} else if(SMSV==1){w(4);b(5);w(6);} else {w(4);w(5);b(6);}
+if(AMSV==0){b(7);w(8);w(9);} else if(AMSV==1){w(7);b(8);w(9);} else {w(7);w(8);b(9);}
+if(RMSV==0){b(10);w(11);w(12);} else if(RMSV==1){w(10);b(11);w(12);} else {w(10);w(11);b(12);} 
+}
+ function BlockMove(event) {
+  // Tell Safari not to move the window.
+  event.preventDefault() ;
+ }
 </script>
