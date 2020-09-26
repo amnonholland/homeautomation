@@ -89,9 +89,8 @@ html {
 </tr>
 </table><table style="width:100%">
 <tr>
-    <td>SlabLea:  <span id="SlabLea"></span></td>
-    <td>SlabEnt:  <span id="SlabEnt"></span></td> 
-    <td>Polypipe:  <span id="Polypipe"></span></td>
+    <td>SlabLea: </td> <td> <span id="SlabLea"></span></td>
+    <td>Collector: </td> <td> <span id="Polypipe"></span></td>
      <tr></table>
 <table style="width:100%">
 <tr><td>Slab Circ:   </td> <td><span id="Slabcirc"></span></td><td>
@@ -116,12 +115,12 @@ html {
 </table>
 
 </table><br><br><table style="width:100%">
-<tr><td>On Solar:  </td> <td> <span id="Supply"></span></td><td></td></tr>
-<tr><td>Power W:  </td> <td> <span id="Power"></span></td><td></td></tr>
-<tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td><td></td></tr>
-<tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td><td></td></tr>
+<tr><td>On Solar:  </td> <td> <span id="Supply"></span></td><td>Batt V:  </td> <td> <span id="battv"></span></td></tr>
+<tr><td>Power W:  </td> <td> <span id="Power"></span></td></tr>
+<tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td></tr>
+<tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td></tr>
 </table>
-<span id="hello"></span>
+
 </body>
 </html>
 <script type="text/javascript" language="javascript">
@@ -135,7 +134,7 @@ if('serviceWorker' in navigator) {
   });
 }
 var alreadyrun;
-var OAT,RMT,DHWtank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
+var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
 var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
 function send(){
@@ -149,7 +148,7 @@ document.getElementById("RMT").innerHTML = RMT =precisionRound(myArr[1].value,1)
 document.getElementById("DHWtank").innerHTML = DHWtank =precisionRound(myArr[2].value,1);
 document.getElementById("Collector").innerHTML = Collector =precisionRound(myArr[3].value,1);
 document.getElementById("SlabLea").innerHTML = SlabLea=precisionRound(myArr[4].value,1);
-document.getElementById("SlabEnt").innerHTML = SlabEnt=precisionRound(myArr[5].value,1);
+document.getElementById("battv").innerHTML = battv=precisionRound(myArr[5].value,1);
 document.getElementById("Polypipe").innerHTML = Polypipe=precisionRound(myArr[6].value,1);
 document.getElementById("Power").innerHTML = Power=precisionRound(myArr[7].value,0);
 document.getElementById("Solar").innerHTML = Solar=precisionRound(myArr[8].value,1);
