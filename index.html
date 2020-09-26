@@ -55,7 +55,7 @@ html {
   height: 100%
 }
 </style>
-<body ontouchmove="BlockMove(event);" >
+<body >
 
 
 <h4>Home Automation</h4>
@@ -125,7 +125,9 @@ html {
 </body>
 </html>
 <script type="text/javascript" language="javascript">
-
+ document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
 
 if('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js', {
@@ -247,8 +249,5 @@ if(SMSV==0){b(4);w(5);w(6);} else if(SMSV==1){w(4);b(5);w(6);} else {w(4);w(5);b
 if(AMSV==0){b(7);w(8);w(9);} else if(AMSV==1){w(7);b(8);w(9);} else {w(7);w(8);b(9);}
 if(RMSV==0){b(10);w(11);w(12);} else if(RMSV==1){w(10);b(11);w(12);} else {w(10);w(11);b(12);} 
 }
- function BlockMove(event) {
-  // Tell Safari not to move the window.
-  event.preventDefault() ;
- }
+
 </script>
