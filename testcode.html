@@ -126,6 +126,9 @@ html {
 </html>
 <script type="text/javascript" language="javascript">
 
+ document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
 
 if('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js', {
