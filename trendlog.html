@@ -1,26 +1,55 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-<span id="hello"></span>
+<head>  
+<span id="hello">qwe</span>
 <script>
-
-var json =
-`[{"value":15.670505,"timeStamp":1601061300019,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13994},{"value":15.68743,"timeStamp":1601061600009,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13995},{"value":15.68743,"timeStamp":1601061600009,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13995}]`;
-
-var obj = JSON.parse(json);
-var time = obj.map(item => item.timeStamp);
-var value = obj.map(item => item.value);
+window.onload = function () {
 
 
-var jsonArr = [];
-for (var i = 0; i < time.length; i++) {
 
-    jsonArr.push([time[i],value[i]]);
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	zoomEnabled: true,
+	title:{
+		text: "Trend" 
+	},
+	data: data  
+});
+chart.render();
+
 }
-jsonArr = JSON.stringify(jsonArr);
+/*
+var json =
+[{"value":1,"timeStamp":4,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13994},{"value":2,"timeStamp":5,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13995},{"value":3,"timeStamp":6,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13995}];
+*/
 
-document.getElementById("hello").innerHTML = jsonArr;
+var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/analog-input/101/trend?encode=json&dataOnly=true";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+    xmlhttp.send(null);
+    var json = JSON.parse(xmlhttp.responseText);
+  	document.getElementById("hello").innerHTML = xmlhttp.responseText;
+
+
+var time = json.map(item => item.timeStamp);
+var value = json.map(item => item.value);
+
+var y = 0;var data = [];var dataSeries = { type: "line" };var dataPoints = [];
+
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
+
+dataSeries.dataPoints = dataPoints;
+data.push(dataSeries);               
+
+
+
 </script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
 <body>
-</body>
+<div id="chartContainer" style="height: 370px; width: 100%;">
+</div>
 
+</body>
 </html>
