@@ -7,17 +7,14 @@ var json =
 `[{"value":15.670505,"timeStamp":1601061300019,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13994},{"value":15.68743,"timeStamp":1601061600009,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13995},{"value":15.68743,"timeStamp":1601061600009,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13995}]`;
 
 var obj = JSON.parse(json);
-
 var time = obj.map(item => item.timeStamp);
 var value = obj.map(item => item.value);
 
 
 var jsonArr = [];
 for (var i = 0; i < time.length; i++) {
-    jsonArr.push({
-         time: time[i],
-         value: value[i]
-    });
+
+    jsonArr.push([time[i],value[i]]);
 }
 jsonArr = JSON.stringify(jsonArr);
 
