@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>  
-<span id="hello">qwe</span>
+<span id="hello"></span>
 <script>
 window.onload = function () {
 
@@ -10,33 +10,28 @@ window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
-	title:{
-		text: "Trend" 
-	},
-	data: data  
-});
+	title:{text: "Trend"},
+    data: data});
+
 chart.render();
 
 }
-/*
-var json =
-[{"value":1,"timeStamp":4,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13994},{"value":2,"timeStamp":5,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13995},{"value":3,"timeStamp":6,"type":2,"statusFlags":"false,false,false,false","sequenceNumber":13995}];
-*/
 
-var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/analog-input/101/trend?encode=json&dataOnly=true";
+
+var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/analog-input/101/trend?encode=json&dataOnly=true&limit=500";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
     xmlhttp.send(null);
     var json = JSON.parse(xmlhttp.responseText);
-  	document.getElementById("hello").innerHTML = xmlhttp.responseText;
+  	//document.getElementById("hello").innerHTML = xmlhttp.responseText;
 
 
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
 
-var y = 0;var data = [];var dataSeries = { type: "line" };var dataPoints = [];
+var y = 0;var data = [];var dataSeries = { type: "line" ,xValueType: "dateTime"};var dataPoints = [];
 
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
 
