@@ -1,6 +1,24 @@
 <!DOCTYPE HTML>
 <html>
-<head>  
+<head>
+
+<form onclick="chartgenerate()">
+  <label for="Object">Object:</label>
+  <select name="Object" id="Object">
+    <option value="analog-input">analog-input</option>
+    <option value="binary-output">binary-output</option>
+  </select>
+</form>
+<form onclick="chartgenerate()">
+  <label for="Instance">Instance:</label>
+  <select name="Instance" id="Instance">
+    <option value="101">101</option>
+    <option value="102">102</option>
+  </select>
+</form>
+
+
+
 <style>
 
 </style>
@@ -9,8 +27,16 @@
 
 
 window.onload = function () {
+chartgenerate();
+}
 
-var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/analog-input/101/trend?encode=json&dataOnly=true&limit=500";
+function chartgenerate(){
+var Object = document.getElementById("Object").value;
+var Instance = document.getElementById("Instance").value;
+
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/") + Object + "/"+Instance+String("/trend?encode=json&dataOnly=true&limit=500");
+
+
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -60,6 +86,7 @@ function toggleDataSeries(e){
 chart.render();
 
 }
+
 </script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
 <body>
