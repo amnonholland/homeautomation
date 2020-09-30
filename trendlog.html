@@ -2,8 +2,22 @@
 <html>
 <head>  
 <span id="hello"></span>
+<style>
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+</style>
 <script>
-document.body.style.setProperty("-webkit-transform", "rotate(-90deg)", null);
+
+
+
 window.onload = function () {
 
 
@@ -11,7 +25,7 @@ window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
-	title:{text: "Trend"},
+	//title:{text: "Trend"},
     data: data});
 
 chart.render();
