@@ -1,46 +1,60 @@
-const OFFLINE_VERSION = 1;
-const CACHE_NAME = 'offline';
-const OFFLINE_URL = 'https://amnonholland.github.io/homeautomation/index.html';
-
-self.addEventListener('install', (event) => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
-  })());
-});
-self.addEventListener('activate', (event) => {
-  event.waitUntil((async () => {
-    if ('navigationPreload' in self.registration) {
-      await self.registration.navigationPreload.enable();
+if (navigator.serviceWorker.controller) {
+    console.log("Active service worker found");
+    } else {
+        navigator.serviceWorker
+        .register("serviceWorker.js", {
+        scope: "./"
+        })
+        .then(function (reg) {
+        console.log("Service worker  registered);
+        });
     }
-  })());
-  self.clients.claim();
+}
+              // Perform install steps
+let CACHE_NAME = 'my-cache';
+let urlsToCache = [
+    'https://amnonholland.github.io/homeautomation/index.html',    '
+    'https://amnonholland.github.io/homeautomation/trendlog.html',
+    
+
+    ];
+
+self.addEventListener('install', function(event) {
+// Perform install steps
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then(function(cache) {
+            console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+        })
+    );
 });
-self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    
-
-    
-    
-    event.respondWith((async () => {
-      try {
- 
-        const preloadResponse = await event.preloadResponse;
-        if (preloadResponse) {
-          return preloadResponse;
+      self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        // Cache hit - return response
+        if (response) {
+          return response;
         }
-
-        const networkResponse = await fetch(event.request);
-        return networkResponse;
+        return fetch(event.request);
       }
+    )
+  );
+});
       
       
-      catch (error) {
-        console.log('Fetch failed; returning offline page instead.', error);
-        const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(OFFLINE_URL);
-        return cachedResponse;
-      }
-    })());
-  }
+self.addEventListener('activate', function(event) {
+  var cacheWhitelist = ['pigment'];
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
