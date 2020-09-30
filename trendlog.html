@@ -2,22 +2,6 @@
 <html>
 <head>
 
-<form onclick="chartgenerate()">
-  <label for="Object">Object:</label>
-  <select name="Object" id="Object">
-    <option value="analog-input">analog-input</option>
-    <option value="binary-output">binary-output</option>
-  </select>
-</form>
-<form onclick="chartgenerate()">
-  <label for="Instance">Instance:</label>
-  <select name="Instance" id="Instance">
-    <option value="101">101</option>
-    <option value="102">102</option>
-  </select>
-</form>
-
-
 
 <style>
 
@@ -31,11 +15,10 @@ chartgenerate();
 }
 
 function chartgenerate(){
-var Object = document.getElementById("Object").value;
-var Instance = document.getElementById("Instance").value;
+var item = document.getElementById("item").value;
 
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/") + Object + "/"+Instance+String("/trend?encode=json&dataOnly=true&limit=500");
 
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=500");
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
@@ -94,5 +77,27 @@ chart.render();
 </div>
 
 </body>
+<form onchange="chartgenerate()">
+  <label for="item">Point:</label>
+  <select name="item" id="item">
+    <option value="analog-input/101">analog-input/101 - OAT</option>
+    <option value="analog-input/102">analog-input/102 - RMT</option>
+    <option value="analog-input/103">analog-input/103 - Tank T</option>
+    <option value="analog-input/104">analog-input/104 - Collector T</option>
+    <option value="analog-input/105">analog-input/105 - Slab Lea</option>
+    <option value="analog-input/106">analog-input/106 - Batt V</option>
+    <option value="analog-input/107">analog-input/107 - Polypipe</option>
+    <option value="binary-output/102">binary-output/102 - AC Unit</option>
+    <option value="binary-output/103">binary-output/103 - Circ Pump</option>
+    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
+    <option value="binary-output/105">binary-output/105 - Slab Circ</option>
+    <option value="binary-output/106">binary-output/106 - Econfan</option>
+    <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-value/25">analog-value/25 - Watts</option>
+    <option value="analog-value/26">analog-value/26 - Mains kWh</option>
+    <option value="analog-value/28">analog-value/26 - Solar kWh</option>
+ 
+  </select>
+</form>
 	<h4><a href="/homeautomation/index.html">Home</a></h4>
 </html>
