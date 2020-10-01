@@ -18,34 +18,38 @@
 window.onload = function () {
 chartgenerate();
 }
-
+var json;
 function chartgenerate(){
 var item = document.getElementById("item").value;
 
-
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=500");
+function fetchtrend(){
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=864&descending=true");
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
     xmlhttp.send(null);
-    var json = JSON.parse(xmlhttp.responseText);
+    json = JSON.parse(xmlhttp.responseText);
+
+
+}
+fetchtrend();
 
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
 
-var y = 0;var data = [];var dataSeries = { 
-type: "line",xValueType: "dateTime",name: "OAT",showInLegend: true
-};
-var dataPoints = [];
-
+var y = 0;var data = [];var dataSeries = {type: "line",xValueType: "dateTime",name: "OAT",showInLegend: true};
+var dataPoints = [];if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
+dataSeries.dataPoints = dataPoints;data.push(dataSeries);  
 
-dataSeries.dataPoints = dataPoints;
-data.push(dataSeries);  
-
-
+/*
+var y = 0;var data1 = [];var data1Series = {type: "line",xValueType: "dateTime",name: "OAT",showInLegend: true};
+var dataPoints = [];if(item.includes("binary")){data1Series.type = "stepArea"}
+for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
+data1Series.data1Points = data1Points;data.push(data1Series);  
+*/
 var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
     data: data,
