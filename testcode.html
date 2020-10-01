@@ -24,7 +24,7 @@ var item = document.getElementById("item").value;
 var item1 = document.getElementById("item1").value;
 
 function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=2&descending=true");//864
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=10&descending=true");//864
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
@@ -36,25 +36,26 @@ var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/ob
 var json = fetchtrend(item);
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
-var y = 0;var data = [];var dataSeries = {type: "line",xValueType: "dateTime",name: "Var 1",showInLegend: true};
-var dataPoints = [];//if(item.includes("binary")){dataSeries.type = "stepArea"}
+var y=0;var data = [];var dataSeries = {type: "line",xValueType: "dateTime",name: "Var 1",showInLegend: true};
+var dataPoints = [];if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
-dataSeries.dataPoints = dataPoints;//data.push(dataSeries); 
+dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
 
 var json1 = fetchtrend(item1);
 var time1 = json1.map(item1 => item1.timeStamp);
 var value1 = json1.map(item1 => item1.value);
-var y = 0;var data1Series = {type: "line",xValueType: "dateTime",name: "Var 2",showInLegend: true};
-var data1Points = [];//if(item.includes("binary")){dataSeries.type = "stepArea"}
+var y=0;var data1Series = {type: "line",xValueType: "dateTime",name: "Var 2",showInLegend: true};
+var data1Points = [];if(item1.includes("binary")){data1Series.type = "stepArea"}
 for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
-data1Series.data1Points = data1Points;data.push(dataSeries); 
+data1Series.dataPoints = data1Points;data.push(data1Series); 
 
-//data[0] = dataSeries;
-//data[1] = data1Series;
+document.getElementById("hello").innerHTML=JSON.stringify(data[0].dataPoints[0].x);
+document.getElementById("hello1").innerHTML=JSON.stringify(data);
 
-alert(data1Series);
+
 var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
+         // axisX:{minimum: },
     data:data,
     	legend:{
 		cursor: "pointer",
@@ -111,7 +112,8 @@ chart.render();
   
     <label for="item1">Point 2:</label>
   <select name="item1" id="item1">
-    <option value="analog-input/101">analog-input/102 - OAT</option>
+  <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-input/102">analog-input/102 - OAT</option>
     <option value="analog-input/102">analog-input/102 - RMT</option>
     <option value="analog-input/103">analog-input/103 - Tank T</option>
     <option value="analog-input/104">analog-input/104 - Collector T</option>
@@ -130,5 +132,5 @@ chart.render();
  
   </select>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="/homeautomation/index.html">Home</a>
 </form>
-	
+	<Br><span id="hello"></span><Br><span id="hello1"></span>
 </html>
