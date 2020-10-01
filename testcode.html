@@ -1,257 +1,134 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-
 <head>
 
+<link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style"content="default" />
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
+<style>
 
-</head>
- <style>
-        .labels {
-            border: 1px solid blue;
-            width: 200px;
-            height: 400px;
-            float: left;
-            margin-bottom: 10px;
-            //padding: 0px 5px 0px 5px;
-            touch-action: none;
-            //position: fixed;
-            overflow: hidden;
-  			        }
-        .outputs {
-            border: 1px solid blue;
-            width: 200px;
-            height: 400px;
-            float: right;
-            margin-left: 200px;
-            //padding: 0px 5px 0px 5px;
-            touch-action: none;
-            position: fixed;
-            overflow: hidden;
-  			        }
-                    .button {
-  background-color: lightgray;
-  border: none;
-  outline:none;
-  border-radius: 10px;
-  color: white;
-  padding: 5px 5px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  //font-size: 16px;
-  margin: 0px 0px;
-  cursor: pointer;
-}
-
-table, th, td {border-collapse: collapse;width: 25%; padding: 1px;border-bottom: 1px solid #ddd;}
-                   // border: 1px solid black;}
-  body,
-html {
-  position: fixed;overflow: hidden;
-  width: 100%; 
-  height: 100%
-}
 </style>
-<body ontouchmove="BlockMove(event);" >
-
-
-<h4>Home Automationnn</h4>
-
-<table style="width:100%">
-<tr>
-    <td>OAT:</td> <td> <span id="OAT"></span></td>
-    <td>RMT:</td> <td>  <span id="RMT"></span></td> 
-</tr>
-</table><table style="width:100%">
-<tr>    
-    <td>EconFan: </td> <td> <span id="Econfan"></span></td>
-    
- <td>
- <button class="button" id="1" onclick="econA()">AUTO</button>
- <button class="button" id="2" onclick="econO()">OFF</button>
- <button class="button" id="3" onclick="econM()">ON</button></td>
-
-</table>
-<br>
-
-
-<table style="width:100%">
-</tr><tr>
-    <td>DHW Tank: </td> <td> <span id="DHWtank"></span></td>
-    <td>Collector: </td> <td> <span id="Collector"></span></td>
-</tr><tr>    
-    <td>Circ Pump:</td> <td>  <span id="Circpump"></span></td>
-    <td>DHW Boost: </td> <td> <span id="DHWboost"></span></td>
-</table><br><table style="width:100%">
-</tr>
-</table><table style="width:100%">
-<tr>
-    <td>SlabLea:  <span id="SlabLea"></span></td>
-    <td>SlabEnt:  <span id="SlabEnt"></span></td> 
-    <td>Polypipe:  <span id="Polypipe"></span></td>
-     <tr></table>
-<table style="width:100%">
-<tr><td>Slab Circ:   </td> <td><span id="Slabcirc"></span></td><td>
-     <button class="button" id="4" onclick="slabA()">AUTO</button>
-     <button class="button" id="5" onclick="slabO()">OFF</button>
-     <button class="button" id="6" onclick="slabM()">ON</button></td>
-        
-    
-</table><br><table style="width:100%">
-<tr><td>Garden Lights:  </td> <td> <span id="Gardenlights"></span></td><td></td><tr>
-<tr><td>AC Unit:  </td> <td> <span id="ACunit"></span></td>
-<td>
-<button class="button" id="7" onclick="acA()">AUTO</button>
-<button class="button" id="8" onclick="acO()">OFF</button>
-<button class="button" id="9" onclick="acM()">ON</button></td></tr>
-<tr><td>ChickFlap:  </td> <td> <span id="Chickflap"></span></td><td></td></tr>
-<tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td>
-<td>
-<button class="button" id="10" onclick="roofA()">AUTO</button>
-<button class="button" id="11" onclick="roofO()">OFF</button>
-<button class="button" id="12" onclick="roofM()">ON</button></td></tr>
-</table>
-
-</table><br><table style="width:100%">
-<tr><td>On Solar:  </td> <td> <span id="Supply"></span></td><td></td></tr>
-<tr><td>Power W:  </td> <td> <span id="Power"></span></td><td></td></tr>
-<tr><td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td><td></td></tr>
-<tr><td>Mains kWh/day:  </td> <td> <span id="Mains"></span></td><td></td></tr>
-</table>
-<span id="hello"></span>
-</body>
-</html>
-<script type="text/javascript" language="javascript">
+<script>
 
  document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
 
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js', {
-    scope: 'https://amnonholland.github.io/homeautomation/'
-  });
+window.onload = function () {
+chartgenerate();
 }
-var alreadyrun;
-var OAT,RMT,DHWtank,Collector,SlabLea,SlabEnt,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
-var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
+var json;
+function chartgenerate(){
+var item = document.getElementById("item").value;
+var item1 = document.getElementById("item1").value;
 
-function send(){
-var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
-var myArr = JSON.parse(xmlhttp.responseText);
+function fetchtrend(var1){
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=2&descending=true");//864
 
- var i;for (i = 0; i < myArr.length; i++) {
-document.getElementById("OAT").innerHTML = OAT =precisionRound(myArr[0].value,1);
-document.getElementById("RMT").innerHTML = RMT =precisionRound(myArr[1].value,1);
-document.getElementById("DHWtank").innerHTML = DHWtank =precisionRound(myArr[2].value,1);
-document.getElementById("Collector").innerHTML = Collector =precisionRound(myArr[3].value,1);
-document.getElementById("SlabLea").innerHTML = SlabLea=precisionRound(myArr[4].value,1);
-document.getElementById("SlabEnt").innerHTML = SlabEnt=precisionRound(myArr[5].value,1);
-document.getElementById("Polypipe").innerHTML = Polypipe=precisionRound(myArr[6].value,1);
-document.getElementById("Power").innerHTML = Power=precisionRound(myArr[7].value,1);
-document.getElementById("Solar").innerHTML = Solar=precisionRound(myArr[8].value,1);
-document.getElementById("Mains").innerHTML = Mains=precisionRound(myArr[9].value,1);
-AMSV=Number(myArr[10].value);
-RMSV=Number(myArr[11].value);
-EMSV=Number(myArr[12].value);
-SMSV=Number(myArr[13].value);
-Gardenlights=myArr[14].value; if(Gardenlights=="Active"){document.getElementById("Gardenlights").innerHTML=Gardenlights.bold();}else{document.getElementById("Gardenlights").innerHTML=Gardenlights;}
-ACunit=myArr[15].value;if(ACunit=="Active"){document.getElementById("ACunit").innerHTML=ACunit.bold();}else{document.getElementById("ACunit").innerHTML=ACunit;}
-Circpump=myArr[16].value;if(Circpump=="Active"){document.getElementById("Circpump").innerHTML=Circpump.bold();}else{document.getElementById("Circpump").innerHTML=Circpump;}
-DHWboost=myArr[17].value;if(DHWboost=="Active"){document.getElementById("DHWboost").innerHTML=DHWboost.bold();}else{document.getElementById("DHWboost").innerHTML=DHWboost;}
-Slabcirc=myArr[18].value;if(Slabcirc=="Active"){document.getElementById("Slabcirc").innerHTML=Slabcirc.bold();}else{document.getElementById("Slabcirc").innerHTML=Slabcirc;}
-Econfan=myArr[19].value;if(Econfan=="Active"){document.getElementById("Econfan").innerHTML=Econfan.bold();}else{document.getElementById("Econfan").innerHTML=Econfan;}
-Chickflap=myArr[20].value;if(Chickflap=="Active"){document.getElementById("Chickflap").innerHTML=Chickflap.bold();}else{document.getElementById("Chickflap").innerHTML=Chickflap;}
-Rooflouvre=myArr[21].value;if(Rooflouvre=="Active"){document.getElementById("Rooflouvre").innerHTML=Rooflouvre.bold();}else{document.getElementById("Rooflouvre").innerHTML=Rooflouvre;}
-Supply=myArr[22].value;if(Supply=="Active"){document.getElementById("Supply").innerHTML=Supply.bold();}else{document.getElementById("Supply").innerHTML=Supply;}
-}     
-
-    
-if(!alreadyrun){initial();}    
-setTimeout('send()', 1500);    
-   
-      }};    
-
-    xmlhttp.open("POST", URL, true);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
-        var params = 
-    {"encode": "text",  "propertyReferences": [
-{"type": "analogInput","instance": 101,"property": "presentValue"},
-{"type": "analogInput","instance": 102,"property": "presentValue"},
-{"type": "analogInput","instance": 103,"property": "presentValue"},
-{"type": "analogInput","instance": 104,"property": "presentValue"},
-{"type": "analogInput","instance": 105,"property": "presentValue"},
-{"type": "analogInput","instance": 106,"property": "presentValue"},
-{"type": "analogInput","instance": 107,"property": "presentValue"},
-{"type": "analogValue","instance": 25,"property": "presentValue"},
-{"type": "analogValue","instance": 28,"property": "presentValue"},
-{"type": "analogValue","instance": 26,"property": "presentValue"},
-{"type": "analogValue","instance": 27,"property": "presentValue"}, //AC
-{"type": "analogValue","instance": 29,"property": "presentValue"},//roof
-{"type": "analogValue","instance": 30,"property": "presentValue"},//econfan
-{"type": "analogValue","instance": 31,"property": "presentValue"},//slabcirc
-{"type": "binaryOutput","instance": 101,"property": "presentValue"},
-{"type": "binaryOutput","instance": 102,"property": "presentValue"},
-{"type": "binaryOutput","instance": 103,"property": "presentValue"},
-{"type": "binaryOutput","instance": 104,"property": "presentValue"},
-{"type": "binaryOutput","instance": 105,"property": "presentValue"},
-{"type": "binaryOutput","instance": 106,"property": "presentValue"},
-{"type": "binaryOutput","instance": 107,"property": "presentValue"},
-{"type": "binaryOutput","instance": 108,"property": "presentValue"},
-{"type": "binaryValue","instance": 3,"property": "presentValue"}
-]};
-xmlhttp.send(JSON.stringify(params));
-
+    xmlhttp.send(null);
+    return json = JSON.parse(xmlhttp.responseText);
 }
-send();
+var json = fetchtrend(item);
+var time = json.map(item => item.timeStamp);
+var value = json.map(item => item.value);
+var y = 0;var data = [];var dataSeries = {type: "line",xValueType: "dateTime",name: "Var 1",showInLegend: true};
+var dataPoints = [];//if(item.includes("binary")){dataSeries.type = "stepArea"}
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
+dataSeries.dataPoints = dataPoints;//data.push(dataSeries); 
 
-//setTimeout('initial()', 1100);
-function precisionRound(number, precision) {
-  var factor = Math.pow(10, precision);
-  return Math.round(number * factor) / factor;
-}
+var json1 = fetchtrend(item1);
+var time1 = json1.map(item1 => item1.timeStamp);
+var value1 = json1.map(item1 => item1.value);
+var y = 0;var data1Series = {type: "line",xValueType: "dateTime",name: "Var 2",showInLegend: true};
+var data1Points = [];//if(item.includes("binary")){dataSeries.type = "stepArea"}
+for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
+data1Series.data1Points = data1Points;data.push(dataSeries); 
 
-function POSTrequest(instance,value){
-    var URLa = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/write-property-multiple";
-    var ee =String("{\"encode\": \"text\",  \"propertyReferences\": [{\"type\": \"analogValue\",\"instance\": ")+instance+ String(",\"property\": \"presentValue\",\"value\":\"")+value+String("\"}]}");
-    
-    var xlhttp = new XMLHttpRequest();
-    xlhttp.open("POST", URLa, true);
-    xlhttp.setRequestHeader("Content-Type", "application/json");
-    xlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
-xlhttp.send(ee);
+//data[0] = dataSeries;
+//data[1] = data1Series;
+
+alert(data1Series);
+var chart = new CanvasJS.Chart("chartContainer", {
+	zoomEnabled: true,
+    data:data,
+    	legend:{
+		cursor: "pointer",
+		fontSize: 16,
+        itemclick: toggleDataSeries
+	},
+    	toolTip:{
+		shared: true}
+    });
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	}
+	else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
 }
 
 
-function w(number){document.getElementById(number).style.backgroundColor ="lightgray";}
-function b(number){document.getElementById(number).style.backgroundColor ="gray";}
 
-function econA(){POSTrequest(30,0);b(1);w(2);w(3);}
-function econO(){POSTrequest(30,1);w(1);b(2);w(3);}
-function econM(){POSTrequest(30,2);w(1);w(2);b(3);}
-function slabA(){POSTrequest(31,0);b(4);w(5);w(6);}
-function slabO(){POSTrequest(31,1);w(4);b(5);w(6);}
-function slabM(){POSTrequest(31,2);w(4);w(5);b(6);}
-function acA(){POSTrequest(27,0);b(7);w(8);w(9);}
-function acO(){POSTrequest(27,1);w(7);b(8);w(9);}
-function acM(){POSTrequest(27,2);w(7);w(8);b(9);}
-function roofA(){POSTrequest(29,0);b(10);w(11);w(12);}
-function roofO(){POSTrequest(29,1);w(10);b(11);w(12);}
-function roofM(){POSTrequest(29,2);w(10);w(11);b(12);}
 
-function initial(){alreadyrun=true;
-if(EMSV==0){b(1);w(2);w(3);} else if(EMSV==1){w(1);b(2);w(3);} else {w(1);w(2);b(3);}
-if(SMSV==0){b(4);w(5);w(6);} else if(SMSV==1){w(4);b(5);w(6);} else {w(4);w(5);b(6);}
-if(AMSV==0){b(7);w(8);w(9);} else if(AMSV==1){w(7);b(8);w(9);} else {w(7);w(8);b(9);}
-if(RMSV==0){b(10);w(11);w(12);} else if(RMSV==1){w(10);b(11);w(12);} else {w(10);w(11);b(12);} 
+chart.render();
+
 }
- function BlockMove(event) {
-  // Tell Safari not to move the window.
-  event.preventDefault() ;
- }
+
 </script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;">
+</div>
+
+</body>
+<form onchange="chartgenerate()">
+  <label for="item">Point 1:</label>
+  <select name="item" id="item">
+    <option value="analog-input/101">analog-input/101 - OAT</option>
+    <option value="analog-input/102">analog-input/102 - RMT</option>
+    <option value="analog-input/103">analog-input/103 - Tank T</option>
+    <option value="analog-input/104">analog-input/104 - Collector T</option>
+    <option value="analog-input/105">analog-input/105 - Slab Lea</option>
+    <option value="analog-input/106">analog-input/106 - Batt V</option>
+    <option value="analog-input/107">analog-input/107 - Polypipe</option>
+    <option value="binary-output/102">binary-output/102 - AC Unit</option>
+    <option value="binary-output/103">binary-output/103 - Circ Pump</option>
+    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
+    <option value="binary-output/105">binary-output/105 - Slab Circ</option>
+    <option value="binary-output/106">binary-output/106 - Econfan</option>
+    <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-value/25">analog-value/25 - Watts</option>
+    <option value="analog-value/26">analog-value/26 - Mains kWh</option>
+    <option value="analog-value/28">analog-value/26 - Solar kWh</option>
+  </select>
+  
+    <label for="item1">Point 2:</label>
+  <select name="item1" id="item1">
+    <option value="analog-input/101">analog-input/102 - OAT</option>
+    <option value="analog-input/102">analog-input/102 - RMT</option>
+    <option value="analog-input/103">analog-input/103 - Tank T</option>
+    <option value="analog-input/104">analog-input/104 - Collector T</option>
+    <option value="analog-input/105">analog-input/105 - Slab Lea</option>
+    <option value="analog-input/106">analog-input/106 - Batt V</option>
+    <option value="analog-input/107">analog-input/107 - Polypipe</option>
+    <option value="binary-output/102">binary-output/102 - AC Unit</option>
+    <option value="binary-output/103">binary-output/103 - Circ Pump</option>
+    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
+    <option value="binary-output/105">binary-output/105 - Slab Circ</option>
+    <option value="binary-output/106">binary-output/106 - Econfan</option>
+    <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-value/25">analog-value/25 - Watts</option>
+    <option value="analog-value/26">analog-value/26 - Mains kWh</option>
+    <option value="analog-value/28">analog-value/26 - Solar kWh</option>
+ 
+  </select>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="/homeautomation/index.html">Home</a>
+</form>
+	
+</html>
