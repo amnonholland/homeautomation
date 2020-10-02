@@ -24,7 +24,7 @@ var item = document.getElementById("item").value;
 var item1 = document.getElementById("item1").value;
 
 function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=10&descending=true");//864
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=100&descending=true");//864
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
@@ -49,13 +49,14 @@ var data1Points = [];if(item1.includes("binary")){data1Series.type = "stepArea"}
 for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
 data1Series.dataPoints = data1Points;data.push(data1Series); 
 
-document.getElementById("hello").innerHTML=JSON.stringify(data[0].dataPoints[0].x);
-document.getElementById("hello1").innerHTML=JSON.stringify(data);
 
+document.getElementById("hello1").innerHTML=JSON.stringify(data);
+var min = Math.min(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
+document.getElementById("hello").innerHTML=JSON.stringify(min);
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
-         // axisX:{minimum: },
+          axisX:{minimum:min},
     data:data,
     	legend:{
 		cursor: "pointer",
