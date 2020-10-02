@@ -21,39 +21,44 @@ chartgenerate();
 var json;
 function chartgenerate(){
 var item = document.getElementById("item").value;
+var item1 = document.getElementById("item1").value;
 
-function fetchtrend(){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=864&descending=true");
+function fetchtrend(var1){
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=576&descending=true");//576,864
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
     xmlhttp.send(null);
-    json = JSON.parse(xmlhttp.responseText);
-
-
+    return json = JSON.parse(xmlhttp.responseText);
 }
-fetchtrend();
-
+var json = fetchtrend(item);
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
-
-var y = 0;var data = [];var dataSeries = {type: "line",xValueType: "dateTime",name: "OAT",showInLegend: true};
+var y=0;var data = [];var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var dataPoints = [];if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
-dataSeries.dataPoints = dataPoints;data.push(dataSeries);  
+dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
 
-/*
-var y = 0;var data1 = [];var data1Series = {type: "line",xValueType: "dateTime",name: "OAT",showInLegend: true};
-var dataPoints = [];if(item.includes("binary")){data1Series.type = "stepArea"}
-for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
-data1Series.data1Points = data1Points;data.push(data1Series);  
-*/
+var json1 = fetchtrend(item1);
+var time1 = json1.map(item1 => item1.timeStamp);
+var value1 = json1.map(item1 => item1.value);
+var y=0;var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
+var data1Points = [];if(item1.includes("binary")){data1Series.type = "stepArea"}
+for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
+data1Series.dataPoints = data1Points;data.push(data1Series); 
+
+
+//document.getElementById("hello1").innerHTML=JSON.stringify(data);
+var min = Math.max(data[0].dataPoints[dataPoints.length - 1].x,data[1].dataPoints[data1Points.length - 1].x);
+//document.getElementById("hello").innerHTML=JSON.stringify(min);
+
 var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
-    data: data,
-
+          axisX:{minimum:min},
+    
+    data:data,
     	legend:{
 		cursor: "pointer",
 		fontSize: 16,
@@ -87,7 +92,7 @@ chart.render();
 
 </body>
 <form onchange="chartgenerate()">
-  <label for="item">Point:</label>
+  <label for="item">Log 1:</label>
   <select name="item" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - RMT</option>
@@ -105,8 +110,29 @@ chart.render();
     <option value="analog-value/25">analog-value/25 - Watts</option>
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
+  </select>
+  
+    <label for="item1">Log 2:</label>
+  <select name="item1" id="item1">
+  <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-input/102">analog-input/102 - RMT</option>
+    <option value="analog-input/101">analog-input/101 - OAT</option>
+    <option value="analog-input/103">analog-input/103 - Tank T</option>
+    <option value="analog-input/104">analog-input/104 - Collector T</option>
+    <option value="analog-input/105">analog-input/105 - Slab Lea</option>
+    <option value="analog-input/106">analog-input/106 - Batt V</option>
+    <option value="analog-input/107">analog-input/107 - Polypipe</option>
+    <option value="binary-output/102">binary-output/102 - AC Unit</option>
+    <option value="binary-output/103">binary-output/103 - Circ Pump</option>
+    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
+    <option value="binary-output/105">binary-output/105 - Slab Circ</option>
+    <option value="binary-output/106">binary-output/106 - Econfan</option>
+    <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-value/25">analog-value/25 - Watts</option>
+    <option value="analog-value/26">analog-value/26 - Mains kWh</option>
+    <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="/homeautomation/index.html">Home</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home</a>
 </form>
-	
+	<Br><span id="hello"></span><Br><span id="hello1"></span>
 </html>
