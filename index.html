@@ -106,7 +106,12 @@ html {
 <button class="button" id="7" onclick="acA()">AUTO</button>
 <button class="button" id="8" onclick="acO()">OFF</button>
 <button class="button" id="9" onclick="acM()">ON</button></td></tr>
-<tr><td>ChickFlap:  </td> <td> <span id="Chickflap"></span></td><td></td></tr>
+<tr><td>ChickFlap:  </td> <td> <span id="Chickflap"></span></td>
+<td>
+<button class="button" id="13" onclick="cA()">AUTO</button>
+<button class="button" id="14" onclick="cO()">OFF</button>
+<button class="button" id="15" onclick="cM()">ON</button>
+</td></tr>
 <tr><td>Rooflouvre:  </td> <td> <span id="Rooflouvre"></span></td>
 <td>
 <button class="button" id="10" onclick="roofA()">AUTO</button>
@@ -134,7 +139,7 @@ if('serviceWorker' in navigator) {
   });
 }
 var alreadyrun;
-var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
+var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
 var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
 function send(){
@@ -157,15 +162,16 @@ AMSV=Number(myArr[10].value);
 RMSV=Number(myArr[11].value);
 EMSV=Number(myArr[12].value);
 SMSV=Number(myArr[13].value);
-Gardenlights=myArr[14].value; if(Gardenlights=="Active"){document.getElementById("Gardenlights").innerHTML=Gardenlights.bold();}else{document.getElementById("Gardenlights").innerHTML=Gardenlights;}
-ACunit=myArr[15].value;if(ACunit=="Active"){document.getElementById("ACunit").innerHTML=ACunit.bold();}else{document.getElementById("ACunit").innerHTML=ACunit;}
-Circpump=myArr[16].value;if(Circpump=="Active"){document.getElementById("Circpump").innerHTML=Circpump.bold();}else{document.getElementById("Circpump").innerHTML=Circpump;}
-DHWboost=myArr[17].value;if(DHWboost=="Active"){document.getElementById("DHWboost").innerHTML=DHWboost.bold();}else{document.getElementById("DHWboost").innerHTML=DHWboost;}
-Slabcirc=myArr[18].value;if(Slabcirc=="Active"){document.getElementById("Slabcirc").innerHTML=Slabcirc.bold();}else{document.getElementById("Slabcirc").innerHTML=Slabcirc;}
-Econfan=myArr[19].value;if(Econfan=="Active"){document.getElementById("Econfan").innerHTML=Econfan.bold();}else{document.getElementById("Econfan").innerHTML=Econfan;}
-Chickflap=myArr[20].value;if(Chickflap=="Active"){document.getElementById("Chickflap").innerHTML=Chickflap.bold();}else{document.getElementById("Chickflap").innerHTML=Chickflap;}
-Rooflouvre=myArr[21].value;if(Rooflouvre=="Active"){document.getElementById("Rooflouvre").innerHTML=Rooflouvre.bold();}else{document.getElementById("Rooflouvre").innerHTML=Rooflouvre;}
-Supply=myArr[22].value;if(Supply=="Active"){document.getElementById("Supply").innerHTML=Supply.bold();}else{document.getElementById("Supply").innerHTML=Supply;}
+CMSV=Number(myArr[14].value);
+Gardenlights=myArr[15].value; if(Gardenlights=="Active"){document.getElementById("Gardenlights").innerHTML=Gardenlights.bold();}else{document.getElementById("Gardenlights").innerHTML=Gardenlights;}
+ACunit=myArr[16].value;if(ACunit=="Active"){document.getElementById("ACunit").innerHTML=ACunit.bold();}else{document.getElementById("ACunit").innerHTML=ACunit;}
+Circpump=myArr[17].value;if(Circpump=="Active"){document.getElementById("Circpump").innerHTML=Circpump.bold();}else{document.getElementById("Circpump").innerHTML=Circpump;}
+DHWboost=myArr[18].value;if(DHWboost=="Active"){document.getElementById("DHWboost").innerHTML=DHWboost.bold();}else{document.getElementById("DHWboost").innerHTML=DHWboost;}
+Slabcirc=myArr[19].value;if(Slabcirc=="Active"){document.getElementById("Slabcirc").innerHTML=Slabcirc.bold();}else{document.getElementById("Slabcirc").innerHTML=Slabcirc;}
+Econfan=myArr[20].value;if(Econfan=="Active"){document.getElementById("Econfan").innerHTML=Econfan.bold();}else{document.getElementById("Econfan").innerHTML=Econfan;}
+Chickflap=myArr[21].value;if(Chickflap=="Active"){document.getElementById("Chickflap").innerHTML=Chickflap.bold();}else{document.getElementById("Chickflap").innerHTML=Chickflap;}
+Rooflouvre=myArr[22].value;if(Rooflouvre=="Active"){document.getElementById("Rooflouvre").innerHTML=Rooflouvre.bold();}else{document.getElementById("Rooflouvre").innerHTML=Rooflouvre;}
+Supply=myArr[23].value;if(Supply=="Active"){document.getElementById("Supply").innerHTML=Supply.bold();}else{document.getElementById("Supply").innerHTML=Supply;}
 }     
 
     
@@ -193,6 +199,7 @@ setTimeout('send()', 1500);
 {"type": "analogValue","instance": 29,"property": "presentValue"},//roof
 {"type": "analogValue","instance": 30,"property": "presentValue"},//econfan
 {"type": "analogValue","instance": 31,"property": "presentValue"},//slabcirc
+{"type": "analogValue","instance": 32,"property": "presentValue"},//chickflap
 {"type": "binaryOutput","instance": 101,"property": "presentValue"},
 {"type": "binaryOutput","instance": 102,"property": "presentValue"},
 {"type": "binaryOutput","instance": 103,"property": "presentValue"},
@@ -241,12 +248,16 @@ function acM(){POSTrequest(27,2);w(7);w(8);b(9);}
 function roofA(){POSTrequest(29,0);b(10);w(11);w(12);}
 function roofO(){POSTrequest(29,1);w(10);b(11);w(12);}
 function roofM(){POSTrequest(29,2);w(10);w(11);b(12);}
+function cA(){POSTrequest(32,0);b(13);w(14);w(15);}
+function cO(){POSTrequest(32,1);w(13);b(14);w(15);}
+function cM(){POSTrequest(32,2);w(13);w(14);b(15);}
 
 function initial(){alreadyrun=true;
 if(EMSV==0){b(1);w(2);w(3);} else if(EMSV==1){w(1);b(2);w(3);} else {w(1);w(2);b(3);}
 if(SMSV==0){b(4);w(5);w(6);} else if(SMSV==1){w(4);b(5);w(6);} else {w(4);w(5);b(6);}
 if(AMSV==0){b(7);w(8);w(9);} else if(AMSV==1){w(7);b(8);w(9);} else {w(7);w(8);b(9);}
 if(RMSV==0){b(10);w(11);w(12);} else if(RMSV==1){w(10);b(11);w(12);} else {w(10);w(11);b(12);} 
+if(CMSV==0){b(13);w(14);w(15);} else if(RMSV==1){w(13);b(14);w(15);} else {w(13);w(14);b(15);} 
 }
 
 </script>
