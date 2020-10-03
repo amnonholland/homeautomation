@@ -154,10 +154,10 @@ function start(ev) {
                 ev.touches[0].pageY - ev.touches[1].pageY);
                 //alert(dist);
                 if(dist1>dist2) {//if fingers are closer now than when they first touched screen, they are pinching
-                  myFunction((dist2/dist1))//alert('zoom out');
+                  myFunction(-(dist2/dist1)*0.001)//alert('zoom out');
                 }
                 if(dist1<dist2) {//if fingers are further apart than when they first touched the screen, they are making the zoomin gesture
-                  myFunction((dist2/dist1)) //alert('zoom in');
+                  myFunction((dist2/dist1)*0.001) //alert('zoom in');
                 }
            }
            
