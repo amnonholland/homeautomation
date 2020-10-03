@@ -130,8 +130,8 @@ function toggleDataSeries(e){
 	else{e.dataSeries.visible = true;}
 	chart.render();}
 
-function myFunction(){//alert("L");
-min=min+(max-min)*0.1;max=max-(max-min)*0.1;
+function myFunction(scale){//alert("L");
+min=min+(max-min)*scale;max=max-(max-min)*scale;
 	mychart();
   }
   
@@ -154,10 +154,10 @@ function start(ev) {
                 ev.touches[0].pageY - ev.touches[1].pageY);
                 //alert(dist);
                 if(dist1>dist2) {//if fingers are closer now than when they first touched screen, they are pinching
-                  myFunction()//alert('zoom out');
+                  myFunction(0.1)//alert('zoom out');
                 }
                 if(dist1<dist2) {//if fingers are further apart than when they first touched the screen, they are making the zoomin gesture
-                  myFunction() //alert('zoom in');
+                  myFunction(-0.1) //alert('zoom in');
                 }
            }
            
