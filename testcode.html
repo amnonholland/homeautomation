@@ -135,8 +135,15 @@ min=min+(max-min)*scale;max=max-(max-min)*scale;
 	mychart();
   }
   
+	node.addEventListener('gestureend', function(e) {
+    if (e.scale < 1.0) {
+        alert('zoom out');// User moved fingers closer together
+    } else if (e.scale > 1.0) {alert('zoom in');
+        // User moved fingers further apart
+    }
+}, false);
   
-
+/*
 var dist1=0;
 function start(ev) {
            if (ev.targetTouches.length == 2) {//check if two fingers touched screen
@@ -164,5 +171,5 @@ function start(ev) {
     }
         document.getElementById ('chartContainer').addEventListener ('touchstart', start, false);
         document.getElementById('chartContainer').addEventListener('touchmove', move, false);
-
+*/
 		</script>
