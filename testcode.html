@@ -141,7 +141,7 @@ if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoo
     e.preventDefault();
 
         e.preventDefault();
-        scale = (e.scale);
+        scale = (e.scale);scale=Math.max(0.6,scale);scale=Math.min(1.4,scale);
 document.getElementById("hello").innerHTML=scale;
 document.getElementById("hello1").innerHTML=fac;
 myFunction();
