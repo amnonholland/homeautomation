@@ -59,7 +59,7 @@
  
   </select>&emsp;<a href="/homeautomation/index.html">Home</a>
 </form>
-	<Br><span id="hello"></span><Br><span id="hello1"></span>
+	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
 </html>
 <script>
 document.addEventListener('touchmove', function(e) {
@@ -73,7 +73,7 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,scale=1,fac=0.01;i=0;var scale1=1;
+var data = [];var min=0,max=0,scale=1,fac=0.1;i=0;var scale1=1;
 
 function fetchtrend(var1){
 var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=50&descending=true");//576,864
@@ -139,12 +139,14 @@ if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoo
   
   document.addEventListener('gesturechange', function(e) {
     e.preventDefault();
-        scale = (e.scale);scale=Math.max(0.6,scale);scale=Math.min(1.4,scale);
+        scale = (e.scale);scale=Math.max(0.5,scale);scale=Math.min(1.5,scale);
 
-if(Math.abs(scale1-scale)>0.09){myFunction();scale1=scale;i++}
+if(Math.abs(scale1-scale)>0.08){myFunction();scale1=scale;i++}
 
 	  document.getElementById("hello").innerHTML=scale;
 document.getElementById("hello1").innerHTML=i;
+document.getElementById("hello2").innerHTML=min;
+document.getElementById("hello3").innerHTML=max;
 });
 
 
