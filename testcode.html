@@ -73,7 +73,7 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,scale=1,fac=0.001;i=0;
+var data = [];var min=0,max=0,scale=1,fac=0.001;i=0;var scale1=1;
 
 function fetchtrend(var1){
 var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=50&descending=true");//576,864
@@ -139,7 +139,6 @@ if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoo
   
   document.addEventListener('gesturechange', function(e) {
     e.preventDefault();
-var scale1=1;
         scale = (e.scale);scale=Math.max(0.8,scale);scale=Math.min(1.2,scale);
 
 if(Math.abs(scale1-scale)>0.09){myFunction();scale1=scale;i++}
