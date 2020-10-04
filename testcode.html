@@ -140,7 +140,7 @@ min=min+(max-min)*scale;max=max-(max-min)*scale;
     e.preventDefault();
 
         e.preventDefault();
-        scale = scale + e.scale;
+        scale = (e.scale)/20;
 document.getElementById("hello").innerHTML=scale;
 myFunction();
 });
