@@ -1,47 +1,178 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style"content="default" />
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
 <style>
-	#square {
-    width:100px;
-    height:100px;
-    background:blue;
-    margin:0 auto;
-}
-	</style>
-<div id="square"></div>
 
+</style>
 
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;">
+</div>
+
+</body>
+<form onchange="processdata()">
+  <label for="item">Log 1:</label>
+  <select name="item" id="item">
+    <option value="analog-input/101">analog-input/101 - OAT</option>
+    <option value="analog-input/102">analog-input/102 - RMT</option>
+    <option value="analog-input/103">analog-input/103 - Tank T</option>
+    <option value="analog-input/104">analog-input/104 - Collector T</option>
+    <option value="analog-input/105">analog-input/105 - Slab Lea</option>
+    <option value="analog-input/106">analog-input/106 - Batt V</option>
+    <option value="analog-input/107">analog-input/107 - Polypipe</option>
+    <option value="binary-output/102">binary-output/102 - AC Unit</option>
+    <option value="binary-output/103">binary-output/103 - Circ Pump</option>
+    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
+    <option value="binary-output/105">binary-output/105 - Slab Circ</option>
+    <option value="binary-output/106">binary-output/106 - Econfan</option>
+    <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-value/25">analog-value/25 - Watts</option>
+    <option value="analog-value/26">analog-value/26 - Mains kWh</option>
+    <option value="analog-value/28">analog-value/26 - Solar kWh</option>
+  </select>
+  
+    <label for="item1">Log 2:</label>
+  <select name="item1" id="item1">
+  <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-input/102">analog-input/102 - RMT</option>
+    <option value="analog-input/101">analog-input/101 - OAT</option>
+    <option value="analog-input/103">analog-input/103 - Tank T</option>
+    <option value="analog-input/104">analog-input/104 - Collector T</option>
+    <option value="analog-input/105">analog-input/105 - Slab Lea</option>
+    <option value="analog-input/106">analog-input/106 - Batt V</option>
+    <option value="analog-input/107">analog-input/107 - Polypipe</option>
+    <option value="binary-output/102">binary-output/102 - AC Unit</option>
+    <option value="binary-output/103">binary-output/103 - Circ Pump</option>
+    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
+    <option value="binary-output/105">binary-output/105 - Slab Circ</option>
+    <option value="binary-output/106">binary-output/106 - Econfan</option>
+    <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-value/25">analog-value/25 - Watts</option>
+    <option value="analog-value/26">analog-value/26 - Mains kWh</option>
+    <option value="analog-value/28">analog-value/26 - Solar kWh</option>
+ 
+  </select>&emsp;<a href="/homeautomation/index.html">Home</a>
+</form>
+	<Br><span id="hello"></span><Br><span id="hello1"></span>
 </html>
 <script>
-	$(document).ready(function() {
+document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
 
-    var dom = document.body,
-        _width = parseInt($('#square').css('width')),
-        vel = 3,
-        min = _width,
-        max = 300,
-        scale;
 
-    dom.addEventListener("gesturechange", gestureChange, false);
+var json,json1;
+var item = document.getElementById("item").value;
+var item1 = document.getElementById("item1").value;
+var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
+var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
+var dataPoints = [];var data1Points = [];
+var data = [];var min=0,max=0,scale=1;
 
-    function gestureChange(e) {
+function fetchtrend(var1){
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=50&descending=true");//576,864
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+    xmlhttp.send(null);
+    return json = JSON.parse(xmlhttp.responseText);
+}
+processdata();
+function processdata(){
+json = fetchtrend(item);
+var time = json.map(item => item.timeStamp);
+var value = json.map(item => item.value);
+var y=0;
+if(item.includes("binary")){dataSeries.type = "stepArea"}
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
+dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
+
+json1 = fetchtrend(item1);
+var time1 = json1.map(item1 => item1.timeStamp);
+var value1 = json1.map(item1 => item1.value);
+var y=0;
+if(item1.includes("binary")){data1Series.type = "stepArea"}
+for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
+data1Series.dataPoints = data1Points;data.push(data1Series); 
+
+min = Math.max(data[0].dataPoints[dataPoints.length - 1].x,data[1].dataPoints[data1Points.length - 1].x);
+max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
+
+}
+
+mychart();
+function mychart(){
+var chart = new CanvasJS.Chart("chartContainer", {
+	zoomEnabled: true,
+  axisX:{minimum:min,maximum:max},
+  data:data,
+  legend:{
+	cursor: "pointer",
+	fontSize: 16,
+  itemclick: toggleDataSeries
+  },
+    	toolTip:{
+		shared: true}
+    });
+chart.render();
+}
+
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}
+	else{e.dataSeries.visible = true;}
+	chart.render();}
+
+function myFunction(){//alert("L");
+min=min+(max-min)*0.1;max=max-(max-min)*0.1;
+	mychart();
+  }
+  
+  
+  document.addEventListener('gesturechange', function(e) {
+    e.preventDefault();
 
         e.preventDefault();
 
-        scale = e.scale;
-        _width = Math.round(_width*(scale/vel));
-
-        if ( _width <= max && _width >= min )
-            $('#square').css({
-                'width' : _width + 'px',
-                'height' : _width + 'px'
-            });
-
-        if ( _width > max ) _width = max;
-        if ( _width < min ) _width = min;
-    }
-
-
+        var scale = e.scale;
+document.getElementById("hello").innerHTML=scale;
 });
-	</script>
+
+/*
+
+var dist1=0;
+function start(ev) {
+           if (ev.targetTouches.length == 2) {//check if two fingers touched screen
+               dist1 = Math.hypot( //get rough estimate of distance between two fingers
+                ev.touches[0].pageX - ev.touches[1].pageX,
+                ev.touches[0].pageY - ev.touches[1].pageY);                  
+           }
+    
+    }
+    function move(ev) {
+           if (ev.targetTouches.length == 2 && ev.changedTouches.length == 2) {
+                 // Check if the two target touches are the same ones that started
+               var dist2 = Math.hypot(//get rough estimate of new distance between fingers
+                ev.touches[0].pageX - ev.touches[1].pageX,
+                ev.touches[0].pageY - ev.touches[1].pageY);
+                //alert(dist);
+                if(dist1>dist2) {//if fingers are closer now than when they first touched screen, they are pinching
+                  alert('zoom out');
+                }
+                if(dist1<dist2) {//if fingers are further apart than when they first touched the screen, they are making the zoomin gesture
+                   alert('zoom in');
+                }
+           }
+           
+    }
+        document.getElementById ('chartContainer').addEventListener ('touchstart', start, false);
+        document.getElementById('chartContainer').addEventListener('touchmove', move, false);
+*/
+</script>
