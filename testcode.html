@@ -121,7 +121,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		shared: true}
     });
 chart.render();
-	setTimeout(myFunction(),200);
+	
 }
 
 function toggleDataSeries(e){
@@ -133,7 +133,7 @@ function myFunction(){//alert("L");
 if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoom in 
 {min=min-(max-min)*scale*fac;max=max+(max-min)*scale*fac;}
 	mychart();
-	setTimeout(myFunction(),200);
+	
   }
   
   
