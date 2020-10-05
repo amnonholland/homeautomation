@@ -62,7 +62,7 @@
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
 </html>
 <script>
-  document.addEventListener('touchmove', function(e) {
+   document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
 processdata();
@@ -130,7 +130,7 @@ if(Math.abs(scale1-scale)>0.05){
 
 if(scale>1){minn=minn+(maxx-minn)*scale*fac;maxx=maxx-(maxx-minn)*scale*fac;} else //zoom in 
 {minn=minn-(maxx-minn)*scale*fac;maxx=maxx+(maxx-minn)*scale*fac;}//zoom out
-min=Math.max(min,minn);max=Math.min(max,maxx);
+//min=Math.max(min,minn);max=Math.min(max,maxx);
 
 chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
 chart.render();
