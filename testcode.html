@@ -109,16 +109,15 @@ max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
 mychart();
 function mychart(){
 var chart = new CanvasJS.Chart("chartContainer", {
-	zoomEnabled: true,
+	//zoomEnabled: true,
   axisX:{minimum:min,maximum:max},
   data:data,
   legend:{
 	cursor: "pointer",
 	fontSize: 16,
   itemclick: toggleDataSeries
-  },
-    	toolTip:{
-		shared: true}
+  }
+    	//,toolTip:{shared: true}
     });
 chart.render();
 	
