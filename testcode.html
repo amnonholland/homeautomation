@@ -57,12 +57,12 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Homebb</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Homebbb</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
 </html>
 <script>
- document.addEventListener('touchmove', function(e) {
+  document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
 processdata();
@@ -122,15 +122,15 @@ chart.render();
 function toggleDataSeries(e){
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
   chart.render();} 
- 
+ minn=min;maxx=max;
 document.addEventListener('gesturechange', function(e) {
 e.preventDefault();
 scale = (e.scale);scale=Math.max(0,scale);scale=Math.min(1.7,scale);
 if(Math.abs(scale1-scale)>0.05){
 
-if(scale>1){minn=min+(max-min)*scale*fac;maxx=max-(max-min)*scale*fac;} else //zoom in 
-{minn=min-(max-min)*scale*fac;maxx=max+(max-min)*scale*fac;}//zoom out
-//min=Math.max(min,minn);max=Math.min(max,maxx);
+if(scale>1){minn=minn+(maxx-minn)*scale*fac;maxx=maxx-(maxx-minn)*scale*fac;} else //zoom in 
+{minn=minn-(maxx-minn)*scale*fac;maxx=maxx+(maxx-minn)*scale*fac;}//zoom out
+min=Math.max(min,minn);max=Math.min(max,maxx);
 
 chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
 chart.render();
