@@ -113,12 +113,12 @@ var chart = new CanvasJS.Chart("chartContainer", {
     });
 chart.render();
   
-function toggleDataSeries(e){alert("L");chart.options.title.text = "hello";
+function toggleDataSeries(e){
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
   chart.render();} 
  
 document.addEventListener('gesturechange', function(e) {
-e.preventDefault();
+/*e.preventDefault();
 scale = (e.scale);scale=Math.max(0.5,scale);scale=Math.min(1.5,scale);
 if(Math.abs(scale1-scale)>0.08){myFunction();scale1=scale;i++}
 
@@ -128,11 +128,13 @@ document.getElementById("hello").innerHTML=scale;
 document.getElementById("hello1").innerHTML=i;
 document.getElementById("hello2").innerHTML=min;
 document.getElementById("hello3").innerHTML=max;
-
-chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
-chart.render();alert("L");
-
+*/
+chart.options.axisX.minimum=1; chart.options.axisX.maximum=max; 
+chart.render();
+alert("L");
 });
+
+
 
 
 
