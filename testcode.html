@@ -72,7 +72,7 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,scale=1,fac=0.05;i=0;var scale1=1;var chart;
+var data = [];var min=0,max=0,scale=1,fac=0.1;i=0;var scale1=1;var chart;
 
 function fetchtrend(var1){
 var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=50&descending=true");//576,864
@@ -114,7 +114,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	fontSize: 16,
   itemclick: toggleDataSeries
   }
-    	//,toolTip:{shared: true}
+    	,toolTip:{enabled: false}
     });
 chart.render();
   
@@ -124,8 +124,8 @@ function toggleDataSeries(e){
  
 document.addEventListener('gesturechange', function(e) {
 e.preventDefault();
-scale = (e.scale);scale=Math.max(0,scale);scale=Math.min(2,scale);
-if(Math.abs(scale1-scale)>0.08){
+scale = (e.scale);scale=Math.max(0,scale);scale=Math.min(1.7,scale);
+if(Math.abs(scale1-scale)>0.05){
 
 if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoom in 
 {min=min-(max-min)*scale*fac;max=max+(max-min)*scale*fac;}//zoom out
