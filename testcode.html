@@ -122,7 +122,6 @@ e.preventDefault();
 scale = (e.scale);scale=Math.max(0.5,scale);scale=Math.min(1.5,scale);
 if(Math.abs(scale1-scale)>0.08){myFunction();scale1=scale;i++}
 
-scale=document.getElementById("myRange").value/100;
 if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoom in 
 {min=min-(max-min)*scale*fac;max=max+(max-min)*scale*fac;}
 document.getElementById("hello").innerHTML=scale;
