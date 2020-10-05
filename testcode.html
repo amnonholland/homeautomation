@@ -62,6 +62,10 @@
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
 </html>
 <script>
+	 document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
+	
 //window.onload = function () {
 var item = document.getElementById("item").value;
 var item1 = document.getElementById("item1").value;
