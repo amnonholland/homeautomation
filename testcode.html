@@ -117,12 +117,11 @@ function toggleDataSeries(e){alert("L");chart.options.title.text = "hello";
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
   chart.render();} 
  
-  document.addEventListener('gesturechange', function(e) {
-    e.preventDefault();
-scale = (e.scale);
-scale=Math.max(0.5,scale);scale=Math.min(1.5,scale);
+document.addEventListener('gesturechange', function(e) {alert("L");
+e.preventDefault();
+scale = (e.scale);scale=Math.max(0.5,scale);scale=Math.min(1.5,scale);
 if(Math.abs(scale1-scale)>0.08){myFunction();scale1=scale;i++}
-
+/*
 scale=document.getElementById("myRange").value/100;
 if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoom in 
 {min=min-(max-min)*scale*fac;max=max+(max-min)*scale*fac;}
@@ -133,6 +132,7 @@ document.getElementById("hello3").innerHTML=max;
 
 chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
 chart.render();
+*/
 });
 
 
