@@ -57,7 +57,7 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home1</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
 </html>
@@ -71,7 +71,7 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,scale=1,fac=0.1;i=0;var scale1=1;
+var data = [];var min=0,max=0,scale=1,fac=0.1;i=0;var scale1=1;var chart=0;
 
 function fetchtrend(var1){
 var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=700&descending=true");//576,864
@@ -107,8 +107,8 @@ max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
 }
 
 mychart();
-function mychart(){
-var chart = new CanvasJS.Chart("chartContainer", {
+function mychart(){ chart=0;
+chart = new CanvasJS.Chart("chartContainer", {
 	//zoomEnabled: true,
   axisX:{minimum:min,maximum:max},
   data:data,
