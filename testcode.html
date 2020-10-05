@@ -106,9 +106,7 @@ max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	//zoomEnabled: true,
-		title: {
-			text: "Adding & Updating dataPoints"
-		},
+
  axisX:{minimum:min,maximum:max},
   data:data,
   legend:{
@@ -125,18 +123,18 @@ function toggleDataSeries(e){
   chart.render();} 
  
 document.addEventListener('gesturechange', function(e) {
-/*e.preventDefault();
+e.preventDefault();
 scale = (e.scale);scale=Math.max(0.5,scale);scale=Math.min(1.5,scale);
 if(Math.abs(scale1-scale)>0.08){
 
 if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoom in 
 {min=min-(max-min)*scale*fac;max=max+(max-min)*scale*fac;}//zoom out
-*/
-chart.options.title.text = "hellbo";
-//chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
-chart.render();
-//scale1=scale;i++
 
+
+chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
+chart.render();
+scale1=scale;i++
+}
 
 document.getElementById("hello").innerHTML=scale;
 document.getElementById("hello1").innerHTML=i;
