@@ -106,7 +106,7 @@ max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	//zoomEnabled: true,
-  title: {
+		title: {
 			text: "Adding & Updating dataPoints"
 		},
  axisX:{minimum:min,maximum:max},
@@ -136,7 +136,7 @@ chart.options.title.text = "hellbo";
 //chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
 chart.render();
 //scale1=scale;i++
-}
+
 
 document.getElementById("hello").innerHTML=scale;
 document.getElementById("hello1").innerHTML=i;
