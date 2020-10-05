@@ -62,7 +62,7 @@
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
 </html>
 <script>
-	 document.addEventListener('touchmove', function(e) {
+ document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
 processdata();
@@ -73,7 +73,7 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,var minn,maxx;scale=1,fac=0.1;i=0;var scale1=1;var chart;
+var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.1;i=0;var scale1=1;var chart;
 
 function fetchtrend(var1){
 var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=50&descending=true");//576,864
@@ -130,7 +130,7 @@ if(Math.abs(scale1-scale)>0.05){
 
 if(scale>1){minn=min+(max-min)*scale*fac;maxx=max-(max-min)*scale*fac;} else //zoom in 
 {minn=min-(max-min)*scale*fac*2;maxx=max+(max-min)*scale*fac*2;}//zoom out
-min=Math.max(min,minn);min=Math.min(max,maxx)
+min=Math.max(min,minn);max=Math.min(max,maxx);
 
 chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
 chart.render();
