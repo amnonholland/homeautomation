@@ -128,10 +128,10 @@ if(scale>1){min=min+(max-min)*scale*fac;max=max-(max-min)*scale*fac;} else //zoo
 document.getElementById("hello").innerHTML=scale;
 document.getElementById("hello1").innerHTML=i;
 document.getElementById("hello2").innerHTML=min;
-document.getElementById("hello3").innerHTML=max;alert("L");
+document.getElementById("hello3").innerHTML=max;
 
 chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
-chart.render();
+chart.render();alert("L");
 
 });
 
