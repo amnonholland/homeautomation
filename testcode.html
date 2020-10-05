@@ -132,7 +132,7 @@ if(scale>1){minn=minn+(maxx-minn)*scale*fac;maxx=maxx-(maxx-minn)*scale*fac;} el
 {minn=minn-(maxx-minn)*scale*fac;maxx=maxx+(maxx-minn)*scale*fac;}//zoom out
 min=Math.max(min,minn);max=Math.min(max,maxx);
 
-chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
+chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
 chart.render();
 scale1=scale;i++
 }
