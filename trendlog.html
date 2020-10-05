@@ -2,96 +2,21 @@
 <html>
 <head>
 
-<link rel="manifest" href="manifest.json">
+
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style"content="default" />
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
 <style>
 
 </style>
-<script>
 
- document.addEventListener('touchmove', function(e) {
-    e.preventDefault();
-}, { passive: false });
-
-window.onload = function () {
-chartgenerate();
-}
-var json;
-function chartgenerate(){
-var item = document.getElementById("item").value;
-var item1 = document.getElementById("item1").value;
-
-function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=576&descending=true");//576,864
-
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", URL, false);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
-    xmlhttp.send(null);
-    return json = JSON.parse(xmlhttp.responseText);
-}
-var json = fetchtrend(item);
-var time = json.map(item => item.timeStamp);
-var value = json.map(item => item.value);
-var y=0;var data = [];var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
-var dataPoints = [];if(item.includes("binary")){dataSeries.type = "stepArea"}
-for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
-dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
-
-var json1 = fetchtrend(item1);
-var time1 = json1.map(item1 => item1.timeStamp);
-var value1 = json1.map(item1 => item1.value);
-var y=0;var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
-var data1Points = [];if(item1.includes("binary")){data1Series.type = "stepArea"}
-for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
-data1Series.dataPoints = data1Points;data.push(data1Series); 
-
-
-//document.getElementById("hello1").innerHTML=JSON.stringify(data);
-var min = Math.max(data[0].dataPoints[dataPoints.length - 1].x,data[1].dataPoints[data1Points.length - 1].x);
-//document.getElementById("hello").innerHTML=JSON.stringify(min);
-
-var chart = new CanvasJS.Chart("chartContainer", {
-	zoomEnabled: true,
-          axisX:{minimum:min},
-    
-    data:data,
-    	legend:{
-		cursor: "pointer",
-		fontSize: 16,
-        itemclick: toggleDataSeries
-	},
-    	toolTip:{
-		shared: true}
-    });
-function toggleDataSeries(e){
-	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-		e.dataSeries.visible = false;
-	}
-	else{
-		e.dataSeries.visible = true;
-	}
-	chart.render();
-}
-
-
-
-
-chart.render();
-
-}
-
-</script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
 <body>
 <div id="chartContainer" style="height: 300px; width: 100%;">
 </div>
 
 </body>
-<form onchange="chartgenerate()">
+<form onchange="processdata()">
   <label for="item">Log 1:</label>
   <select name="item" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
@@ -134,5 +59,90 @@ chart.render();
  
   </select>&emsp;<a href="/homeautomation/index.html">Home</a>
 </form>
-	<Br><span id="hello"></span><Br><span id="hello1"></span>
+	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
 </html>
+<script>
+   document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
+processdata();
+function processdata(){	
+//window.onload = function () {
+var item = document.getElementById("item").value;
+var item1 = document.getElementById("item1").value;
+var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
+var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
+var dataPoints = [];var data1Points = [];
+var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.07;i=0;var scale1=1;var chart;
+
+function fetchtrend(var1){
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=500&descending=true");//576,864
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+    xmlhttp.send(null);
+    return json = JSON.parse(xmlhttp.responseText);
+}
+
+var json = fetchtrend(item);
+var time = json.map(item => item.timeStamp);
+var value = json.map(item => item.value);
+var y=0;
+if(item.includes("binary")){dataSeries.type = "stepArea"}
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
+dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
+
+var json1 = fetchtrend(item1);
+var time1 = json1.map(item1 => item1.timeStamp);
+var value1 = json1.map(item1 => item1.value);
+var y=0;
+if(item1.includes("binary")){data1Series.type = "stepArea"}
+for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
+data1Series.dataPoints = data1Points;data.push(data1Series); 
+
+min = Math.max(data[0].dataPoints[dataPoints.length - 1].x,data[1].dataPoints[data1Points.length - 1].x);
+max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
+
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	//zoomEnabled: true,
+
+ axisX:{minimum:min,maximum:max},
+  data:data,
+  legend:{
+	cursor: "pointer",
+	fontSize: 16,
+  itemclick: toggleDataSeries
+  }
+    	,toolTip:{enabled: false}
+    });
+chart.render();
+  
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
+  chart.render();} 
+ minn=min;maxx=max;
+document.addEventListener('gesturechange', function(e) {
+e.preventDefault();
+scale = (e.scale);scale=Math.max(0,scale);scale=Math.min(1.7,scale);
+if(Math.abs(scale1-scale)>0.05){
+
+if(scale>1){minn=minn+(maxx-minn)*scale*fac;maxx=maxx-(maxx-minn)*scale*fac;} else //zoom in 
+{minn=minn-(maxx-minn)*scale*fac*2;maxx=maxx+(maxx-minn)*scale*fac*2;}//zoom out
+minn=Math.max(min,minn);maxx=Math.min(max,maxx);
+
+chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
+chart.render();
+scale1=scale;i++
+}
+
+document.getElementById("hello").innerHTML=scale;
+document.getElementById("hello1").innerHTML=i;
+document.getElementById("hello2").innerHTML=min;
+document.getElementById("hello3").innerHTML=max;
+
+
+});}
+
+</script>
