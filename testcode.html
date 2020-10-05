@@ -65,7 +65,8 @@
 	 document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
-	
+processdata();
+function processdata(){	
 //window.onload = function () {
 var item = document.getElementById("item").value;
 var item1 = document.getElementById("item1").value;
@@ -142,6 +143,6 @@ document.getElementById("hello2").innerHTML=min;
 document.getElementById("hello3").innerHTML=max;
 
 
-});
+});}
 
 </script>
