@@ -57,7 +57,7 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Homeb</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Homebb</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
 </html>
@@ -130,9 +130,9 @@ if(Math.abs(scale1-scale)>0.05){
 
 if(scale>1){minn=min+(max-min)*scale*fac;maxx=max-(max-min)*scale*fac;} else //zoom in 
 {minn=min-(max-min)*scale*fac;maxx=max+(max-min)*scale*fac;}//zoom out
-min=Math.max(min,minn);max=Math.min(max,maxx);
+//min=Math.max(min,minn);max=Math.min(max,maxx);
 
-chart.options.axisX.minimum=min; chart.options.axisX.maximum=max; 
+chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
 chart.render();
 scale1=scale;i++
 }
