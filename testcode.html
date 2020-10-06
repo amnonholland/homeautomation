@@ -57,14 +57,15 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home1</a>
 </form>
-	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
+	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
 </html>
 <script>
-   document.addEventListener('touchmove', function(e) {
-    e.preventDefault();
-}, { passive: false });
+ document.addEventListener('touchmove', function(e) {
+    e.preventDefault();}, { passive: false });
+
+
 processdata();
 function processdata(){	
 //window.onload = function () {
@@ -73,10 +74,10 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.07;i=0;var scale1=1;var chart;
+var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.1;i=0;var scale1=1;var chart;
 
 function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=500&descending=true");//576,864
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=50&descending=true");//576,864
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -123,14 +124,15 @@ function toggleDataSeries(e){
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
   chart.render();} 
  minn=min;maxx=max;
+ 
 document.addEventListener('gesturechange', function(e) {
 e.preventDefault();
 scale = (e.scale);scale=Math.max(0,scale);scale=Math.min(1.7,scale);
 if(Math.abs(scale1-scale)>0.05){
 
 if(scale>1){minn=minn+(maxx-minn)*scale*fac;maxx=maxx-(maxx-minn)*scale*fac;} else //zoom in 
-{minn=minn-(maxx-minn)*scale*fac*2;maxx=maxx+(maxx-minn)*scale*fac*2;}//zoom out
-minn=Math.max(min,minn);maxx=Math.min(max,maxx);
+{minn=minn-(maxx-minn)*scale*fac;maxx=maxx+(maxx-minn)*scale*fac;}//zoom out
+//min=Math.max(min,minn);max=Math.min(max,maxx);
 
 chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
 chart.render();
@@ -141,8 +143,13 @@ document.getElementById("hello").innerHTML=scale;
 document.getElementById("hello1").innerHTML=i;
 document.getElementById("hello2").innerHTML=min;
 document.getElementById("hello3").innerHTML=max;
+var movex = e.touches[0].clientX;
+document.getElementById("hello4").innerHTML=movex;
+}
 
 
-});}
 
+
+
+);}
 </script>
