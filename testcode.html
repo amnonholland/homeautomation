@@ -161,7 +161,8 @@ function doTouch(e) {
     document.getElementById("xtext").innerHTML = touch.pageX;}
 */	
 function dostart(e) {
-    e.preventDefault();start = e.touches[0].pageX;}
+    e.preventDefault();
+	start = e.touches[0].pageX;alert(start);}
 	
 function doend(e) {
     e.preventDefault();
