@@ -57,7 +57,7 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home44</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home5</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
 		X: <div id="xtext">0</div>
@@ -160,18 +160,17 @@ function doTouch(e) {
     var touch = e.touches[0];
     document.getElementById("xtext").innerHTML = touch.pageX;}
 */	
-function dostart(e) {
-    e.preventDefault();
-	start = e.touches[0].pageX;}
+//function dostart(e) {e.preventDefault();start = e.touches[0].pageX;}
 	
 function doend(e) {
     e.preventDefault();
-    end = e.touches[0].pageX;alert(end);
-	length = end-start;alert(length);}
+         end = e.touches[0].pageX;alert(end);
+	//length = end-start;alert(length);
+}
 
 //document.addEventListener('touchmove', function(e) {doTouch(e);}, false);
 	
-document.addEventListener('touchstart', function(e) {dostart(e);}, false);
+//document.addEventListener('touchstart', function(e) {dostart(e);}, false);
 document.addEventListener('touchend', function(e) {doend(e);}, false);
 	
 </script>
