@@ -57,9 +57,11 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home11</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home111</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
+		X: <div id="xtext">0</div>
+Y: <div id="ytext">0</div>
 </html>
 <script>
  document.addEventListener('touchmove', function(e) {
@@ -153,11 +155,16 @@ document.getElementById("hello4").innerHTML=movex;
 
 );}
 	
-	document.addEventListener('touchmove', function(e) {
+function doTouch(e) {
     e.preventDefault();
     var touch = e.touches[0];
-    alert(touch.pageX + " - " + touch.pageY);
-}, false);
+
+    document.getElementById("xtext").innerHTML = touch.pageX;
+    document.getElementById("ytext").innerHTML = touch.pageY;   
+}
+
+document.addEventListener('touchstart', function(e) {doTouch(e);}, false);
+document.addEventListener('touchmove', function(e) {doTouch(e);}, false);
 	
 	
 </script>
