@@ -57,7 +57,7 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home111</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home2</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
 		X: <div id="xtext">0</div>
@@ -76,7 +76,7 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.1;i=0;var scale1=1;var chart;
+var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.1;i=0;var scale1=1;var chart;var start;
 
 function fetchtrend(var1){
 var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=50&descending=true");//576,864
@@ -154,16 +154,24 @@ document.getElementById("hello4").innerHTML=movex;
 
 
 );}
-	
+/*	
 function doTouch(e) {
     e.preventDefault();
     var touch = e.touches[0];
-
-    document.getElementById("xtext").innerHTML = touch.pageX;  
-}
-
-
-document.addEventListener('touchmove', function(e) {doTouch(e);}, false);
+    document.getElementById("xtext").innerHTML = touch.pageX;}
+*/	
+function dostart(e) {
+    e.preventDefault();
+    var start = e.touches[0];start = touch.pageX;}
 	
+function doend(e) {
+    e.preventDefault();
+    var end = e.touches[0];end = touch.pageX;
+	var length = end-start;document.getElementById("xtext").innerHTML =length;}
+
+//document.addEventListener('touchmove', function(e) {doTouch(e);}, false);
+	
+document.addEventListener('touchstart', function(e) {dostart(e);}, false);
+document.addEventListener('touchend', function(e) {doend(e);}, false);
 	
 </script>
