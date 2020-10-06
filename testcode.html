@@ -61,7 +61,7 @@
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
 		X: <div id="xtext">0</div>
-Y: <div id="ytext">0</div>
+
 </html>
 <script>
  document.addEventListener('touchmove', function(e) {
@@ -159,11 +159,10 @@ function doTouch(e) {
     e.preventDefault();
     var touch = e.touches[0];
 
-    document.getElementById("xtext").innerHTML = touch.pageX;
-    document.getElementById("ytext").innerHTML = touch.pageY;   
+    document.getElementById("xtext").innerHTML = touch.pageX;  
 }
 
-document.addEventListener('touchstart', function(e) {doTouch(e);}, false);
+
 document.addEventListener('touchmove', function(e) {doTouch(e);}, false);
 	
 	
