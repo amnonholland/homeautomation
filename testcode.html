@@ -57,7 +57,7 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home33</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home4</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
 		X: <div id="xtext">0</div>
@@ -162,12 +162,12 @@ function doTouch(e) {
 */	
 function dostart(e) {
     e.preventDefault();
-	start = e.touches[0].pageX;alert(start);}
+	start = e.touches[0].pageX;}
 	
 function doend(e) {
     e.preventDefault();
     var end = e.touches[0].pageX;
-	length = end-start;document.getElementById("xtext").innerHTML =end;}
+	length = end-start;document.getElementById("xtext").innerHTML =end;alert(end);alert(length);}
 
 //document.addEventListener('touchmove', function(e) {doTouch(e);}, false);
 	
