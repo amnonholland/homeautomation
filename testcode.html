@@ -152,16 +152,14 @@ document.body.addEventListener('touchstart', touchstart);
 function touchstart(e){startX = e.touches[0].clientX;}
 
 function touchmove(e){var deltaX = e.touches[0].clientX - startX;
-
-		      
-minn=minn+(maxx-minn)*(deltaX/500);maxx=maxx+(maxx-minn)*(deltaX/500);
-if(0<1){//(minn>min)||(maxx<max)
 document.getElementById("hello4").innerHTML=deltaX;
-document.getElementById("hello2").innerHTML=minn;
-document.getElementById("hello3").innerHTML=maxx;
+/*if(deltaX>1){
+minn=minn+(maxx-minn)*(deltaX/1000);maxx=maxx+(maxx-minn)*(deltaX/1000);
+if((minn<minnn)||(maxx<max)){
 chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
-chart.render();}
-		      
+chart.render();
+}
+}*/		      
 		      
 }
 	
