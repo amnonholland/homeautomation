@@ -13,7 +13,7 @@ if (navigator.serviceWorker.controller) {
               // Perform install steps
 let CACHE_NAME = 'my-cache';
 let urlsToCache = [
-    'https://amnonholland.github.io/homeautomation/index.html',    '
+    'https://amnonholland.github.io/homeautomation/index.html',    
     'https://amnonholland.github.io/homeautomation/trendlog.html',
     
 
