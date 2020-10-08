@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style"content="default" />
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
+	<meta http-equiv="expires" content="0">
 <style>
 
 </style>
@@ -17,8 +18,8 @@
 
 </body>
 <form onchange="processdata()">
-  <label for="item">Log 1:</label>
-  <select name="item" id="item">
+  <label for="item"style="color:#4f81bd;"></label>
+  <select name="item" style="color:#4f81bd;" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - RMT</option>
     <option value="analog-input/103">analog-input/103 - Tank T</option>
@@ -37,8 +38,8 @@
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
   </select>
   
-    <label for="item1">Log 2:</label>
-  <select name="item1" id="item1">
+    <label for="item1"style="color:#c0504e;"></label>
+  <select name="item1" id="item1"style="color:#c0504e;">
   <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
     <option value="analog-input/102">analog-input/102 - RMT</option>
     <option value="analog-input/101">analog-input/101 - OAT</option>
@@ -59,12 +60,15 @@
  
   </select>&emsp;<a href="/homeautomation/index.html">Home</a>
 </form>
-	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span>
+	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
+		
+
 </html>
 <script>
-   document.addEventListener('touchmove', function(e) {
-    e.preventDefault();
-}, { passive: false });
+ document.addEventListener('touchmove', function(e) {
+    e.preventDefault();}, { passive: false });
+
+
 processdata();
 function processdata(){	
 //window.onload = function () {
@@ -73,10 +77,10 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.07;i=0;var scale1=1;var chart;
+var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.1;i=0;var scale1=1;var chart;var start=0, end=0,range=0;
 
 function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=500&descending=true");//576,864
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=288&descending=true");//576,864
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -106,8 +110,6 @@ max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
 
 
 var chart = new CanvasJS.Chart("chartContainer", {
-	//zoomEnabled: true,
-
  axisX:{minimum:min,maximum:max},
   data:data,
   legend:{
@@ -118,31 +120,46 @@ var chart = new CanvasJS.Chart("chartContainer", {
     	,toolTip:{enabled: false}
     });
 chart.render();
-  
+ range=maxx-minn;
 function toggleDataSeries(e){
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
   chart.render();} 
  minn=min;maxx=max;
+ 
 document.addEventListener('gesturechange', function(e) {
 e.preventDefault();
 scale = (e.scale);scale=Math.max(0,scale);scale=Math.min(1.7,scale);
 if(Math.abs(scale1-scale)>0.05){
 
 if(scale>1){minn=minn+(maxx-minn)*scale*fac;maxx=maxx-(maxx-minn)*scale*fac;} else //zoom in 
-{minn=minn-(maxx-minn)*scale*fac*2;maxx=maxx+(maxx-minn)*scale*fac*2;}//zoom out
+{minn=minn-(maxx-minn)*scale*fac;maxx=maxx+(maxx-minn)*scale*fac;}//zoom out
 minn=Math.max(min,minn);maxx=Math.min(max,maxx);
-
+range=maxx-minn;
+	
 chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
 chart.render();
 scale1=scale;i++
 }
 
-document.getElementById("hello").innerHTML=scale;
-document.getElementById("hello1").innerHTML=i;
-document.getElementById("hello2").innerHTML=min;
-document.getElementById("hello3").innerHTML=max;
+});
+		
+document.body.addEventListener('touchmove', touchmove);
+document.body.addEventListener('touchstart', touchstart);
+function touchstart(e){startX = e.touches[0].clientX;}
+
+function touchmove(e){var deltaX = e.touches[0].clientX - startX;
 
 
-});}
+minn=Math.max(minn,min);maxx=Math.min(maxx,max);
+if ((minn-range*(deltaX/5000))<min){minn=min;maxx=min+range} else {minn=minn-range*(deltaX/5000)}
+if ((maxx-range*(deltaX/5000))>max){maxx=max;minn=max-range} else {maxx=maxx-range*(deltaX/5000)}		      
 
+chart.options.axisX.minimum=minn;chart.options.axisX.maximum=maxx; 
+chart.render();
+
+	      
+		      
+}
+
+}	
 </script>
