@@ -18,8 +18,8 @@
 
 </body>
 <form onchange="processdata()">
-  <label for="item">Log 1:</label>
-  <select name="item" id="item">
+  <label for="item"style="color:#4f81bd;">Log 1:</label>
+  <select name="item" style="color:#4f81bd;" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - RMT</option>
     <option value="analog-input/103">analog-input/103 - Tank T</option>
@@ -38,8 +38,8 @@
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
   </select>
   
-    <label for="item1">Log 2:</label>
-  <select name="item1" id="item1">
+    <label for="item1"style="color:#c0504e;">Log 2:</label>
+  <select name="item1" id="item1"style="color:#c0504e;">
   <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
     <option value="analog-input/102">analog-input/102 - RMT</option>
     <option value="analog-input/101">analog-input/101 - OAT</option>
@@ -58,10 +58,10 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home55</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
-		X: <div id="xtext">0</div>
+		
 
 </html>
 <script>
@@ -110,8 +110,6 @@ max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
 
 
 var chart = new CanvasJS.Chart("chartContainer", {
-	//zoomEnabled: true,
-
  axisX:{minimum:min,maximum:max},
   data:data,
   legend:{
@@ -153,8 +151,6 @@ function touchmove(e){var deltaX = e.touches[0].clientX - startX;
 
 
 minn=Math.max(minn,min);maxx=Math.min(maxx,max);
-//if(!(minn==min&&maxx==max)){minn=minn-range*(deltaX/5000);maxx=maxx-range*(deltaX/5000);}
-
 if ((minn-range*(deltaX/5000))<min){minn=min;maxx=min+range} else {minn=minn-range*(deltaX/5000)}
 if ((maxx-range*(deltaX/5000))>max){maxx=max;minn=max-range} else {maxx=maxx-range*(deltaX/5000)}		      
 
