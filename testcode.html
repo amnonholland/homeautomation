@@ -58,7 +58,7 @@
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home1</a>
+  </select>&emsp;<a href="/homeautomation/index.html">Home11</a>
 </form>
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
 		X: <div id="xtext">0</div>
@@ -77,7 +77,7 @@ var item1 = document.getElementById("item1").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.1;i=0;var scale1=1;var chart;var start=0, end=0,length=0;
+var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.1;i=0;var scale1=1;var chart;var start=0, end=0,range=0;
 
 function fetchtrend(var1){
 var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=50&descending=true");//576,864
@@ -136,7 +136,8 @@ if(Math.abs(scale1-scale)>0.05){
 if(scale>1){minn=minn+(maxx-minn)*scale*fac;maxx=maxx-(maxx-minn)*scale*fac;} else //zoom in 
 {minn=minn-(maxx-minn)*scale*fac;maxx=maxx+(maxx-minn)*scale*fac;}//zoom out
 minn=Math.max(min,minn);maxx=Math.min(max,maxx);
-
+range=maxx-minn;
+	
 chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
 chart.render();
 scale1=scale;i++
@@ -153,7 +154,8 @@ function touchstart(e){startX = e.touches[0].clientX;}
 
 function touchmove(e){var deltaX = e.touches[0].clientX - startX;
 
-minn=minn-(maxx-minn)*(deltaX/5000);maxx=maxx-(maxx-minn)*(deltaX/5000);
+range=maxx-minn;
+if(minn>min&&maxx<max){minn=minn-range*(deltaX/5000);maxx=maxx-range*(deltaX/5000);}
 
 minn=Math.max(minn,min);maxx=Math.min(maxx,max);
 
