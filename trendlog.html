@@ -10,11 +10,12 @@
 <style>
 html {
   position: fixed;
-  
+   width: 100%; 
+  height: 100% 
   
 }
 @media (orientation: portrait) {
-  body {
+  html {
  transform: rotate(90deg);
   }
 </style>
@@ -45,7 +46,7 @@ html {
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
   </select>
-  
+  &emsp;
     <label for="item1"style="color:#c0504e;"></label>
   <select name="item1" id="item1"style="color:#c0504e;">
     <option value="analog-input/102">analog-input/102 - RMT</option>
@@ -65,8 +66,9 @@ html {
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
-  </select>&emsp;<a href="/homeautomation/index.html">Home</a>
+  </select>
 </form>
+
 	<Br><span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
 		
 
