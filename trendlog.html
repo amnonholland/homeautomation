@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html style="overflow: hidden">
 <head>
 
 <link rel="manifest" href="manifest.json">
@@ -40,7 +40,6 @@
   
     <label for="item1"style="color:#c0504e;"></label>
   <select name="item1" id="item1"style="color:#c0504e;">
-  <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
     <option value="analog-input/102">analog-input/102 - RMT</option>
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/103">analog-input/103 - Tank T</option>
@@ -74,8 +73,8 @@ function processdata(){
 //window.onload = function () {
 var item = document.getElementById("item").value;
 var item1 = document.getElementById("item1").value;
-var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1",showInLegend: true};
-var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2",showInLegend: true};
+var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
+var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
 var dataPoints = [];var data1Points = [];
 var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.1;i=0;var scale1=1;var chart;var start=0, end=0,range=0;
 
