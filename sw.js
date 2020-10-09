@@ -2,7 +2,7 @@ if (navigator.serviceWorker.controller) {
     console.log("Active service worker found");
     } else {
         navigator.serviceWorker
-        .register("serviceWorker.js", {
+        .register("sw.js", {
         scope: "./"
         })
         .then(function (reg) {
