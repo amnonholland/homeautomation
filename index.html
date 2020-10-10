@@ -130,13 +130,17 @@ html {
 </html>
 <script type="text/javascript" language="javascript">
  
-    if (navigator.serviceWorker.controller) {
-    console.log("Active service worker found");
-    } else {navigator.serviceWorker
-        .register("serviceworker.js", {
-        scope: "./"})
-        .then(function (reg) {console.log("Service worker  registered");});
-    }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 
     
     
