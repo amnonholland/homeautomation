@@ -133,7 +133,7 @@ html {
     if (navigator.serviceWorker.controller) {
     console.log("Active service worker found");
     } else {navigator.serviceWorker
-        .register("sw.js", {
+        .register("serviceworker.js", {
         scope: "./"})
         .then(function (reg) {console.log("Service worker  registered");});
     }
@@ -143,13 +143,7 @@ html {
     document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
-/*
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js', {
-    scope: 'https://amnonholland.github.io/homeautomation/'
-  });
-}
-*/
+
 var alreadyrun;
 var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
 var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
