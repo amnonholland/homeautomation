@@ -1,19 +1,18 @@
-// Perform install steps
-let CACHE_NAME = 'my-cache';
-let urlsToCache = [
+var CACHE_NAME = 'my-site-cache-v1';
+var urlsToCache = [
     'https://amnonholland.github.io/homeautomation/index.html',
     'https://amnonholland.github.io/homeautomation/trendlog.html'
-    ];
+];
 
 self.addEventListener('install', function(event) {
-// Perform install steps
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-        .then(function(cache) {
-            console.log('Opened cache');
+  // Perform install steps
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        console.log('Opened cache');
         return cache.addAll(urlsToCache);
-        })
-    );
+      })
+  );
 });
 
 
@@ -26,26 +25,28 @@ self.addEventListener('fetch', function(event) {
         if (response) {
           return response;
         }
-        return fetch(event.request);
-      }
-    )
-  );
-});
 
+        return fetch(event.request).then(
+          function(response) {
+            // Check if we received a valid response
+            if(!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
 
+            // IMPORTANT: Clone the response. A response is a stream
+            // and because we want the browser to consume the response
+            // as well as the cache consuming the response, we need
+            // to clone it so we have two streams.
+            var responseToCache = response.clone();
 
+            caches.open(CACHE_NAME)
+              .then(function(cache) {
+                cache.put(event.request, responseToCache);
+              });
 
-self.addEventListener('activate', function(event) {
-  var cacheWhitelist = ['pigment'];
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
+            return response;
           }
-        })
-      );
-    })
-  );
+        );
+      })
+    );
 });
