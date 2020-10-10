@@ -9,7 +9,7 @@ if (navigator.serviceWorker.controller) {
         console.log("Service worker  registered");
         });
     }
-}
+
               // Perform install steps
 let CACHE_NAME = 'my-cache';
 let urlsToCache = [
