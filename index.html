@@ -6,19 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style"content="default" />
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
-<script>if (navigator.serviceWorker.controller) {
-    console.log("Active service worker found");
-    } else {
-        navigator.serviceWorker
-        .register("serviceWorker.js", {
-        scope: "./"
-        })
-        .then(function (reg) {
-        console.log("Service worker  registered);
-        });
-    }
-}
-              </script>
+
 </head>
  <style>
         .labels {
@@ -141,7 +129,22 @@ html {
 </center></body>
 </html>
 <script type="text/javascript" language="javascript">
- document.addEventListener('touchmove', function(e) {
+ 
+    if (navigator.serviceWorker.controller) {
+    console.log("Active service worker found");
+    } else {
+        navigator.serviceWorker
+        .register("serviceWorker.js", {
+        scope: "./"
+        })
+        .then(function (reg) {
+        console.log("Service worker  registered);
+        });
+    }
+}
+    
+    
+    document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
 /*
