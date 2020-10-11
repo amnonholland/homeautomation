@@ -16,7 +16,8 @@ html {
 }
 @media (orientation: portrait) {
   body {
-    transform: rotate(90deg);
+    transform: rotate(90deg) translate(10%,50%);
+    
   }
 }
 </style>
@@ -89,7 +90,7 @@ var dataPoints = [];var data1Points = [];
 var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.08;i=0;var scale1=1;var chart;var start=0, end=0,range=0,timeout=true;
 
 function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=288&descending=true");//576,864
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=2&descending=true");//576,864
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
