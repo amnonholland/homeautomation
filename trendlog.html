@@ -20,9 +20,9 @@ html {
 <div id="chartContainer" style="height: 300px; width: 810px;">
 </div>
 <br>
-<form onchange="processdata()">
+
   <label for="item"style="color:#4f81bd;"></label>
-  <select name="item" style="color:#4f81bd;" id="item">
+  <select onchange="processdata()" name="item" style="color:#4f81bd;" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/103">analog-input/103 - Transfer SAT</option>
@@ -40,11 +40,12 @@ html {
     <option value="analog-value/26">analog-value/26 - Mains kWh</option>
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
   </select>
+ 
   &emsp;
     <label for="item1"style="color:#c0504e;"></label>
-  <select name="item1" id="item1"style="color:#c0504e;">
-    <option value="analog-input/102">analog-input/102 - RMT</option>
-    <option value="analog-input/101">analog-input/101 - Lounge T</option>
+  <select onchange="processdata()" name="item1" id="item1"style="color:#c0504e;">
+    <option value="analog-input/102">analog-input/102 - Lounge T</option>
+    <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/103">analog-input/103 - Transfer SAT</option>
     <option value="analog-input/104">analog-input/104 - Master T</option>
     <option value="analog-input/105">analog-input/105 - Slab Lea</option>
@@ -61,7 +62,17 @@ html {
     <option value="analog-value/28">analog-value/26 - Solar kWh</option>
  
   </select>
-</form>
+  &emsp;
+      <label for="item2"style="color:#c0504e;"></label>
+  <select onchange="processdata()" name="item2" id="item2"style="color:#c0504f;">
+    <option value="288">1 Day</option>
+    <option value="576">2 Days</option>
+    <option value="864">3 Days</option>
+  </select>
+  
+  
+  
+
 
 	<span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
 		
@@ -77,14 +88,14 @@ function processdata(){
 //window.onload = function () {
 var item = document.getElementById("item").value;
 var item1 = document.getElementById("item1").value;
+var samples = document.getElementById("item2").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
 var dataPoints = [];var data1Points = [];
 var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.05;i=0;var scale1=1;var chart;var start=0, end=0,range=0,timeout=true;
-var samples;
 	
 function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=900&descending=true");
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=")+samples+String("&descending=true");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
