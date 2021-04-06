@@ -24,9 +24,9 @@ html {
   <label for="item"style="color:#4f81bd;"></label>
   <select name="item" style="color:#4f81bd;" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
-    <option value="analog-input/102">analog-input/102 - RMT</option>
-    <option value="analog-input/103">analog-input/103 - Tank T</option>
-    <option value="analog-input/104">analog-input/104 - Collector T</option>
+    <option value="analog-input/102">analog-input/102 - Lounge T</option>
+    <option value="analog-input/103">analog-input/103 - Transfer SAT</option>
+    <option value="analog-input/104">analog-input/104 - Master T</option>
     <option value="analog-input/105">analog-input/105 - Slab Lea</option>
     <option value="analog-input/106">analog-input/106 - Batt V</option>
     <option value="analog-input/107">analog-input/107 - Polypipe</option>
@@ -44,9 +44,9 @@ html {
     <label for="item1"style="color:#c0504e;"></label>
   <select name="item1" id="item1"style="color:#c0504e;">
     <option value="analog-input/102">analog-input/102 - RMT</option>
-    <option value="analog-input/101">analog-input/101 - OAT</option>
-    <option value="analog-input/103">analog-input/103 - Tank T</option>
-    <option value="analog-input/104">analog-input/104 - Collector T</option>
+    <option value="analog-input/101">analog-input/101 - Lounge T</option>
+    <option value="analog-input/103">analog-input/103 - Transfer SAT</option>
+    <option value="analog-input/104">analog-input/104 - Master T</option>
     <option value="analog-input/105">analog-input/105 - Slab Lea</option>
     <option value="analog-input/106">analog-input/106 - Batt V</option>
     <option value="analog-input/107">analog-input/107 - Polypipe</option>
@@ -81,9 +81,10 @@ var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
 var dataPoints = [];var data1Points = [];
 var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.05;i=0;var scale1=1;var chart;var start=0, end=0,range=0,timeout=true;
-
+var samples;
+	
 function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=288&descending=true");//576,864
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=900&descending=true");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
