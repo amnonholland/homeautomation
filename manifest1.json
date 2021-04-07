@@ -1,0 +1,10 @@
+{
+    "name": "Amnon",
+    "short_name": "Home Auto",
+    "display": "fullscreen",
+    "scope": "https://amnonholland.github.io/homeautomation/",
+    "start_url": "https://amnonholland.github.io/homeautomation/trendlog.html",
+    "description": "Home Automation",
+    "orientation": "landscape"
+
+}
