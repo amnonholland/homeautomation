@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html style="overflow: hidden">
+<head>
+
+<link rel="manifest" href="manifest1.json">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style"content="default" />
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
+	<meta http-equiv="expires" content="0">
+<style>
+html {
+  position: fixed;
+  
+}
+
+</style>
+
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 810px;">
+</div>
+<br>
+
+  <label for="item"style="color:#4f81bd;"></label>
+  <select onchange="processdata()" name="item" style="color:#4f81bd;" id="item">
+    <option value="analog-input/101">analog-input/101 - OAT</option>
+    <option value="analog-input/102">analog-input/102 - Lounge T</option>
+    <option value="analog-input/103">analog-input/103 - Transfer SAT</option>
+    <option value="analog-input/104">analog-input/104 - Master T</option>
+    <option value="analog-input/105">analog-input/105 - Slab Lea</option>
+    <option value="analog-input/106">analog-input/106 - Batt V</option>
+    <option value="analog-input/107">analog-input/107 - Polypipe</option>
+    <option value="binary-output/102">binary-output/102 - AC Unit</option>
+    <option value="binary-output/103">binary-output/103 - Circ Pump</option>
+    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
+    <option value="binary-output/105">binary-output/105 - Slab Circ</option>
+    <option value="binary-output/106">binary-output/106 - Econfan</option>
+    <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-value/25">analog-value/25 - Watts</option>
+    <option value="analog-value/26">analog-value/26 - Mains kWh</option>
+    <option value="analog-value/28">analog-value/26 - Solar kWh</option>
+  </select>
+ 
+  &emsp;
+    <label for="item1"style="color:#c0504e;"></label>
+  <select onchange="processdata()" name="item1" id="item1"style="color:#c0504e;">
+    <option value="analog-input/102">analog-input/102 - Lounge T</option>
+    <option value="analog-input/101">analog-input/101 - OAT</option>
+    <option value="analog-input/103">analog-input/103 - Transfer SAT</option>
+    <option value="analog-input/104">analog-input/104 - Master T</option>
+    <option value="analog-input/105">analog-input/105 - Slab Lea</option>
+    <option value="analog-input/106">analog-input/106 - Batt V</option>
+    <option value="analog-input/107">analog-input/107 - Polypipe</option>
+    <option value="binary-output/102">binary-output/102 - AC Unit</option>
+    <option value="binary-output/103">binary-output/103 - Circ Pump</option>
+    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
+    <option value="binary-output/105">binary-output/105 - Slab Circ</option>
+    <option value="binary-output/106">binary-output/106 - Econfan</option>
+    <option value="binary-output/108">binary-output/108 - Roof Louvre</option>
+    <option value="analog-value/25">analog-value/25 - Watts</option>
+    <option value="analog-value/26">analog-value/26 - Mains kWh</option>
+    <option value="analog-value/28">analog-value/26 - Solar kWh</option>
+ 
+  </select>
+  &emsp;
+      <label for="item2"style="color:#c0504e;"></label>
+  <select onchange="processdata()" name="item2" id="item2"style="color:#c0504f;">
+    <option value="288">1 Day</option>
+    <option value="576">2 Days</option>
+    <option value="864">3 Days</option>
+  </select>
+  
+  
+  
+
+
+	<span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
+		
+</body>
+</html>
+<script>
+ document.addEventListener('touchmove', function(e) {
+    e.preventDefault();}, { passive: false });
+
+
+processdata();
+function processdata(){	
+//window.onload = function () {
+var item = document.getElementById("item").value;
+var item1 = document.getElementById("item1").value;
+var samples = document.getElementById("item2").value;
+var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
+var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
+var dataPoints = [];var data1Points = [];
+var data = [];var min=0,max=0,minn=0,maxx=0;scale=1,fac=0.05;i=0;var scale1=1;var chart;var start=0, end=0,range=0,timeout=true;
+	
+function fetchtrend(var1){
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=")+samples+String("&descending=true");
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+    xmlhttp.send(null);
+    return json = JSON.parse(xmlhttp.responseText);
+}
+
+var json = fetchtrend(item);
+var time = json.map(item => item.timeStamp);
+var value = json.map(item => item.value);
+var y=0;
+if(item.includes("binary")){dataSeries.type = "stepArea"}
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
+dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
+
+var json1 = fetchtrend(item1);
+var time1 = json1.map(item1 => item1.timeStamp);
+var value1 = json1.map(item1 => item1.value);
+var y=0;
+if(item1.includes("binary")){data1Series.type = "stepArea"}
+for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
+data1Series.dataPoints = data1Points;data.push(data1Series); 
+
+min = Math.max(data[0].dataPoints[dataPoints.length - 1].x,data[1].dataPoints[data1Points.length - 1].x);
+max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
+
+
+var chart = new CanvasJS.Chart("chartContainer", {
+ axisX:{minimum:min,maximum:max},
+  data:data,
+  legend:{
+	cursor: "pointer",
+	fontSize: 16,
+  itemclick: toggleDataSeries
+  }
+    	,toolTip:{enabled: false}
+    });
+chart.render();
+ range=maxx-minn;
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
+  chart.render();} 
+ minn=min;maxx=max;
+ 
+document.addEventListener('gesturechange', function(e) {timeout=false;
+e.preventDefault();
+scale = (e.scale);scale=Math.max(0,scale);scale=Math.min(1.7,scale);
+if(Math.abs(scale1-scale)>0.05){
+
+if(scale>1){minn=minn+(maxx-minn)*scale*fac;maxx=maxx-(maxx-minn)*scale*fac;} else //zoom in 
+{minn=minn-(maxx-minn)*scale*fac;maxx=maxx+(maxx-minn)*scale*fac;}//zoom out
+minn=Math.max(min,minn);maxx=Math.min(max,maxx);
+range=maxx-minn;
+	
+chart.options.axisX.minimum=minn; chart.options.axisX.maximum=maxx; 
+chart.render();
+scale1=scale;i++
+}
+setTimeout(function(){timeout=true; }, 300);
+});
+		
+document.body.addEventListener('touchmove', touchmove);
+document.body.addEventListener('touchstart', touchstart);
+function touchstart(e){startX = e.touches[0].clientX;}
+
+function touchmove(e){if(timeout){
+var deltaX = e.touches[0].clientX - startX;
+minn=Math.max(minn,min);maxx=Math.min(maxx,max);
+if ((minn-range*(deltaX/5000))<min){minn=min;maxx=min+range} else {minn=minn-range*(deltaX/5000)}
+if ((maxx-range*(deltaX/5000))>max){maxx=max;minn=max-range} else {maxx=minn+range;}	//maxx-range*(deltaX/5000)	      
+chart.options.axisX.minimum=minn;chart.options.axisX.maximum=maxx; 
+chart.render();
+}}
+
+}	
+</script>
