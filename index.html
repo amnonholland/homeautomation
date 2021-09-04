@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 
@@ -67,7 +68,12 @@ html {
     <td>Lounge T:</td> <td>  <span id="RMT"></span></td> 
 </tr>
 </table>
-
+<table style="width:100%">
+<tr>
+    <td>Office Heater:</td> <td> <span id="officeheater"></span></td>
+    <td>Wall Temp:</td> <td> <span id="walltemp"></span></td>
+</tr>
+</table>
 <table style="width:100%">
 <tr>
     <td>Office T: </td> <td> <span id="DHWtank"></span></td>
@@ -112,7 +118,7 @@ if ('serviceWorker' in navigator) {
 }, { passive: false });
 
 var alreadyrun;
-var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply;
+var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply,officeheater,walltemp;
 var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
 function send(){
@@ -126,13 +132,14 @@ document.getElementById("RMT").innerHTML = RMT =precisionRound(myArr[1].value,1)
 document.getElementById("DHWtank").innerHTML = DHWtank =precisionRound(myArr[2].value,1);
 document.getElementById("Collector").innerHTML = Collector =precisionRound(myArr[3].value,1);
 document.getElementById("SlabLea").innerHTML = SlabLea=precisionRound(myArr[4].value,1);
-//document.getElementById("battv").innerHTML = battv=precisionRound(myArr[5].value,1);
+document.getElementById("walltemp").innerHTML = battv=precisionRound(myArr[5].value,1);
 //document.getElementById("Polypipe").innerHTML = Polypipe=precisionRound(myArr[6].value,1);
 document.getElementById("Power").innerHTML = Power=precisionRound(myArr[7].value,0);
 document.getElementById("Solar").innerHTML = Solar=precisionRound(myArr[8].value,1);
 
 Polypipe=myArr[15].value;if(Polypipe=="Active"){document.getElementById("Polypipe").innerHTML=Polypipe.bold();}else{document.getElementById("Polypipe").innerHTML=Polypipe;}
 ACunit=myArr[16].value;if(ACunit=="Active"){document.getElementById("ACunit").innerHTML=ACunit.bold();}else{document.getElementById("ACunit").innerHTML=ACunit;}
+officeheater=myArr[23].value;if(officeheater=="Active"){document.getElementById("officeheater").innerHTML=officeheater.bold();}else{document.getElementById("officeheater").innerHTML=officeheater;}
 
 
 }     
@@ -175,7 +182,7 @@ setTimeout('send()', 1500);
 {"type": "binaryOutput","instance": 106,"property": "presentValue"},
 {"type": "binaryOutput","instance": 107,"property": "presentValue"},
 {"type": "binaryOutput","instance": 108,"property": "presentValue"},
-{"type": "binaryValue","instance": 3,"property": "presentValue"}
+{"type": "binaryValue","instance": 8,"property": "presentValue"}
 ]};
 xmlhttp.send(JSON.stringify(params));
 
