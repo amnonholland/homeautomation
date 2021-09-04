@@ -78,12 +78,7 @@ html {
     </tr>
 </table>
 
-<table style="width:100%">
-<tr>
-    <td>OAT:</td> <td> <span id="battv"></span></td>
-    <td>Lounge T:</td> <td>  <span id="Polypipe"></span></td> 
-</tr>
-</table>
+
 <table style="width:100%">
 
 <tr><td>Power W:  </td> <td> <span id="Power"></span></td>
@@ -127,25 +122,13 @@ document.getElementById("RMT").innerHTML = RMT =precisionRound(myArr[1].value,1)
 document.getElementById("DHWtank").innerHTML = DHWtank =precisionRound(myArr[2].value,1);
 document.getElementById("Collector").innerHTML = Collector =precisionRound(myArr[3].value,1);
 document.getElementById("SlabLea").innerHTML = SlabLea=precisionRound(myArr[4].value,1);
-document.getElementById("battv").innerHTML = battv=precisionRound(myArr[5].value,1);
+//document.getElementById("battv").innerHTML = battv=precisionRound(myArr[5].value,1);
 document.getElementById("Polypipe").innerHTML = Polypipe=precisionRound(myArr[6].value,1);
 document.getElementById("Power").innerHTML = Power=precisionRound(myArr[7].value,0);
 document.getElementById("Solar").innerHTML = Solar=precisionRound(myArr[8].value,1);
-//document.getElementById("Mains").innerHTML = Mains=precisionRound(myArr[9].value,1);
-AMSV=Number(myArr[10].value);
-RMSV=Number(myArr[11].value);
-EMSV=Number(myArr[12].value);
-SMSV=Number(myArr[13].value);
-CMSV=Number(myArr[14].value);
-Gardenlights=myArr[15].value; if(Gardenlights=="Active"){document.getElementById("Gardenlights").innerHTML=Gardenlights.bold();}else{document.getElementById("Gardenlights").innerHTML=Gardenlights;}
+
 ACunit=myArr[16].value;if(ACunit=="Active"){document.getElementById("ACunit").innerHTML=ACunit.bold();}else{document.getElementById("ACunit").innerHTML=ACunit;}
-Circpump=myArr[17].value;if(Circpump=="Active"){document.getElementById("Circpump").innerHTML=Circpump.bold();}else{document.getElementById("Circpump").innerHTML=Circpump;}
-DHWboost=myArr[18].value;if(DHWboost=="Active"){document.getElementById("DHWboost").innerHTML=DHWboost.bold();}else{document.getElementById("DHWboost").innerHTML=DHWboost;}
-Slabcirc=myArr[19].value;if(Slabcirc=="Active"){document.getElementById("Slabcirc").innerHTML=Slabcirc.bold();}else{document.getElementById("Slabcirc").innerHTML=Slabcirc;}
-Econfan=myArr[20].value;if(Econfan=="Active"){document.getElementById("Econfan").innerHTML=Econfan.bold();}else{document.getElementById("Econfan").innerHTML=Econfan;}
-Chickflap=myArr[21].value;if(Chickflap=="Active"){document.getElementById("Chickflap").innerHTML=Chickflap.bold();}else{document.getElementById("Chickflap").innerHTML=Chickflap;}
-Rooflouvre=myArr[22].value;if(Rooflouvre=="Active"){document.getElementById("Rooflouvre").innerHTML=Rooflouvre.bold();}else{document.getElementById("Rooflouvre").innerHTML=Rooflouvre;}
-Supply=myArr[23].value;if(Supply=="Active"){document.getElementById("Supply").innerHTML=Supply.bold();}else{document.getElementById("Supply").innerHTML=Supply;}
+
 }     
 
     
