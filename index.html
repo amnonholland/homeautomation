@@ -76,6 +76,10 @@ html {
     <td>DHW Tank T:</td> <td>  <span id="SlabLea"></span></td>
     <td>DHW Boost: </td> <td> <span id="ACunit"></span></td>
     </tr>
+    <tr>    
+    <td>Irrigation:</td> <td>  <span id="Polypipe"></span></td>
+    
+    </tr>
 </table>
 
 
@@ -127,7 +131,9 @@ document.getElementById("SlabLea").innerHTML = SlabLea=precisionRound(myArr[4].v
 document.getElementById("Power").innerHTML = Power=precisionRound(myArr[7].value,0);
 document.getElementById("Solar").innerHTML = Solar=precisionRound(myArr[8].value,1);
 
+Polypipe=myArr[15].value;if(Polypipe=="Active"){document.getElementById("Polypipe").innerHTML=Polypipe.bold();}else{document.getElementById("Polypipe").innerHTML=Polypipe;}
 ACunit=myArr[16].value;if(ACunit=="Active"){document.getElementById("ACunit").innerHTML=ACunit.bold();}else{document.getElementById("ACunit").innerHTML=ACunit;}
+
 
 }     
 
@@ -147,21 +153,25 @@ setTimeout('send()', 1500);
 {"type": "analogInput","instance": 103,"property": "presentValue"},
 {"type": "analogInput","instance": 104,"property": "presentValue"},
 {"type": "analogInput","instance": 105,"property": "presentValue"},
+
 {"type": "analogInput","instance": 106,"property": "presentValue"},
 {"type": "analogInput","instance": 107,"property": "presentValue"},
 {"type": "analogValue","instance": 25,"property": "presentValue"},
 {"type": "analogValue","instance": 28,"property": "presentValue"},
 {"type": "analogValue","instance": 26,"property": "presentValue"},
+
 {"type": "analogValue","instance": 27,"property": "presentValue"}, //AC
 {"type": "analogValue","instance": 29,"property": "presentValue"},//roof
 {"type": "analogValue","instance": 30,"property": "presentValue"},//econfan
 {"type": "analogValue","instance": 31,"property": "presentValue"},//slabcirc
 {"type": "analogValue","instance": 32,"property": "presentValue"},//chickflap
+
 {"type": "binaryOutput","instance": 101,"property": "presentValue"},
 {"type": "binaryOutput","instance": 102,"property": "presentValue"},
 {"type": "binaryOutput","instance": 103,"property": "presentValue"},
 {"type": "binaryOutput","instance": 104,"property": "presentValue"},
 {"type": "binaryOutput","instance": 105,"property": "presentValue"},
+
 {"type": "binaryOutput","instance": 106,"property": "presentValue"},
 {"type": "binaryOutput","instance": 107,"property": "presentValue"},
 {"type": "binaryOutput","instance": 108,"property": "presentValue"},
