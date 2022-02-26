@@ -2,6 +2,7 @@
     "name": "Amnon",
     "short_name": "Home Auto",
     "display": "fullscreen",
+    "background_color": "black",
     "scope": "https://amnonholland.github.io/homeautomation/",
     "start_url": "https://amnonholland.github.io/homeautomation/index1.html",
     "description": "Home Automation",
