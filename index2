@@ -1,0 +1,199 @@
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style"content="default" />
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
+
+</head>
+ <style>
+        .labels {
+            border: 1px solid blue;
+            width: 200px;
+            height: 400px;
+            float: left;
+            margin-bottom: 10px;
+            //padding: 0px 5px 0px 5px;
+            touch-action: none;
+            //position: fixed;
+            overflow: hidden;
+  			        }
+        .outputs {
+            border: 1px solid blue;
+            width: 200px;
+            height: 400px;
+            float: right;
+            margin-left: 200px;
+            //padding: 0px 5px 0px 5px;
+            touch-action: none;
+            position: fixed;
+            overflow: hidden;
+  			        }
+                    .button {
+  background-color: lightgray;
+  border: none;
+  outline:none;
+  border-radius: 10px;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  //font-size: 16px;
+  margin: 0px 0px;
+  cursor: pointer;
+}
+
+table, th, td {border-collapse: collapse;width: 25%; padding: 1px;border-bottom: 1px solid #ddd;}
+                   // border: 1px solid black;}
+  body,
+html {
+  position: fixed;
+  width: 100%; 
+  height: 100%
+}
+</style>
+<body >
+
+
+<h4>Home Automation</h4>
+
+<table style="width:100%">
+<tr><td>OAT:</td> <td> <span id="OAT"></span></td></tr>
+<tr><td>Lounge T:</td> <td>  <span id="RMT"></span></td></tr>
+<tr><td>DHW T:</td> <td>  <span id="SlabLea"></span></td></tr>
+</table>
+<br><br/>
+<table style="width:100%">
+<tr><td>Office Heater:</td> <td> <span id="officeheater"></span></td>
+    <td>Wall Temp:</td> <td> <span id="walltemp"></span></td>
+</tr>
+</table>
+<table style="width:100%">
+<tr>
+    <td>Office T: </td> <td> <span id="DHWtank"></span></td>
+    <td>Master T: </td> <td> <span id="Collector"></span></td>
+</tr><tr>    
+    <td>DHW Tank T:</td> <td>  <span id="SlabLea"></span></td>
+    <td>DHW Boost: </td> <td> <span id="ACunit"></span></td>
+    </tr>
+    <tr>    
+    <td>Irrigation:</td> <td>  <span id="Polypipe"></span></td>
+    
+    </tr>
+</table>
+
+
+<table style="width:100%">
+
+<tr><td>Power W:  </td> <td> <span id="Power"></span></td>
+<td>Solar kWh/day:  </td> <td> <span id="Solar"></span></td></tr>
+</table>
+<br><br><center><a href="/homeautomation/trendlog.html">Trend Logs</a>
+</center></body>
+</html>
+<script type="text/javascript" language="javascript">
+ 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+    
+    
+    document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
+
+var alreadyrun;
+var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply,officeheater,walltemp;
+var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
+
+function send(){
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
+var myArr = JSON.parse(xmlhttp.responseText);
+
+ var i;for (i = 0; i < myArr.length; i++) {
+document.getElementById("OAT").innerHTML = OAT =precisionRound(myArr[0].value,1);
+document.getElementById("RMT").innerHTML = RMT =precisionRound(myArr[1].value,1);
+document.getElementById("DHWtank").innerHTML = DHWtank =precisionRound(myArr[2].value,1);
+document.getElementById("Collector").innerHTML = Collector =precisionRound(myArr[3].value,1);
+document.getElementById("SlabLea").innerHTML = SlabLea=precisionRound(myArr[4].value,1);
+document.getElementById("walltemp").innerHTML = battv=precisionRound(myArr[5].value,1);
+//document.getElementById("Polypipe").innerHTML = Polypipe=precisionRound(myArr[6].value,1);
+document.getElementById("Power").innerHTML = Power=precisionRound(myArr[7].value,0);
+document.getElementById("Solar").innerHTML = Solar=precisionRound(myArr[8].value,1);
+
+Polypipe=myArr[15].value;if(Polypipe=="Active"){document.getElementById("Polypipe").innerHTML=Polypipe.bold();}else{document.getElementById("Polypipe").innerHTML=Polypipe;}
+ACunit=myArr[16].value;if(ACunit=="Active"){document.getElementById("ACunit").innerHTML=ACunit.bold();}else{document.getElementById("ACunit").innerHTML=ACunit;}
+officeheater=myArr[23].value;if(officeheater=="Active"){document.getElementById("officeheater").innerHTML=officeheater.bold();}else{document.getElementById("officeheater").innerHTML=officeheater;}
+
+
+}     
+
+    
+    
+setTimeout('send()', 1500);    
+   
+      }};    
+
+    xmlhttp.open("POST", URL, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+        var params = 
+    {"encode": "text",  "propertyReferences": [
+{"type": "analogInput","instance": 101,"property": "presentValue"},
+{"type": "analogInput","instance": 102,"property": "presentValue"},
+{"type": "analogInput","instance": 103,"property": "presentValue"},
+{"type": "analogInput","instance": 104,"property": "presentValue"},
+{"type": "analogInput","instance": 105,"property": "presentValue"},
+
+{"type": "analogInput","instance": 106,"property": "presentValue"},
+{"type": "analogInput","instance": 107,"property": "presentValue"},
+{"type": "analogValue","instance": 25,"property": "presentValue"},
+{"type": "analogValue","instance": 28,"property": "presentValue"},
+{"type": "analogValue","instance": 26,"property": "presentValue"},
+
+{"type": "analogValue","instance": 27,"property": "presentValue"}, //AC
+{"type": "analogValue","instance": 29,"property": "presentValue"},//roof
+{"type": "analogValue","instance": 30,"property": "presentValue"},//econfan
+{"type": "analogValue","instance": 31,"property": "presentValue"},//slabcirc
+{"type": "analogValue","instance": 32,"property": "presentValue"},//chickflap
+
+{"type": "binaryOutput","instance": 101,"property": "presentValue"},
+{"type": "binaryOutput","instance": 102,"property": "presentValue"},
+{"type": "binaryOutput","instance": 103,"property": "presentValue"},
+{"type": "binaryOutput","instance": 104,"property": "presentValue"},
+{"type": "binaryOutput","instance": 105,"property": "presentValue"},
+
+{"type": "binaryOutput","instance": 106,"property": "presentValue"},
+{"type": "binaryOutput","instance": 107,"property": "presentValue"},
+{"type": "binaryOutput","instance": 108,"property": "presentValue"},
+{"type": "binaryValue","instance": 8,"property": "presentValue"}
+]};
+xmlhttp.send(JSON.stringify(params));
+
+}
+send();
+
+function precisionRound(number, precision) {
+  var factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
+
+
+
+</script>
