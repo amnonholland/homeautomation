@@ -12,56 +12,23 @@
 
 </head>
  <style>
-        .labels {
-            border: 1px solid blue;
-            width: 200px;
-            height: 400px;
-            float: left;
-            margin-bottom: 10px;
-            //padding: 0px 5px 0px 5px;
-            touch-action: none;
-            //position: fixed;
-            overflow: hidden;
-  			        }
-        .outputs {
-            border: 1px solid blue;
-            width: 200px;
-            height: 400px;
-            float: right;
-            margin-left: 200px;
-            //padding: 0px 5px 0px 5px;
-            touch-action: none;
-            position: fixed;
-            overflow: hidden;
-  			        }
-                    .button {
-  background-color: lightgray;
-  border: none;
-  outline:none;
-  border-radius: 10px;
-  color: white;
-  padding: 5px 5px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  //font-size: 16px;
-  margin: 0px 0px;
-  cursor: pointer;
-}
 
-table, th, td {border-collapse: collapse;width: 25%; padding: 1px;border-bottom: 1px solid #ddd;}
-                   // border: 1px solid black;}
+
+
+table, th, td {border-collapse: collapse;width: 25%; padding: 1px;}
+                   }
   body,
 html {
   position: fixed;
   width: 100%; 
-  height: 100%
+  height: 100%;
+}
+body {font-size: 20px;
+  color: white;
 }
 </style>
-<body >
+<body style="background-color:black" >
 
-
-<h4>Home Automation</h4>
 
 <table style="width:100%">
 <tr><td>OAT:</td> <td> <span id="OAT"></span></td></tr>
@@ -87,13 +54,13 @@ html {
 <br><br/>
 
 <table style="width:100%">
-<tr><td>Grid Coinnect:</td> <td> <span id="Collector"></span></td>
-<tr><td>DHW Tank:</td> <td> <span id="SlabLea"></span></td></tr>
+<tr><td>Grid Connect:</td> <td> <span id="EMSV"></span></td>
+<tr><td>DHW Tank:</td> <td> <span id="SMSV"></span></td></tr>
 </table>
 <br><br/>
 
 
-<br><br><center><a href="/homeautomation/trendlog.html">Trend Logs</a>
+<br><br><left><a href="/homeautomation/trendlog.html">Trend Logs</a>
 </center></body>
 </html>
 <script type="text/javascript" language="javascript">
@@ -136,6 +103,8 @@ document.getElementById("battv").innerHTML =precisionRound(myArr[7].value,1);
 document.getElementById("Mains").innerHTML =precisionRound(myArr[8].value,1);
 document.getElementById("AMSV").innerHTML =precisionRound(myArr[9].value,2);
 document.getElementById("RMSV").innerHTML =precisionRound(myArr[10].value,1);
+document.getElementById("SMSV").innerHTML =myArr[11].value;
+document.getElementById("EMSV").innerHTML =myArr[12].value;
 
 }     
 
@@ -163,8 +132,8 @@ setTimeout('send()', 1500);
 {"type": "analogValue","instance": 48,"property": "presentValue"},//battkw
 {"type": "analogValue","instance": 50,"property": "presentValue"},//battpercent
 
-{"type": "binaryOutput","instance": 106,"property": "presentValue"},
-{"type": "binaryOutput","instance": 107,"property": "presentValue"},
+{"type": "binaryOutput","instance": 102,"property": "presentValue"},//tank
+{"type": "binaryOutput","instance": 103,"property": "presentValue"},//grid
 
 ]};
 xmlhttp.send(JSON.stringify(params));
