@@ -1,6 +1,6 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
-    'https://amnonholland.github.io/homeautomation/index.html',
+    'https://amnonholland.github.io/homeautomation/index1.html',
     'https://amnonholland.github.io/homeautomation/trendlog.html'
 ];
 
