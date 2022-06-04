@@ -36,6 +36,8 @@ body {font-size: 28px;
 <tr><td>Lounge T:</td> <td>  <span id="RMT"></span></td></tr>
 <tr><td>Master T:</td> <td>  <span id="master"></span></td></tr>
 <tr><td>DHW T:</td> <td>  <span id="DHWTank"></span></td></tr>
+<tr><td>Temp 1:</td> <td>  <span id="temp1"></span></td></tr>
+<tr><td>RH 1:</td> <td>  <span id="rh1"></span></td></tr>
 </table>
 <br><br/>
 
@@ -84,8 +86,8 @@ if ('serviceWorker' in navigator) {
 }, { passive: false });
 
 var alreadyrun;
-var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply,officeheater,walltemp,master;
-var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
+var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply,officeheater,walltemp,master,temp1,rh1;
+var URL = "http://192.168.0.176/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
 function send(){
 var xmlhttp = new XMLHttpRequest();
@@ -97,17 +99,20 @@ document.getElementById("OAT").innerHTML =precisionRound(myArr[0].value,1);
 document.getElementById("RMT").innerHTML  =precisionRound(myArr[1].value,1);
 document.getElementById("master").innerHTML =precisionRound(myArr[2].value,1);
 document.getElementById("DHWTank").innerHTML =precisionRound(myArr[3].value,1);
-
+  
 document.getElementById("Solar").innerHTML =precisionRound(myArr[4].value,1);
 document.getElementById("walltemp").innerHTML =precisionRound(myArr[5].value,1);
 document.getElementById("Collector").innerHTML =precisionRound(myArr[6].value,1);
 document.getElementById("SlabLea").innerHTML =precisionRound(myArr[7].value,1);
 document.getElementById("battv").innerHTML =precisionRound(myArr[8].value,1);
 document.getElementById("Mains").innerHTML =precisionRound(myArr[9].value,1);
-document.getElementById("AMSV").innerHTML =precisionRound(myArr[10].value,2);
-document.getElementById("RMSV").innerHTML =precisionRound(myArr[11].value,1);
-document.getElementById("SMSV").innerHTML =myArr[12].value;
-document.getElementById("EMSV").innerHTML =myArr[13].value;
+document.getElementById("temp1").innerHTML =precisionRound(myArr[10].value,1);
+document.getElementById("rh1").innerHTML =precisionRound(myArr[11].value,1);
+
+document.getElementById("AMSV").innerHTML =precisionRound(myArr[12].value,2);
+document.getElementById("RMSV").innerHTML =precisionRound(myArr[13].value,1);
+document.getElementById("SMSV").innerHTML =myArr[14].value;
+document.getElementById("EMSV").innerHTML =myArr[15].value;
 
 }     
 
@@ -133,6 +138,8 @@ setTimeout('send()', 1500);
 {"type": "analogValue","instance": 19,"property": "presentValue"},//itank
 {"type": "analogValue","instance": 22,"property": "presentValue"},//solarvolts
 {"type": "analogValue","instance": 39,"property": "presentValue"},//battcurrent
+{"type": "analogValue","instance": 43,"property": "presentValue"},//temp1
+{"type": "analogValue","instance": 44,"property": "presentValue"},//rh1
 {"type": "analogValue","instance": 48,"property": "presentValue"},//battkw
 {"type": "analogValue","instance": 50,"property": "presentValue"},//battpercent
 
