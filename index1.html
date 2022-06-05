@@ -38,8 +38,9 @@ body {font-size: 28px;
 <tr><td>DHW T:</td> <td>  <span id="DHWTank"></span></td></tr>
 <tr><td>Temp 1:</td> <td>  <span id="temp1"></span></td></tr>
 <tr><td>RH 1:</td> <td>  <span id="rh1"></span></td></tr>
+ <tr><td>Temp 2:</td> <td>  <span id="temp2"></span></td></tr>
+<tr><td>RH 2:</td> <td>  <span id="rh2"></span></td></tr>
 </table>
-<br><br/>
 
 <table style="width:150%">
 <tr><td>Water Tank Level:</td> <td> <span id="Collector"></span></td>
@@ -86,7 +87,7 @@ if ('serviceWorker' in navigator) {
 }, { passive: false });
 
 var alreadyrun;
-var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply,officeheater,walltemp,master,temp1,rh1;
+var OAT,RMT,DHWtank,Collector,SlabLea,battv,Polypipe,Power,Solar,Mains,AMSV,RMSV,EMSV,SMSV,CMSV,Gardenlights,ACunit,Circpump,DHWboost,Slabcirc,Econfan,Chickflap,Rooflouvre,Supply,officeheater,walltemp,master,temp1,rh1,temp2,rh2;
 var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
 function send(){
@@ -108,11 +109,13 @@ document.getElementById("battv").innerHTML =precisionRound(myArr[8].value,1);
 document.getElementById("Mains").innerHTML =precisionRound(myArr[9].value,1);
 document.getElementById("temp1").innerHTML =precisionRound(myArr[10].value,1);
 document.getElementById("rh1").innerHTML =precisionRound(myArr[11].value,1);
-
-document.getElementById("AMSV").innerHTML =precisionRound(myArr[12].value,2);
-document.getElementById("RMSV").innerHTML =precisionRound(myArr[13].value,1);
-document.getElementById("SMSV").innerHTML =myArr[14].value;
-document.getElementById("EMSV").innerHTML =myArr[15].value;
+document.getElementById("temp2").innerHTML =precisionRound(myArr[12].value,1);
+document.getElementById("rh2").innerHTML =precisionRound(myArr[13].value,1);
+  
+document.getElementById("AMSV").innerHTML =precisionRound(myArr[14].value,2);
+document.getElementById("RMSV").innerHTML =precisionRound(myArr[15].value,1);
+document.getElementById("SMSV").innerHTML =myArr[16].value;
+document.getElementById("EMSV").innerHTML =myArr[17].value;
 
 }     
 
@@ -140,6 +143,8 @@ setTimeout('send()', 1500);
 {"type": "analogValue","instance": 39,"property": "presentValue"},//battcurrent
 {"type": "analogValue","instance": 43,"property": "presentValue"},//temp1
 {"type": "analogValue","instance": 44,"property": "presentValue"},//rh1
+{"type": "analogValue","instance": 45,"property": "presentValue"},//temp2
+{"type": "analogValue","instance": 46,"property": "presentValue"},//rh2
 {"type": "analogValue","instance": 48,"property": "presentValue"},//battkw
 {"type": "analogValue","instance": 50,"property": "presentValue"},//battpercent
 
