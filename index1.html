@@ -36,10 +36,10 @@ body {font-size: 28px;
 <tr><td>Lounge T:</td> <td>  <span id="RMT"></span></td></tr>
 <tr><td>Master T:</td> <td>  <span id="master"></span></td></tr>
 <tr><td>DHW T:</td> <td>  <span id="DHWTank"></span></td></tr>
-<tr><td>Temp 1:</td> <td>  <span id="temp1"></span></td></tr>
-<tr><td>RH 1:</td> <td>  <span id="rh1"></span></td></tr>
- <tr><td>Temp 2:</td> <td>  <span id="temp2"></span></td></tr>
-<tr><td>RH 2:</td> <td>  <span id="rh2"></span></td></tr>
+<tr><i><td>Temp 1:</td> <td>  <span id="temp1"></span></td></i></tr>
+<tr><i><td>RH 1:</td> <td>  <span id="rh1"></span></td></i></tr>
+ <tr><i><td>Temp 2:</td> <td>  <span id="temp2"></span></td></i></tr>
+<tr><i><td>RH 2:</td> <td>  <span id="rh2"></span></td></i></tr>
 </table>
 
 <table style="width:150%">
@@ -108,9 +108,9 @@ document.getElementById("SlabLea").innerHTML =precisionRound(myArr[7].value,1);
 document.getElementById("battv").innerHTML =precisionRound(myArr[8].value,1);
 document.getElementById("Mains").innerHTML =precisionRound(myArr[9].value,1);
 document.getElementById("temp1").innerHTML =precisionRound(myArr[10].value,1);
-document.getElementById("rh1").innerHTML =precisionRound(myArr[11].value,1);
+document.getElementById("rh1").innerHTML =precisionRound(myArr[11].value,0);
 document.getElementById("temp2").innerHTML =precisionRound(myArr[12].value,1);
-document.getElementById("rh2").innerHTML =precisionRound(myArr[13].value,1);
+document.getElementById("rh2").innerHTML =precisionRound(myArr[13].value,0);
   
 document.getElementById("AMSV").innerHTML =precisionRound(myArr[14].value,2);
 document.getElementById("RMSV").innerHTML =precisionRound(myArr[15].value,1);
