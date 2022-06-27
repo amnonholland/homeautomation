@@ -3,7 +3,7 @@
 <html style="overflow: hidden">
 <head>
 
-<link rel="manifest" href="manifest.json">
+
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style"content="default" />
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
@@ -31,18 +31,18 @@ html {
     <option value="analog-input/105">analog-input/105 - DHW T</option>
     <option value="analog-input/106">analog-input/106 - Batt V</option>
     <option value="analog-input/107">analog-input/107 - House Tank</option>
-    <option value="analog-input/107">analog-input/108 - Irrig. Tank</option>
+    <option value="analog-input/108">analog-input/108 - Irrig. Tank</option>
     <option value="binary-output/102">binary-output/102 - DHW Booster</option>
     <option value="binary-output/103">binary-output/103 - Batt Grid Connect</option>
     <option value="binary-output/104">binary-output/104 - DHW Boost</option>
-    <option value="analog-value/25">analog-value/5 - Circ</option>
-    <option value="analog-value/26">analog-value/22 - Solar V</option>
+    <option value="analog-value/5">analog-value/5 - Circ</option>
+    <option value="analog-value/22">analog-value/22 - Solar V</option>
     <option value="analog-value/28">analog-value/28 - Solar kWh/day</option>
-    <option value="analog-value/28">analog-value/43 - Temp 1</option>
-    <option value="analog-value/28">analog-value/44 - RH 1</option>
-    <option value="analog-value/28">analog-value/45 - Temp 2</option>
-    <option value="analog-value/28">analog-value/46 - RH 2</option>
-    <option value="analog-value/28">analog-value/48 - Batt kW</option>
+    <option value="analog-value/43">analog-value/43 - Temp 1</option>
+    <option value="analog-value/44">analog-value/44 - RH 1</option>
+    <option value="analog-value/45">analog-value/45 - Temp 2</option>
+    <option value="analog-value/46">analog-value/46 - RH 2</option>
+    <option value="analog-value/48">analog-value/48 - Batt kW</option>
   </select>
  
   &emsp;
@@ -55,18 +55,18 @@ html {
     <option value="analog-input/105">analog-input/105 - DHW T</option>
     <option value="analog-input/106">analog-input/106 - Batt V</option>
     <option value="analog-input/107">analog-input/107 - House Tank</option>
-    <option value="analog-input/107">analog-input/108 - Irrig. Tank</option>
+    <option value="analog-input/108">analog-input/108 - Irrig. Tank</option>
     <option value="binary-output/102">binary-output/102 - DHW Booster</option>
     <option value="binary-output/103">binary-output/103 - Batt Grid Connect</option>
     <option value="binary-output/104">binary-output/104 - DHW Boost</option>
-    <option value="analog-value/25">analog-value/5 - Circ</option>
-    <option value="analog-value/26">analog-value/22 - Solar V</option>
+    <option value="analog-value/5">analog-value/5 - Circ</option>
+    <option value="analog-value/22">analog-value/22 - Solar V</option>
     <option value="analog-value/28">analog-value/28 - Solar kWh/day</option>
-    <option value="analog-value/28">analog-value/43 - Temp 1</option>
-    <option value="analog-value/28">analog-value/44 - RH 1</option>
-    <option value="analog-value/28">analog-value/45 - Temp 2</option>
-    <option value="analog-value/28">analog-value/46 - RH 2</option>
-    <option value="analog-value/28">analog-value/48 - Batt kW</option>
+    <option value="analog-value/43">analog-value/43 - Temp 1</option>
+    <option value="analog-value/44">analog-value/44 - RH 1</option>
+    <option value="analog-value/45">analog-value/45 - Temp 2</option>
+    <option value="analog-value/46">analog-value/46 - RH 2</option>
+    <option value="analog-value/48">analog-value/48 - Batt kW</option>
   </select>
   &emsp;
       <label for="item2"style="color:#c0504e;"></label>
@@ -164,18 +164,9 @@ scale1=scale;i++
 setTimeout(function(){timeout=true; }, 300);
 });
 		
-document.body.addEventListener('touchmove', touchmove);
-document.body.addEventListener('touchstart', touchstart);
-function touchstart(e){startX = e.touches[0].clientX;}
 
-function touchmove(e){if(timeout){
-var deltaX = e.touches[0].clientX - startX;
-minn=Math.max(minn,min);maxx=Math.min(maxx,max);
-if ((minn-range*(deltaX/5000))<min){minn=min;maxx=min+range} else {minn=minn-range*(deltaX/5000)}
-if ((maxx-range*(deltaX/5000))>max){maxx=max;minn=max-range} else {maxx=minn+range;}	//maxx-range*(deltaX/5000)	      
-chart.options.axisX.minimum=minn;chart.options.axisX.maximum=maxx; 
-chart.render();
-}}
+
+
 
 }	
 </script>
