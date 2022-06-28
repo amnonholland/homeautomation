@@ -24,8 +24,8 @@ html {
 <br>
 
   <label for="item"style="color:#4f81bd;"></label>
-  <select onchange="processdata(0,1)" name="item" style="color:#4f81bd;" id="item">
-    <option value="analog-input/101">analog-input/101 - OAT</option>
+  <select onchange="trend1()" name="item" style="color:#4f81bd;" id="item">
+    <option value="analog-input/101">analog-input/101 - OATsssss</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/103">analog-input/103 - Batt A</option>
     <option value="analog-input/104">analog-input/104 - Master T</option>
@@ -48,7 +48,7 @@ html {
  
   &emsp;
     <label for="item1"style="color:#c0504e;"></label>
-  <select onchange="processdata(1,0)" name="item1" id="item1"style="color:#c0504e;">
+  <select onchange="trend2()" name="item1" id="item1"style="color:#c0504e;">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/103">analog-input/103 - Batt A</option>
@@ -87,48 +87,35 @@ html {
 </html>
 <script>
 
-processdata(1,1);
-function processdata(trend1,trend2){	
-var item = document.getElementById("item").value;
-var item1 = document.getElementById("item1").value;
-var samples = document.getElementById("item2").value;
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
 var dataPoints = [];var data1Points = [];
-var data = [];var min=0,max=0,i=0;var chart;var start=0, end=0,timeout=true;
-	
-function fetchtrend(var1){
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=")+samples+String("&descending=true");
+var data = [];
+var min=0,max=0,i=0;
+
+
+trend1();trend2();
+function trend1(){   
+i=0;dataPoints=[];
+var item = document.getElementById("item").value;
+var samples = document.getElementById("item2").value;
+
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples+String("&descending=true");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
     xmlhttp.send(null);
-    return json = JSON.parse(xmlhttp.responseText);
-}
-
-if(trend1=1){
-var json = fetchtrend(item);
+var json = JSON.parse(xmlhttp.responseText);
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
-var y=0;
+
 if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
 dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
-}
-if(trend2=1){
-var json1 = fetchtrend(item1);
-var time1 = json1.map(item1 => item1.timeStamp);
-var value1 = json1.map(item1 => item1.value);
-var y=0;
-if(item1.includes("binary")){data1Series.type = "stepArea"}
-for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
-data1Series.dataPoints = data1Points;data.push(data1Series); 
-}
 
-min = Math.max(data[0].dataPoints[dataPoints.length - 1].x,data[1].dataPoints[data1Points.length - 1].x);
-max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
-
+min = data[0].dataPoints[dataPoints.length - 1].x;
+max = data[0].dataPoints[0].x;
 
 var chart = new CanvasJS.Chart("chartContainer", {
  zoomEnabled: true,
@@ -146,8 +133,46 @@ chart.render();
 function toggleDataSeries(e){
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
   chart.render();} 
- 
-
-
 }	
+
+
+function trend2(){   
+i=0;data1Points=[];
+var item = document.getElementById("item1").value;
+var samples = document.getElementById("item2").value;
+
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples+String("&descending=true");
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+    xmlhttp.send(null);
+var json = JSON.parse(xmlhttp.responseText);
+var time = json.map(item => item.timeStamp);
+var value = json.map(item => item.value);
+
+if(item.includes("binary")){dataSeries.type = "stepArea"}
+for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
+data1Series.dataPoints = data1Points;data.push(data1Series);
+
+min = data[1].dataPoints[data1Points.length - 1].x;
+max = data[1].dataPoints[0].x;
+
+var chart = new CanvasJS.Chart("chartContainer", {
+ zoomEnabled: true,
+ axisX:{minimum:min,maximum:max},
+  data:data,
+  legend:{
+	cursor: "pointer",
+	fontSize: 16,
+  itemclick: toggleDataSeries
+  }
+    	,toolTip:{enabled: true}
+    });
+chart.render();
+ 
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
+  chart.render();} 
+}
 </script>
