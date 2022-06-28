@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
 <head>
@@ -23,7 +24,7 @@ html {
 <br>
 
   <label for="item"style="color:#4f81bd;"></label>
-  <select onchange="processdata()" name="item" style="color:#4f81bd;" id="item">
+  <select onchange="processdata(0,1)" name="item" style="color:#4f81bd;" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/103">analog-input/103 - Batt A</option>
@@ -47,7 +48,7 @@ html {
  
   &emsp;
     <label for="item1"style="color:#c0504e;"></label>
-  <select onchange="processdata()" name="item1" id="item1"style="color:#c0504e;">
+  <select onchange="processdata(1,0)" name="item1" id="item1"style="color:#c0504e;">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/103">analog-input/103 - Batt A</option>
@@ -85,13 +86,9 @@ html {
 </body>
 </html>
 <script>
- document.addEventListener('touchmove', function(e) {
-    e.preventDefault();}, { passive: false });
 
-
-processdata();
-function processdata(){	
-//window.onload = function () {
+processdata(1,1);
+function processdata(trend1,trend2){	
 var item = document.getElementById("item").value;
 var item1 = document.getElementById("item1").value;
 var samples = document.getElementById("item2").value;
@@ -110,6 +107,7 @@ var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/ob
     return json = JSON.parse(xmlhttp.responseText);
 }
 
+if(trend1=1){
 var json = fetchtrend(item);
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
@@ -117,7 +115,8 @@ var y=0;
 if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
 dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
-
+}
+if(trend2=1){
 var json1 = fetchtrend(item1);
 var time1 = json1.map(item1 => item1.timeStamp);
 var value1 = json1.map(item1 => item1.value);
@@ -125,6 +124,7 @@ var y=0;
 if(item1.includes("binary")){data1Series.type = "stepArea"}
 for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
 data1Series.dataPoints = data1Points;data.push(data1Series); 
+}
 
 min = Math.max(data[0].dataPoints[dataPoints.length - 1].x,data[1].dataPoints[data1Points.length - 1].x);
 max = Math.max(data[0].dataPoints[0].x,data[1].dataPoints[0].x);
