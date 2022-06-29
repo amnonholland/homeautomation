@@ -72,9 +72,9 @@ html {
   &emsp;
       <label for="item2"style="color:#c0504e;"></label>
   <select onchange="processdata()" name="item2" id="item2"style="color:#c0504f;">
-    <option value="288">1 Day</option>
-    <option value="576">2 Days</option>
-    <option value="864">3 Days</option>
+    <option value="86400000">1 Day</option>
+    <option value="172800000">2 Days</option>
+    <option value="259200000">3 Days</option>
   </select>
   
   
@@ -114,7 +114,7 @@ if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
 dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
 
-min = data[0].dataPoints[dataPoints.length - 1].x;
+min = Date.now()-samples;
 max = data[0].dataPoints[0].x;
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -155,7 +155,7 @@ if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
 data1Series.dataPoints = data1Points;data.push(data1Series);
 
-min = data[1].dataPoints[data1Points.length - 1].x;
+min = Date.now()-samples;
 max = data[1].dataPoints[0].x;
 
 var chart = new CanvasJS.Chart("chartContainer", {
