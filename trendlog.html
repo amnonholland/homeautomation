@@ -71,10 +71,10 @@ html {
   </select>
   &emsp;
       <label for="item2"style="color:#c0504e;"></label>
-  <select onchange="processdata()" name="item2" id="item2"style="color:#c0504f;">
-    <option value="86400000">1 Day</option>
-    <option value="172800000">2 Days</option>
-    <option value="259200000">3 Days</option>
+  <select onchange="trend1();trend2();" name="item2" id="item2"style="color:#c0504f;">
+    <option value="1">1 Day</option>
+    <option value="2">2 Days</option>
+    <option value="3">3 Days</option>
   </select>
   
   
@@ -100,7 +100,7 @@ i=0;dataPoints=[];
 var item = document.getElementById("item").value;
 var samples = document.getElementById("item2").value;
 
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples+String("&descending=true");
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples*288+String("&descending=true");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -113,7 +113,7 @@ var value = json.map(item => item.value);
 if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
 dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
-
+samples=samples*86400000;
 min = Date.now()-samples;
 max = data[0].dataPoints[0].x;
 
@@ -141,7 +141,7 @@ i=0;data1Points=[];
 var item = document.getElementById("item1").value;
 var samples = document.getElementById("item2").value;
 
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples+String("&descending=true");
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples*288+String("&descending=true");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -154,7 +154,7 @@ var value = json.map(item => item.value);
 if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
 data1Series.dataPoints = data1Points;data.push(data1Series);
-
+samples=samples*86400000;
 min = Date.now()-samples;
 max = data[1].dataPoints[0].x;
 
