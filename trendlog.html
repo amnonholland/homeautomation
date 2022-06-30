@@ -1,18 +1,17 @@
-
-
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
+<body style="background-color:black;">
 <head>
 
 
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style"content="default" />
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width" />
-	<meta http-equiv="expires" content="0">
+<meta http-equiv="expires" content="0">
 <style>
 html {
-  
-  
+ 
+ 
 }
 
 </style>
@@ -23,9 +22,9 @@ html {
 </div>
 <br>
 
-  <label for="item"style="color:#4f81bd;"></label>
-  <select onchange="trend1()" name="item" style="color:#4f81bd;" id="item">
-    <option value="analog-input/101">analog-input/101 - OATsssss</option>
+  <label for="item"style="color:#DDDF0E;"></label>
+  <select onchange="trend1();render();" name="item" style="color:#DDDF0E;background-color:#424949;" id="item">
+    <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/103">analog-input/103 - Batt A</option>
     <option value="analog-input/104">analog-input/104 - Master T</option>
@@ -47,8 +46,8 @@ html {
   </select>
  
   &emsp;
-    <label for="item1"style="color:#c0504e;"></label>
-  <select onchange="trend2()" name="item1" id="item1"style="color:#c0504e;">
+    <label for="item1"style="color:#7698BF;"></label>
+  <select onchange="trend2();render();" name="item1" id="item1"style="color:#7698BF;background-color:#424949;">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/103">analog-input/103 - Batt A</option>
@@ -71,31 +70,37 @@ html {
   </select>
   &emsp;
       <label for="item2"style="color:#c0504e;"></label>
-  <select onchange="trend1();trend2();" name="item2" id="item2"style="color:#c0504f;">
+  <select onchange="trend1();trend2();" name="item2" id="item2"style="color:#999999;background-color:#424949;">
     <option value="1">1 Day</option>
     <option value="2">2 Days</option>
     <option value="3">3 Days</option>
   </select>
-  
-  
-  
+ 
+ 
+ 
 
 
-	<span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
-		
+<span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
+
 </body>
 </html>
 <script>
-
+        CanvasJS.addColorSet("abc",
+                ["#7698BF",
+                "#DDDF0E"
+                       
+                ]);
+                
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
 var dataPoints = [];var data1Points = [];
 var data = [];
-var min=0,max=0,i=0;
+var i=0;
 
 
-trend1();trend2();
-function trend1(){   
+trend1();trend2;render();
+
+function trend1(){  
 i=0;dataPoints=[];
 var item = document.getElementById("item").value;
 var samples = document.getElementById("item2").value;
@@ -112,28 +117,10 @@ var value = json.map(item => item.value);
 
 if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
-dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
+dataSeries.dataPoints = dataPoints;data.push(dataSeries);
 samples=samples*86400000;
-min = Date.now()-samples;
-max = data[0].dataPoints[0].x;
+}
 
-var chart = new CanvasJS.Chart("chartContainer", {
- zoomEnabled: true,
- axisX:{minimum:min,maximum:max},
-  data:data,
-  legend:{
-	cursor: "pointer",
-	fontSize: 16,
-  itemclick: toggleDataSeries
-  }
-    	,toolTip:{enabled: true}
-    });
-chart.render();
- 
-function toggleDataSeries(e){
-	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
-  chart.render();} 
-}	
 
 
 function trend2(){   
@@ -155,24 +142,94 @@ if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
 data1Series.dataPoints = data1Points;data.push(data1Series);
 samples=samples*86400000;
-min = Date.now()-samples;
-max = data[1].dataPoints[0].x;
 
+}
+
+
+
+
+
+
+
+
+
+
+
+function render() {
 var chart = new CanvasJS.Chart("chartContainer", {
  zoomEnabled: true,
- axisX:{minimum:min,maximum:max},
+
+ backgroundColor: "#000000",
+ theme: "dark1",
+ colorSet: "abc",
+ fontColor: "#999999",
+  axisX:{gridThickness: 1,
+   gridColor: "#424949",
+   lineThickness: 0,
+   lineColor: "#000000",
+   tickLength: 0,
+   labelFontColor: "#999999",
+   
+ },
+   axisY:{gridThickness: 1,
+   gridColor: "#424949",
+   tickLength: 0,
+      lineThickness: 0,
+   lineColor: "#000000",
+   labelFontColor: "#999999",
+ },
+
   data:data,
   legend:{
-	cursor: "pointer",
-	fontSize: 16,
+cursor: "crosshair",
+fontSize: 16,
   itemclick: toggleDataSeries
   }
-    	,toolTip:{enabled: true}
+    ,toolTip:{enabled: true,borderThickness: 0},
+    toolbar:{buttonBorderColor: "#424949"}
     });
 chart.render();
+
+document.addEventListener('keydown', function(e) {
+
+    var axisX = chart.axisX[0];
+    var viewportMin = axisX.get("viewportMinimum"),
+        viewportMax = axisX.get("viewportMaximum"),
+        interval = 3000000;
+    var newViewportMin, newViewportMax;
+
+    if (e.keyCode == '38'|| e.keyCode =='34') {// up arrow    
+      newViewportMin = viewportMin + interval;
+      newViewportMax = viewportMax - interval;
+    }
+    else if (e.keyCode == '40'|| e.keyCode =='34') {// down arrow
+      newViewportMin = viewportMin - interval;
+      newViewportMax = viewportMax + interval;
+    }
+    else if (e.keyCode == '37') {// left arrow
+      newViewportMin = viewportMin - interval;
+      newViewportMax = viewportMax - interval;
+    }
+    else if (e.keyCode == '39') {// right arrow
+      newViewportMin = viewportMin + interval;
+      newViewportMax = viewportMax + interval;
+    }
+
+   if(newViewportMin >= chart.axisX[0].get("minimum") && newViewportMax <= chart.axisX[0].get("maximum") && (newViewportMax - newViewportMin) > (2 * interval)){
+      chart.axisX[0].set("viewportMinimum", newViewportMin,true);
+      chart.axisX[0].set("viewportMaximum", newViewportMax);
+    }
+
+}, false);
+
+
+
+
  
 function toggleDataSeries(e){
-	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
-  chart.render();} 
+if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
+  chart.render();}
 }
+
+
 </script>
