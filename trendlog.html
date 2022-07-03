@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
 <body style="background-color:black;">
@@ -126,7 +127,7 @@ var value = json.map(item => item.value);
 
 if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
-dataSeries.dataPoints = dataPoints;data.push(dataSeries);
+//dataSeries.dataPoints = dataPoints;data.push(dataSeries);
 }
 
 
@@ -148,33 +149,34 @@ var value = json.map(item => item.value);
 
 if(item.includes("binary")){data1Series.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
-data1Series.dataPoints = data1Points;data.push(data1Series);
+//data1Series.dataPoints = data1Points;data.push(data1Series);
 }
 
 
 
 function render() {
 CanvasJS.addColorSet("abc",["#DDDF0E","#7698BF"]);
-//dataSeries.dataPoints = dataPoints;data.push(dataSeries);
-//data1Series.dataPoints = data1Points;data.push(data1Series);
+dataSeries.dataPoints = dataPoints;data.push(dataSeries);
+data1Series.dataPoints = data1Points;data.push(data1Series);
+var samples = document.getElementById("item2").value;
 
 var chart = new CanvasJS.Chart("chartContainer", {
  zoomEnabled: true,
 
  backgroundColor: "#000000",theme: "dark1",colorSet: "abc",fontColor: "#999999",
-  axisX:{gridThickness: 1,gridColor: "#424949",lineThickness: 0,
+  axisX:{gridThickness: 1,gridColor: "#424949",lineThickness: 0,labelFontSize: 12,
+  //minimum:Date.now()-samples*86400000,maximum:Date.now(),
    lineColor: "#000000",
    tickLength: 0,
    labelFontColor: "#999999",   
  },
-   axisY:{gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,
+   axisY:{gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",
    labelFontColor: "#999999", 
  },
   data:data,
   legend:{
 cursor: "crosshair",
-fontSize: 16,
   itemclick: toggleDataSeries
   }
     ,toolTip:{enabled: true,borderThickness: 0},
