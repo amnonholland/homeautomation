@@ -19,56 +19,68 @@ html {
 
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
 <body>
-<div id="chartContainer" style="height: 300px; width: 100%;">
+<div id="chartContainer" style="height: 500px; width: 100%;">
 </div>
 <br>
 
   <label for="item"style="color:#DDDF0E;"></label>
-  <select onchange="trend1();render();" name="item" style="color:#DDDF0E;background-color:#424949;" id="item">
+  <select onchange="trend1();render();chartdiv.focus();" name="item" style="color:#DDDF0E;background-color:#424949;" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
-    <option value="analog-input/103">analog-input/103 - Batt A</option>
     <option value="analog-input/104">analog-input/104 - Master T</option>
     <option value="analog-input/105">analog-input/105 - DHW T</option>
-    <option value="analog-input/106">analog-input/106 - Batt V</option>
-    <option value="analog-input/107">analog-input/107 - House Tank</option>
-    <option value="analog-input/108">analog-input/108 - Irrig. Tank</option>
     <option value="binary-output/102">binary-output/102 - DHW Booster</option>
     <option value="binary-output/103">binary-output/103 - Batt Grid Connect</option>
-    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
     <option value="analog-value/5">analog-value/5 - Circ</option>
+    <option value="analog-value/10">analog-value/10 - Batt V</option>
+    <option value="analog-value/11">analog-value/11 - Solar kWhout</option>
+    <option value="analog-value/12">analog-value/12 - Solar kWhin</option>
+    <option value="analog-value/17">analog-value/17 - Solar kW</option>
+    <option value="analog-value/18">analog-value/18 - House Tank</option>
+    <option value="analog-value/19">analog-value/19 - Irrig. Tank</option>
     <option value="analog-value/22">analog-value/22 - Solar V</option>
+    <option value="analog-value/23">analog-value/23 - Batt A</option>
     <option value="analog-value/28">analog-value/28 - Solar kWh/day</option>
+    <option value="analog-value/42">analog-value/42 - Flue T</option>
     <option value="analog-value/43">analog-value/43 - Temp 1</option>
     <option value="analog-value/44">analog-value/44 - RH 1</option>
     <option value="analog-value/45">analog-value/45 - Temp 2</option>
     <option value="analog-value/46">analog-value/46 - RH 2</option>
     <option value="analog-value/48">analog-value/48 - Batt kW</option>
+    <option value="analog-value/50">analog-value/50 - Batt %</option>
   </select>
  
   &emsp;
     <label for="item1"style="color:#7698BF;"></label>
-  <select onchange="trend2();render();" name="item1" id="item1"style="color:#7698BF;background-color:#424949;">
+  <select onchange="trend2();render();chartdiv.focus();" name="item1" id="item1"style="color:#7698BF;background-color:#424949;">
     <option value="analog-input/101">analog-input/101 - OAT</option>
-    <option value="analog-input/102">analog-input/102 - Lounge T</option>
-    <option value="analog-input/103">analog-input/103 - Batt A</option>
+    <option value="analog-input/102"selected="selected">analog-input/102 - Lounge T</option>
     <option value="analog-input/104">analog-input/104 - Master T</option>
     <option value="analog-input/105">analog-input/105 - DHW T</option>
-    <option value="analog-input/106">analog-input/106 - Batt V</option>
-    <option value="analog-input/107">analog-input/107 - House Tank</option>
-    <option value="analog-input/108">analog-input/108 - Irrig. Tank</option>
     <option value="binary-output/102">binary-output/102 - DHW Booster</option>
     <option value="binary-output/103">binary-output/103 - Batt Grid Connect</option>
-    <option value="binary-output/104">binary-output/104 - DHW Boost</option>
     <option value="analog-value/5">analog-value/5 - Circ</option>
+    <option value="analog-value/10">analog-value/10 - Batt V</option>
+    <option value="analog-value/11">analog-value/11 - Solar kWhout</option>
+    <option value="analog-value/12">analog-value/12 - Solar kWhin</option>
+    <option value="analog-value/17">analog-value/17 - Solar kW</option>
+    <option value="analog-value/18">analog-value/18 - House Tank</option>
+    <option value="analog-value/19">analog-value/19 - Irrig. Tank</option>
     <option value="analog-value/22">analog-value/22 - Solar V</option>
+    <option value="analog-value/23">analog-value/23 - Batt A</option>
     <option value="analog-value/28">analog-value/28 - Solar kWh/day</option>
+    <option value="analog-value/42">analog-value/42 - Flue T</option>
     <option value="analog-value/43">analog-value/43 - Temp 1</option>
     <option value="analog-value/44">analog-value/44 - RH 1</option>
     <option value="analog-value/45">analog-value/45 - Temp 2</option>
     <option value="analog-value/46">analog-value/46 - RH 2</option>
     <option value="analog-value/48">analog-value/48 - Batt kW</option>
+    <option value="analog-value/50">analog-value/50 - Batt %</option>
   </select>
+  
+  
+  
+  
   &emsp;
       <label for="item2"style="color:#c0504e;"></label>
   <select onchange="trend1();trend2();render()" name="item2" id="item2"style="color:#999999;background-color:#424949;">
@@ -86,6 +98,7 @@ html {
 </body>
 </html>
 <script>
+var chartdiv = document.getElementById('chartContainer');
 
                
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
@@ -113,7 +126,7 @@ var value = json.map(item => item.value);
 
 if(item.includes("binary")){dataSeries.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
-//dataSeries.dataPoints = dataPoints;data.push(dataSeries);
+dataSeries.dataPoints = dataPoints;data.push(dataSeries);
 }
 
 
@@ -133,17 +146,17 @@ var json = JSON.parse(xmlhttp.responseText);
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
 
-if(item.includes("binary")){dataSeries.type = "stepArea"}
+if(item.includes("binary")){data1Series.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
-//data1Series.dataPoints = data1Points;data.push(data1Series);
+data1Series.dataPoints = data1Points;data.push(data1Series);
 }
 
 
 
 function render() {
 CanvasJS.addColorSet("abc",["#DDDF0E","#7698BF"]);
-dataSeries.dataPoints = dataPoints;data.push(dataSeries);
-data1Series.dataPoints = data1Points;data.push(data1Series);
+//dataSeries.dataPoints = dataPoints;data.push(dataSeries);
+//data1Series.dataPoints = data1Points;data.push(data1Series);
 
 var chart = new CanvasJS.Chart("chartContainer", {
  zoomEnabled: true,
@@ -168,6 +181,7 @@ fontSize: 16,
     toolbar:{buttonBorderColor: "#424949"}
     });
 chart.render();
+chartdiv.focus();
 
 document.addEventListener('keydown', function(e) {
 
