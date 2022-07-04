@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
 <body style="background-color:black;">
@@ -50,8 +51,16 @@ html {
     <option value="analog-value/48">analog-value/48 - Batt kW</option>
     <option value="analog-value/50">analog-value/50 - Batt %</option>
   </select>
- 
-  &emsp;
+  
+   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+      <label for="item2"style="color:#c0504e;"></label>
+  <select onchange="trend1();trend2();render()" name="item2" id="item2"style="color:#999999;background-color:#424949;">
+    <option value="1">1 Day</option>
+    <option value="2">2 Days</option>
+    <option value="3">3 Days</option>
+  </select>
+  
+  <br>  <br>
     <label for="item1"style="color:#7698BF;"></label>
   <select onchange="trend2();render();chartdiv.focus();" name="item1" id="item1"style="color:#7698BF;background-color:#424949;">
     <option value="analog-input/101">analog-input/101 - OAT</option>
@@ -78,17 +87,7 @@ html {
     <option value="analog-value/48">analog-value/48 - Batt kW</option>
     <option value="analog-value/50">analog-value/50 - Batt %</option>
   </select>
-  
-  
-  
-  
-  &emsp;
-      <label for="item2"style="color:#c0504e;"></label>
-  <select onchange="trend1();trend2();render()" name="item2" id="item2"style="color:#999999;background-color:#424949;">
-    <option value="1">1 Day</option>
-    <option value="2">2 Days</option>
-    <option value="3">3 Days</option>
-  </select>
+ 
  
  
  
@@ -100,7 +99,7 @@ html {
 </html>
 <script>
 var chartdiv = document.getElementById('chartContainer');
-
+chartdiv.blur();
                
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
@@ -159,18 +158,21 @@ CanvasJS.addColorSet("abc",["#DDDF0E","#7698BF"]);
 dataSeries.dataPoints = dataPoints;data.push(dataSeries);
 data1Series.dataPoints = data1Points;data.push(data1Series);
 var samples = document.getElementById("item2").value;
+var item = document.getElementById("item");
+var item1 = document.getElementById("item1");
+var item2 = document.getElementById("item2");
 
 var chart = new CanvasJS.Chart("chartContainer", {
  zoomEnabled: true,
 
  backgroundColor: "#000000",theme: "dark1",colorSet: "abc",fontColor: "#999999",
   axisX:{gridThickness: 1,gridColor: "#424949",lineThickness: 0,labelFontSize: 12,
-  //minimum:Date.now()-samples*86400000,maximum:Date.now(),
+  minimum:Date.now()-samples*86400000,maximum:Date.now(),
    lineColor: "#000000",
    tickLength: 0,
    labelFontColor: "#999999",   
  },
-   axisY:{gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,labelFontSize: 12,
+   axisY:{valueFormatString: "###,###.0",gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",
    labelFontColor: "#999999", 
  },
@@ -183,7 +185,7 @@ cursor: "crosshair",
     toolbar:{buttonBorderColor: "#424949"}
     });
 chart.render();
-chartdiv.focus();
+
 
 document.addEventListener('keydown', function(e) {
 
@@ -223,7 +225,7 @@ document.addEventListener('keydown', function(e) {
 function toggleDataSeries(e){
 if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
   chart.render();}
-}
+item.blur();item1.blur();items2.blur();}
 
 
 </script>
