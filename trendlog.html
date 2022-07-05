@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
 <body style="background-color:black;">
@@ -26,7 +27,7 @@ html {
 <br>
 
   <label for="item"style="color:#DDDF0E;"></label>
-  <select onchange="trend1();render();chartdiv.focus();" name="item" style="color:#DDDF0E;background-color:#424949;" id="item">
+  <select onchange="trend1();render();" name="item" style="color:#DDDF0E;background-color:#424949;" id="item">
     <option value="analog-input/101">analog-input/101 - OAT</option>
     <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/104">analog-input/104 - Master T</option>
@@ -51,20 +52,47 @@ html {
     <option value="analog-value/48">analog-value/48 - Batt kW</option>
     <option value="analog-value/50">analog-value/50 - Batt %</option>
   </select>
-  
+ 
    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
       <label for="item2"style="color:#c0504e;"></label>
-  <select onchange="trend1();trend2();render()" name="item2" id="item2"style="color:#999999;background-color:#424949;">
+  <select onchange="trend1();trend2();trend3();render()" name="item2" id="item2"style="color:#999999;background-color:#424949;">
     <option value="1">1 Day</option>
     <option value="2">2 Days</option>
     <option value="3">3 Days</option>
   </select>
-  
+ 
   <br>  <br>
     <label for="item1"style="color:#7698BF;"></label>
-  <select onchange="trend2();render();chartdiv.focus();" name="item1" id="item1"style="color:#7698BF;background-color:#424949;">
+  <select onchange="trend2();render();" name="item1" id="item1"style="color:#7698BF;background-color:#424949;">
     <option value="analog-input/101">analog-input/101 - OAT</option>
-    <option value="analog-input/102"selected="selected">analog-input/102 - Lounge T</option>
+    <option value="analog-input/102">analog-input/102 - Lounge T</option>
+    <option value="analog-input/104">analog-input/104 - Master T</option>
+    <option value="analog-input/105">analog-input/105 - DHW T</option>
+    <option value="binary-output/102">binary-output/102 - DHW Booster</option>
+    <option value="binary-output/103">binary-output/103 - Batt Grid Connect</option>
+    <option value="analog-value/5">analog-value/5 - Circ</option>
+    <option value="analog-value/10">analog-value/10 - Batt V</option>
+    <option value="analog-value/11">analog-value/11 - Solar kWhout</option>
+    <option value="analog-value/12">analog-value/12 - Solar kWhin</option>
+    <option value="analog-value/17">analog-value/17 - Solar kW</option>
+    <option value="analog-value/18">analog-value/18 - House Tank</option>
+    <option value="analog-value/19">analog-value/19 - Irrig. Tank</option>
+    <option value="analog-value/22">analog-value/22 - Solar V</option>
+    <option value="analog-value/23">analog-value/23 - Batt A</option>
+    <option value="analog-value/28">analog-value/28 - Solar kWh/day</option>
+    <option value="analog-value/42">analog-value/42 - Flue T</option>
+    <option value="analog-value/43">analog-value/43 - Temp 1</option>
+    <option value="analog-value/44">analog-value/44 - RH 1</option>
+    <option value="analog-value/45">analog-value/45 - Temp 2</option>
+    <option value="analog-value/46">analog-value/46 - RH 2</option>
+    <option value="analog-value/48">analog-value/48 - Batt kW</option>
+    <option value="analog-value/50">analog-value/50 - Batt %</option>
+  </select>
+   <br>  <br>
+    <label for="item3"style="color:#7cbc66;"></label>
+  <select onchange="trend3();render();" name="item3" id="item3"style="color:#7cbc66;background-color:#424949;">
+    <option value="analog-input/101">analog-input/101 - OAT</option>
+    <option value="analog-input/102">analog-input/102 - Lounge T</option>
     <option value="analog-input/104">analog-input/104 - Master T</option>
     <option value="analog-input/105">analog-input/105 - DHW T</option>
     <option value="binary-output/102">binary-output/102 - DHW Booster</option>
@@ -88,26 +116,18 @@ html {
     <option value="analog-value/50">analog-value/50 - Batt %</option>
   </select>
  
- 
- 
- 
-
-
-<span id="hello"></span><Br><span id="hello1"></span><Br><span id="hello2"></span><Br><span id="hello3"></span><Br><span id="hello4"></span>
-
 </body>
 </html>
 <script>
-var chartdiv = document.getElementById('chartContainer');
-chartdiv.blur();
-               
+             
 var dataSeries = {type: "line",xValueType: "dateTime",name: "Log 1"};
 var data1Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
-var dataPoints = [];var data1Points = [];
+var data2Series = {type: "line",xValueType: "dateTime",name: "Log 2"};
+var dataPoints = [];var data1Points = [];var data2Points = [];
 var data = [];
 var i=0;
 
-trend1();trend2();render();
+trend1();render();
 
 function trend1(){
 i=0;dataPoints=[];
@@ -124,9 +144,10 @@ var json = JSON.parse(xmlhttp.responseText);
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
 
-if(item.includes("binary")){dataSeries.type = "stepArea"}
-for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
-//dataSeries.dataPoints = dataPoints;data.push(dataSeries);
+if(item.includes("binary")){dataSeries.type = "stepArea"
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}} else {
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}}
+
 }
 
 
@@ -148,33 +169,59 @@ var value = json.map(item => item.value);
 
 if(item.includes("binary")){data1Series.type = "stepArea"}
 for (var i = 0; i < time.length; i ++) {data1Points.push({x: time[i],y: value[i]});}
-//data1Series.dataPoints = data1Points;data.push(data1Series);
+
+}
+
+function trend3(){  
+i=0;data2Points=[];
+var item = document.getElementById("item3").value;
+var samples = document.getElementById("item2").value;
+
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples*288+String("&descending=true");
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+    xmlhttp.send(null);
+var json = JSON.parse(xmlhttp.responseText);
+var time = json.map(item => item.timeStamp);
+var value = json.map(item => item.value);
+
+if(item.includes("binary")){data2Series.type = "stepArea"}
+for (var i = 0; i < time.length; i ++) {data2Points.push({x: time[i],y: value[i]});}
+
 }
 
 
 
+
+
+
 function render() {
-CanvasJS.addColorSet("abc",["#DDDF0E","#7698BF"]);
+CanvasJS.addColorSet("abc",["#DDDF0E","#7698BF","#7cbc66"]);
 dataSeries.dataPoints = dataPoints;data.push(dataSeries);
 data1Series.dataPoints = data1Points;data.push(data1Series);
+data2Series.dataPoints = data2Points;data.push(data2Series);
+
 var samples = document.getElementById("item2").value;
 var item = document.getElementById("item");
 var item1 = document.getElementById("item1");
 var item2 = document.getElementById("item2");
+var item3 = document.getElementById("item3");
 
 var chart = new CanvasJS.Chart("chartContainer", {
  zoomEnabled: true,
 
  backgroundColor: "#000000",theme: "dark1",colorSet: "abc",fontColor: "#999999",
   axisX:{gridThickness: 1,gridColor: "#424949",lineThickness: 0,labelFontSize: 12,
-  minimum:Date.now()-samples*86400000,maximum:Date.now(),
+  //minimum:Date.now()-samples*86400000,maximum:Date.now(),
    lineColor: "#000000",
    tickLength: 0,
-   labelFontColor: "#999999",   
+   labelFontColor: "#999999",  
  },
-   axisY:{valueFormatString: "###,###.0",gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,labelFontSize: 12,
+   axisY:{gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",
-   labelFontColor: "#999999", 
+   labelFontColor: "#999999",
  },
   data:data,
   legend:{
@@ -193,7 +240,7 @@ document.addEventListener('keydown', function(e) {
     var viewportMin = axisX.get("viewportMinimum"),
         viewportMax = axisX.get("viewportMaximum"),
         interval = (viewportMax-viewportMin)/10;
-        // 3000000;
+ 
     var newViewportMin, newViewportMax;
 
     if (e.keyCode == '38'|| e.keyCode =='34') {// up arrow    
@@ -225,7 +272,7 @@ document.addEventListener('keydown', function(e) {
 function toggleDataSeries(e){
 if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
   chart.render();}
-item.blur();item1.blur();items2.blur();}
+item.blur();item1.blur();item2.blur();item3.blur();}
 
 
 </script>
