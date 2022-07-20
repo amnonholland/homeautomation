@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
 <body style="background-color:black;">
@@ -14,19 +15,22 @@
   .selectMultiple {
 	width: 100%;
 	position: relative;
+   
 }
 
 .selectMultiple select {
 	display: none;
+    
 }
 
 .selectMultiple > div {
-	position: fixed;
-    top:310px;
-    width: 95%;
-	z-index: 2;
+	position: relative;
+    width: 100%;
+	z-index: 0;
+    overflow-y: scroll;
 	padding: 8px 12px 2px 12px;
 	border-radius: 8px;
+    cursor: pointer;
 	background: #424949;
 	font-size: 12px;
 	min-height: 44px;
@@ -51,6 +55,7 @@
 	content: '';
 	position: absolute;
 	display: block;
+    overflow-y: scroll;
 	width: 2px;
 	height: 8px;
 	border-bottom: 8px solid #99A3BA;
@@ -218,6 +223,7 @@
 	left: 0;
 	right: 0;
 	visibility: hidden;
+    overflow-y: scroll;
 	opacity: 0;
 	border-radius: 8px;
 	transform: translate(0, 20px) scale(0.8);
@@ -231,7 +237,7 @@
 	background: #999999;
 	padding: 2px 16px;
 	cursor: pointer;
-	overflow: hidden;
+	overflow-y: scroll;
 	position: relative;
 	transition: background .3s ease, color .3s ease, transform .3s ease .3s, opacity .5s ease .3s, border-radius .3s ease;
 }
@@ -264,6 +270,7 @@
 	left: 50%;
 	width: 6px;
 	height: 6px;
+    overflow-y: scroll;
 	background: rgba(0, 0, 0, 0.4);
 	opacity: 0;
 	border-radius: 100%;
@@ -374,7 +381,7 @@ body {
 }
 
 body .selectMultiple {
-	margin-top: -12%;
+	//margin-top: -12%;
 }
 
 body .dribbble {
@@ -382,7 +389,7 @@ body .dribbble {
 	display: block;
 	right: 20px;
 	bottom: 20px;
-	opacity: .5;
+	opacity: .
 	transition: all .4s ease;
 }
 
@@ -395,15 +402,20 @@ body .dribbble img {
 	height: 36px;
 }
 
+.myDiv {
+
+}
+
 
 
 </style>
 
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
 <body>
-<div id="chartContainer" style="height: 300px; width: 100%;">
+<div class="myDiv" id="chartContainer" style="height: 300px; width: 100%;">
 </div>
-<br><br><br>
+<br>
+<div>
     <select multiple data-placeholder="">
     <option value="0"selected>analog-input/101 - OAT</option>
     <option value="1">analog-input/102 - Lounge T</option>
@@ -433,8 +445,9 @@ body .dribbble img {
     
 </select>
 
+ </div>
  
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+<br><br>
       <label for="item2"style="color:#c0504e;"></label>
   <select onchange="trend1();render()" name="item2" id="item2"style="color:#999999;background-color:#424949;">
     <option value="1">1 Day</option>
@@ -450,14 +463,11 @@ body .dribbble img {
 </html>
 <script>
 var chartarray = []; chartarray[0]=0; var chartindex=0; var dataPoints = [];var data = [];var i=0;
+var item; var seriesn;
 var samples = document.getElementById("item2").value;  
 CanvasJS.addColorSet("abc",["#DDDF0E","#7698BF","#7cbc66"]);
 
- function addseries(item,series){       
-    trend(item,samples);
-    chart.data[series]=dataPoints;
-    chart.render();
-}  
+ 
    function removeseries(series){       
     chart.data[series].remove();
     chart.render();
@@ -470,7 +480,6 @@ var chart = new CanvasJS.Chart("chartContainer", {
    lineColor: "#000000",tickLength: 0,labelFontColor: "#999999", },
   axisY:{gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",labelFontColor: "#999999",},
-  //data:[{type: "line",xValueType: "dateTime",dataPoints:dataPoints}],
   data:data,
   legend:{cursor: "crosshair"},
   toolTip:{enabled: true,borderThickness: 0},
@@ -578,6 +587,7 @@ newSelect.appendChild(optionList);
 
 select.parentElement.append(newSelect);
 span.appendChild(select);
+var myArray=[];
 
 document.querySelector('.selectMultiple ul').addEventListener('click', (e) => {
     let li = e.target.closest('li');
@@ -601,17 +611,16 @@ document.querySelector('.selectMultiple ul').addEventListener('click', (e) => {
         let selectEl = select.querySelector('select');
         let opt = selectEl.querySelector('option[value="'+li.dataset.value+'"]');
         opt.setAttribute('selected', 'selected');
-        setTimeout(() => {
+        //setTimeout(() => {
             a.classList.add('shown');
             select.querySelector('span').classList.add('hide');
 
-        }, 300);
+        //}, 300);
         chartindex++;
         chartarray[chartindex]=li.dataset.value;
                 
-        const myArray = li.innerText.split(" ");    
-        addseries(myArray[0],li.dataset.value);
-       //alert("add "+chartarray[0]);
+        myArray = li.innerText.split(" ");    
+      
         
         setTimeout(() => {
             let styles = window.getComputedStyle(li);
@@ -640,12 +649,21 @@ document.querySelector('.selectMultiple ul').addEventListener('click', (e) => {
                     select.classList.remove('clicked');
                 }
 
-
-        }, 300); //600
-			//2nd
+addseries(myArray[0],li.dataset.value);
+        }, 300); 
+    		
     }
-    
+
+
+ function addseries(item,series){       
+    trend(item,samples);
+    chart.data[series]=dataPoints;
+    chart.render();
+} 
+
+
 });
+
 
 document.querySelector('.selectMultiple > div').addEventListener('click', (e) => {
     let a = e.target.closest('a');
@@ -709,7 +727,7 @@ document.querySelector('.selectMultiple > div').addEventListener('click', (e) =>
 
 });
 
-document.querySelectorAll('.selectMultiple > div .arrow, .selectMultiple > div span').forEach((el) => {
+document.querySelectorAll('.selectMultiple, .selectMultiple > div span').forEach((el) => {
 	el.addEventListener('click', (e) => {
 		el.closest('.selectMultiple').classList.toggle('open');
         
