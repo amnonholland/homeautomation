@@ -16,6 +16,7 @@
 	width: 100%;
 	position: relative;
    
+   
 }
 
 .selectMultiple select {
@@ -27,7 +28,7 @@
 	position: relative;
     width: 100%;
 	z-index: 0;
-    overflow-y: scroll;
+    
 	padding: 8px 12px 2px 12px;
 	border-radius: 8px;
     cursor: pointer;
@@ -55,7 +56,7 @@
 	content: '';
 	position: absolute;
 	display: block;
-    overflow-y: scroll;
+    
 	width: 2px;
 	height: 8px;
 	border-bottom: 8px solid #99A3BA;
@@ -135,6 +136,7 @@
 	width: 2px;
 	height: 10px;
 	position: absolute;
+    
 	left: 50%;
 	top: 50%;
 	background: #4D18FF;
@@ -216,15 +218,16 @@
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	font-size: 12px;
+	font-size: 14px;
 	z-index: 1;
+    
 	position: absolute;
 	top: 100%;
 	left: 0;
 	right: 0;
 	visibility: hidden;
-    overflow-y: scroll;
-	opacity: 0;
+    
+    opacity: 0;
 	border-radius: 8px;
 	transform: translate(0, 20px) scale(0.8);
 	transform-origin: 0 0;
@@ -237,7 +240,7 @@
 	background: #999999;
 	padding: 2px 16px;
 	cursor: pointer;
-	overflow-y: scroll;
+	
 	position: relative;
 	transition: background .3s ease, color .3s ease, transform .3s ease .3s, opacity .5s ease .3s, border-radius .3s ease;
 }
@@ -270,7 +273,7 @@
 	left: 50%;
 	width: 6px;
 	height: 6px;
-    overflow-y: scroll;
+    
 	background: rgba(0, 0, 0, 0.4);
 	opacity: 0;
 	border-radius: 100%;
@@ -375,6 +378,7 @@ body {
 	font-family: Roboto, Arial;
 	color: #ADAFB6;
 	//display: flex;
+    overflow-y: scroll;
 	justify-content: center;
 	align-items: center;
 	background: #fff;
