@@ -32,10 +32,11 @@
 	padding: 8px 12px 2px 12px;
 	border-radius: 8px;
     cursor: pointer;
-	background: #424949;
+	background: #000000;
+    //outline: 1px solid white;
 	font-size: 12px;
 	min-height: 44px;
-	box-shadow: 0 4px 16px 0 rgba(22, 42, 90, 0.12);
+	//box-shadow: 0 4px 16px 0 rgba(22, 42, 90, 0.12);
 	transition: box-shadow .3s ease;
 }
 
@@ -95,7 +96,7 @@
 	position: relative;
 	padding: 0 24px 6px 8px;
 	line-height: 28px;
-	color: #1E2330;
+	color: #DDDF0E;
 	display: inline-block;
 	vertical-align: top;
 	margin: 0 6px 0 0;
@@ -115,7 +116,7 @@
 	width: 100%;
 	position: absolute;
 	display: block;
-	background: rgba(228, 236, 250, 0.7);
+	background: #000000;//rgba(228, 236, 250, 0.7);
 	z-index: -1;
 	border-radius: 4px;
 }
@@ -139,7 +140,7 @@
     
 	left: 50%;
 	top: 50%;
-	background: #4D18FF;
+	background: #000000;
 	border-radius: 1px;
 }
 
@@ -465,10 +466,10 @@ body .dribbble img {
 </body>
 </html>
 <script>
-var chartarray = []; chartarray[0]=0; var chartindex=0; var dataPoints = [];var data = [];var i=0;
+var chartarray = []; chartarray[0]=0; var chartindex=0; var dataPoints = [];var data = [];var i=0; var colours=["#DDDF0E","#7698BF","#7cbc66"];
 var item; var seriesn;
 var samples = document.getElementById("item2").value;  
-CanvasJS.addColorSet("abc",["#DDDF0E","#7698BF","#7cbc66"]);
+CanvasJS.addColorSet("abc",colours);
 
  
    function removeseries(series){       
@@ -481,7 +482,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
  backgroundColor: "#000000",theme: "dark1",colorSet: "abc",fontColor: "#999999",
   axisX:{gridThickness: 1,gridColor: "#424949",lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",tickLength: 0,labelFontColor: "#999999",    
-   viewportMinimum: Date.now()-(86400000*samples*3),
+   viewportMinimum: Date.now()-(86400000*samples),
    viewportMaximum: Date.now()},
   axisY:{gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",labelFontColor: "#999999",},
@@ -496,7 +497,7 @@ render();
 
 function trend(item, samples){
 i=0;dataPoints=[];
-var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples*288*3+String("&descending=true");
+var URL = String("https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/")+item+String("/trend?encode=json&dataOnly=true&limit=")+samples*288+String("&descending=true");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", URL, false);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -514,7 +515,14 @@ data.push(newSeries);
 function render() {
 chart.render();
 
+
+
 document.addEventListener('keydown', function(e) {
+
+
+
+
+
 
     var axisX = chart.axisX[0];
     var viewportMin = axisX.get("viewportMinimum"),
