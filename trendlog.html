@@ -116,7 +116,7 @@
 	width: 100%;
 	position: absolute;
 	display: block;
-	background: #000000;//rgba(228, 236, 250, 0.7);
+	background: #444444;//rgba(228, 236, 250, 0.7);
 	z-index: -1;
 	border-radius: 4px;
 }
@@ -516,7 +516,12 @@ function render() {
 chart.render();
 
 
-
+  /*
+    const demoClasses = document.querySelector('select[multiple]');
+	for(var i = 0; i < demoClasses.length; i++){
+		demoClasses[i].style.backgroundColor = "white";
+	}    
+*/
 document.addEventListener('keydown', function(e) {
 
 
@@ -561,6 +566,7 @@ if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dat
 
 
 var select = document.querySelector('select[multiple]');
+
 var selectOptions = select.querySelectorAll('option');
 
 var newSelect = document.createElement('div');
@@ -591,15 +597,14 @@ selectOptions.forEach((option) => {
     //alert(li);
 });
 
-var arrow = document.createElement('div');
-arrow.classList.add('arrow');
-active.appendChild(arrow);
+
 
 newSelect.appendChild(active);
 newSelect.appendChild(optionList);
 
 select.parentElement.append(newSelect);
 span.appendChild(select);
+
 var myArray=[];
 
 document.querySelector('.selectMultiple ul').addEventListener('click', (e) => {
