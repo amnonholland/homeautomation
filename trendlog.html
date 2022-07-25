@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
 <body style="background-color:black;">
@@ -116,7 +117,7 @@
 	width: 100%;
 	position: absolute;
 	display: block;
-	background: #444444;//rgba(228, 236, 250, 0.7);
+	background: #333333;//rgba(228, 236, 250, 0.7);
 	z-index: -1;
 	border-radius: 4px;
 }
@@ -416,8 +417,7 @@ body .dribbble img {
 
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
 <body>
-<div class="myDiv" id="chartContainer" style="height: 300px; width: 100%;">
-</div>
+<div class="myDiv" id="chartContainer" style="height: 300px; width: 100%;"></div>
 <br>
 <div>
     <select multiple data-placeholder="">
@@ -513,15 +513,17 @@ data.push(newSeries);
 }
 
 function render() {
-chart.render();
 
 
-  /*
-    const demoClasses = document.querySelector('select[multiple]');
+
+ /*
+    const demoClasses = document.querySelector('selectMultiple');
 	for(var i = 0; i < demoClasses.length; i++){
-		demoClasses[i].style.backgroundColor = "white";
+		demoClasses[i].style.width = "50%";
 	}    
-*/
+    */
+  
+chart.render();
 document.addEventListener('keydown', function(e) {
 
 
@@ -571,8 +573,14 @@ var selectOptions = select.querySelectorAll('option');
 
 var newSelect = document.createElement('div');
 newSelect.classList.add('selectMultiple');
+
+
+
+
 var active = document.createElement('div');
 active.classList.add('active');
+
+
 var optionList = document.createElement('ul');
 var placeholder = select.dataset.placeholder;
 
@@ -624,6 +632,7 @@ document.querySelector('.selectMultiple ul').addEventListener('click', (e) => {
         a.dataset.value = li.dataset.value;
         a.innerHTML = "<em>"+li.innerText+"</em><i></i>";
         a.classList.add('notShown');
+       
         
         select.querySelector('div').appendChild(a); //might have to check later
         let selectEl = select.querySelector('select');
@@ -631,6 +640,7 @@ document.querySelector('.selectMultiple ul').addEventListener('click', (e) => {
         opt.setAttribute('selected', 'selected');
         //setTimeout(() => {
             a.classList.add('shown');
+        a.style.color = colours[chartindex+1]; /// label color
             select.querySelector('span').classList.add('hide');
 
         //}, 300);
@@ -756,6 +766,8 @@ document.querySelectorAll('.selectMultiple, .selectMultiple > div span').forEach
 
 
 </script>
+
+
 
 
 
