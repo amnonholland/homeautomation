@@ -466,7 +466,7 @@ body .dribbble img {
 </body>
 </html>
 <script>
-var chartarray = []; chartarray[0]=0; var chartindex=0; var dataPoints = [];var data = [];var i=0; var colours=["#DDDF0E","#7698BF","#7cbc66"];
+var chartarray = []; chartarray[0]="0"; var chartindex=0; var dataPoints = [];var data = [];var i=0; var colours=["#DDDF0E","#7698BF","#7cbc66"];
 
 var item; var seriesn;
 var samples = document.getElementById("item2").value;  
@@ -514,23 +514,8 @@ data.push(newSeries);
 }
 
 function render() {
-
-
-
- /*
-    const demoClasses = document.querySelector('selectMultiple');
-	for(var i = 0; i < demoClasses.length; i++){
-		demoClasses[i].style.width = "50%";
-	}    
-    */
-  
 chart.render();
 document.addEventListener('keydown', function(e) {
-
-
-
-
-
 
     var axisX = chart.axisX[0];
     var viewportMin = axisX.get("viewportMinimum"),
@@ -641,15 +626,19 @@ document.querySelector('.selectMultiple ul').addEventListener('click', (e) => {
         opt.setAttribute('selected', 'selected');
         //setTimeout(() => {
             a.classList.add('shown');
-        a.style.color = colours[chartindex+1]; /// label color
+            //alert(JSON.stringify(chartarray)+JSON.stringify(colours));
+      
+      chartindex++;
+      if(chartindex>2){colours[chartindex]=colours[chartindex-3];}
+       a.style.color = colours[chartindex]; /// label color
             select.querySelector('span').classList.add('hide');
 
         //}, 300);
-        chartindex++;
+        
         chartarray[chartindex]=li.dataset.value;
                 
         myArray = li.innerText.split(" ");    
-      
+     // alert(chartindex);
         
         setTimeout(() => {
             let styles = window.getComputedStyle(li);
@@ -743,22 +732,19 @@ document.querySelector('.selectMultiple > div').addEventListener('click', (e) =>
             
             
             var result = chartarray.indexOf(a.dataset.value);
-           
+            chartarray.splice(result, 1);
+
             
-            if(result==-1){result=0;}
+
+            //alert(result);
+            
             let length = colours.length;
             colours[length]=colours[result];
             colours.splice(result, 1); 
             
-           /* 
-           	alert(colours[0]);
-            alert(colours[1]);
-            alert(colours[2]);
-            alert(colours[3]);
-            //alert("remove "+a.dataset.value);
+            //alert(JSON.stringify(chartarray)+JSON.stringify(colours));
             
-            */
-            removeseries(result);chartindex--;
+            removeseries(result);chartindex--;//alert(chartindex);
             removeOption.onfinish = () => {
                 a.remove();
             }
@@ -779,6 +765,8 @@ document.querySelectorAll('.selectMultiple, .selectMultiple > div span').forEach
 
 
 </script>
+
+
 
 
 
