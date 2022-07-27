@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
 <body style="background-color:black;">
@@ -219,16 +220,16 @@
 .selectMultiple > ul {
 	margin: 0;
 	padding: 0;
+    height: 300px;
 	list-style: none;
 	font-size: 14px;
 	z-index: 1;
-    
-	position: absolute;
+    position: absolute;
 	top: 100%;
 	left: 0;
 	right: 0;
 	visibility: hidden;
-    
+    overflow: scroll;
     opacity: 0;
 	border-radius: 8px;
 	transform: translate(0, 20px) scale(0.8);
@@ -379,7 +380,6 @@ body {
 	min-height: 100vh;
 	font-family: Roboto, Arial;
 	color: #ADAFB6;
-    overflow-y: scroll;
 	justify-content: center;
 	align-items: center;
 	background: #fff;
@@ -438,28 +438,20 @@ body .dribbble img {
     <option value="14">analog-value/23 - Batt A</option>
     <option value="15">analog-value/28 - Solar kWh/day</option> 
     <option value="16">analog-value/42 - Flue T</option>
-    <option value="17">analog-value/43 - Temp 1</option>
-    <option value="18">analog-value/44 - RH 1</option> 
-    <option value="19">analog-value/45 - Temp 2</option>
-    <option value="20">analog-value/46 - RH 2</option>
+    <option value="17">analog-value/43 - Office T</option>
+    <option value="18">analog-value/44 - Office RH</option> 
+    <option value="19">analog-value/45 - Greenhouse T</option>
+    <option value="20">analog-value/46 - Greenhouse RH</option>
     <option value="21">analog-value/48 - Batt kW</option> 
     <option value="22">analog-value/22 - Solar V</option>
     <option value="23">analog-value/23 - Batt A</option>
-    <option value="24">analog-value/50 - Batt %</option>     
+    <option value="24">analog-value/50 - Batt %</option>
+    <option value="25">binary-value/4 - Office Circ</option>
     
 </select>
 
  </div>
- 
-<br><br>
-      <label for="item2"style="color:#c0504e;"></label>
-  <select onchange="render()" name="item2" id="item2"style="color:#999999;background-color:#424949;">
-    <option value="1">1 Day</option>
-    <option value="2">2 Days</option>
-    <option value="3">3 Days</option>
-  </select>
- <br>
-<br><br>
+
 
 
 
@@ -469,7 +461,7 @@ body .dribbble img {
 var chartarray = []; chartarray[0]="0"; var chartindex=0; var dataPoints = [];var data = [];var i=0; var colours=["#DDDF0E","#7698BF","#7cbc66"];
 
 var item; var seriesn;
-var samples = document.getElementById("item2").value;  
+var samples = 1 //days  
 CanvasJS.addColorSet("abc",colours);
 
  
@@ -483,7 +475,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
  backgroundColor: "#000000",theme: "dark1",colorSet: "abc",fontColor: "#999999",
   axisX:{gridThickness: 1,gridColor: "#424949",lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",tickLength: 0,labelFontColor: "#999999",    
-   viewportMinimum: Date.now()-(86400000*samples),
+   viewportMinimum: Date.now()-(86400000*1),
    viewportMaximum: Date.now()},
   axisY:{gridThickness: 1,gridColor: "#424949",tickLength: 0,lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",labelFontColor: "#999999",},
@@ -508,8 +500,11 @@ var json = JSON.parse(xmlhttp.responseText);
 var time = json.map(item => item.timeStamp);
 var value = json.map(item => item.value);
     var newSeries = {type: "line",xValueType: "dateTime",dataPoints: dataPoints};
-if(item.includes("binary")){newSeries.type = "stepArea"}
-for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
+
+if(item.includes("binary")){newSeries.type = "stepArea";
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: 1-value[i]});}} else{
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}}
+
 data.push(newSeries);
 }
 
