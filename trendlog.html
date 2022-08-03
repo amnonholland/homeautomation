@@ -462,7 +462,7 @@ body .dribbble img {
 </body>
 </html>
 <script>
-var chartarray = []; chartarray[0]="0"; var chartindex=0; var dataPoints = [];var data = [];var i=0; var colours=["#dcde0e","#7498c2","#56bc3c","#df5354"];
+var chartarray = []; chartarray[0]="0"; var chartindex=0; var dataPoints = [];var data = [];var i=0; var colours=["#DDDF0E","#7698BF","#7cbc66"];
 
 var item; var seriesn;
 var samples = 1 //days  
@@ -506,7 +506,8 @@ var value = json.map(item => item.value);
     var newSeries = {type: "line",xValueType: "dateTime",dataPoints: dataPoints};
 
 if(item.includes("binary")){newSeries.type = "stepArea";
-for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: 1-value[i]});}
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i-1],y: value[i]});}
+
 
 } else{
 for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}}
@@ -630,7 +631,7 @@ document.querySelector('.selectMultiple ul').addEventListener('click', (e) => {
             //alert(JSON.stringify(chartarray)+JSON.stringify(colours));
       
       chartindex++;
-      if(chartindex>3){colours[chartindex]=colours[chartindex-4];}
+      if(chartindex>2){colours[chartindex]=colours[chartindex-3];}
        a.style.color = colours[chartindex]; /// label color
             select.querySelector('span').classList.add('hide');
 
