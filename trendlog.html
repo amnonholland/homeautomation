@@ -3,6 +3,7 @@
 
 
 
+
 <!DOCTYPE HTML>
 <html style="overflow: hidden">
 <body style="background-color:black;">
@@ -475,7 +476,7 @@ CanvasJS.addColorSet("abc",colours);
 }  
 
 var chart = new CanvasJS.Chart("chartContainer", {
- zoomEnabled: true,
+
  backgroundColor: "#000000",theme: "dark1",colorSet: "abc",fontColor: "#999999",
   axisX:{gridThickness: 1,gridColor: "#424949",lineThickness: 0,labelFontSize: 12,
    lineColor: "#000000",tickLength: 0,labelFontColor: "#999999",    
@@ -485,8 +486,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
    lineColor: "#000000",labelFontColor: "#999999",},
   data:data,
   legend:{cursor: "crosshair"},
-  toolTip:{enabled: false,borderThickness: 0},
-  toolbar:{buttonBorderColor: "#424949"}
+  toolTip:{enabled: true,borderThickness: 0}
 });
 
 trend("analog-input/101",samples);
