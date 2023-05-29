@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://amnonholland.github.io/homeautomation/index1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="manifest" href="https://amnonholland.github.io/homeautomation/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<style>
+
+
+
+table, th, td {border-collapse: collapse;border: 1px solid black; padding: 1px; }
+                   }
+  body,
+html {
+  position: fixed;
+  width: 100%; 
+  height: 100%;
+}
+body {font-size: 12px;
+  color: white;
+}
+</style></head>
+ 
+<body style="background-color:black"  >
+
+
+<table style="width:50%">
+<tbody>
+<tr>
+<td style="width:50%">EVAP EWT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="v5">12.6</span></td>
+<td style="width:50%">EVAP LWT: &nbsp;&nbsp;&nbsp;<span id="v4">17.9</span></td>
+
+</tr>
+
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:25%" >COND EWT: &nbsp;&nbsp; <span id="v3">34.7</span></td>
+<td style="width:25%">COND LWT: &nbsp;&nbsp;<span id="v2">67.5</span></td>
+<td style="width:25%">dT: &nbsp;&nbsp;&nbsp;<span id="v10">67.5</span></td>
+<td style="width:25%">Flow(L/s):&nbsp;&nbsp; <span id="v8">17.8</span></td>
+</tr>
+
+<table style="width:100%"><tbody>
+  <p></p>
+<tr> 
+<td style="width:25%">Input (W):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <span id="v1">67.5</span></td>
+<td style="width:25%">Heating (W):&nbsp;&nbsp;&nbsp;<span id="v6">67.5</span></td>
+<td style="width:25%">COP:&nbsp;&nbsp;<span id="v7">67.5</span></td>
+<td style="width:15%">LMTD/Target dT:&nbsp;&nbsp; <span id="v9">67.5</span> / <span id="v12">67.5</span></td>
+<td style="width:10%">Eff (%):&nbsp;&nbsp; <span id="v11">67.5</span></td
+</tr>
+
+
+<script type="text/javascript" language="javascript">
+ 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+    document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
+
+var alreadyrun;
+var v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12;
+var URL = "http://192.168.0.176/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
+
+function send(){
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
+var myArr = JSON.parse(xmlhttp.responseText);
+
+ var i;for (i = 0; i < myArr.length; i++) {
+document.getElementById("v1").innerHTML =precisionRound(myArr[0].value,1);
+document.getElementById("v2").innerHTML =precisionRound(myArr[1].value,1);
+document.getElementById("v3").innerHTML =precisionRound(myArr[2].value,1);
+document.getElementById("v4").innerHTML =precisionRound(myArr[3].value,1);
+document.getElementById("v5").innerHTML =precisionRound(myArr[4].value,1);
+document.getElementById("v6").innerHTML =precisionRound(myArr[5].value,1);
+document.getElementById("v7").innerHTML =precisionRound(myArr[6].value,2);
+document.getElementById("v8").innerHTML =precisionRound(myArr[7].value,3);
+document.getElementById("v9").innerHTML =precisionRound(myArr[8].value,1);
+document.getElementById("v10").innerHTML =precisionRound(myArr[9].value,2);
+document.getElementById("v11").innerHTML =precisionRound(myArr[10].value,1);
+document.getElementById("v12").innerHTML =precisionRound(myArr[11].value,1);
+}     
+
+    
+    
+setTimeout('send()', 1500);    
+   
+      }};    
+
+    xmlhttp.open("POST", URL, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+        var params = 
+    {"encode": "text",  "propertyReferences": [
+
+
+{"type": "analogValue","instance": 55,"property": "presentValue"},//INPUT W
+{"type": "analogValue","instance": 57,"property": "presentValue"},//COND LWT
+{"type": "analogValue","instance": 58,"property": "presentValue"},//COND EWT
+{"type": "analogValue","instance": 59,"property": "presentValue"},//EVAP LWT
+{"type": "analogValue","instance": 60,"property": "presentValue"},//EVAP EWT
+{"type": "analogValue","instance": 61,"property": "presentValue"},//HEATING W
+{"type": "analogValue","instance": 62,"property": "presentValue"},//COP
+{"type": "analogValue","instance": 63,"property": "presentValue"},//FLOW
+{"type": "analogValue","instance": 64,"property": "presentValue"},//LMTD
+{"type": "analogValue","instance": 65,"property": "presentValue"},//COND DT
+{"type": "analogValue","instance": 66,"property": "presentValue"},//EFF%
+{"type": "analogValue","instance": 67,"property": "presentValue"},//PREDICTDT
+
+
+
+]};
+xmlhttp.send(JSON.stringify(params));
+
+}
+send();
+
+function precisionRound(number, precision) {
+  var factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
+
+
+
+</script>
+</left></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+  div.grammarly-desktop-integration {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
+    user-select:none;
+  }
+
+  
