@@ -3,7 +3,6 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
@@ -57,21 +56,9 @@ body {font-size: 12px;
 
 <script type="text/javascript" language="javascript">
  
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  });
-}
 
-    document.addEventListener('touchmove', function(e) {
-    e.preventDefault();
-}, { passive: false });
+
+
 
 var alreadyrun;
 var v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12;
