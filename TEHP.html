@@ -1,72 +1,71 @@
+
+
 <!DOCTYPE html>
 
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+<meta name="viewport" content="initial-scale=1.0, width=device-width">
 <style>
-
-
-
 table, th, td {border-collapse: collapse;border: 1px solid black; padding: 1px; }
                    }
   body,
 html {
-  position: fixed;
-  width: 100%; 
-  height: 100%;
 }
-body {font-size: 12px;
+body {font-size: 14px;
   color: white;
 }
-</style></head>
+</style>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+</head>
  
 <body style="background-color:black"  >
 
 
 <table style="width:50%">
-<tbody>
 <tr>
-<td style="width:50%">EVAP EWT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="v5">12.6</span></td>
-<td style="width:50%">EVAP LWT: &nbsp;&nbsp;&nbsp;<span id="v4">17.9</span></td>
+<td style="width:50%">EVAP EWT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="v6">12.6</span></td>
+<td style="width:50%">EVAP LWT: &nbsp;&nbsp;&nbsp;<span id="v5">17.9</span></td>
 
 </tr>
 
 <table style="width:100%">
-<tbody>
 <tr>
-<td style="width:25%" >COND EWT: &nbsp;&nbsp; <span id="v3">34.7</span></td>
-<td style="width:25%">COND LWT: &nbsp;&nbsp;<span id="v2">67.5</span></td>
-<td style="width:25%">dT: &nbsp;&nbsp;&nbsp;<span id="v10">67.5</span></td>
-<td style="width:25%">Flow(L/s):&nbsp;&nbsp; <span id="v8">17.8</span></td>
+<td style="width:25%" >COND EWT: &nbsp;&nbsp; <span id="v4">34.7</span></td>
+<td style="width:25%">COND LWT: &nbsp;&nbsp;<span id="v3">67.5</span></td>
+<td style="width:15%">dT: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="v11">67.5</span></td>
+<td style="width:23%">Flow(L/s):&nbsp;&nbsp; <span id="v9">17.8</span></td>
+<td style="width:12%">Room T:&nbsp;&nbsp; <span id="v2">17.8</span></td>
 </tr>
 
-<table style="width:100%"><tbody>
-  <p></p>
+<table style="width:100%">
+<br>
 <tr> 
-<td style="width:25%">Input (W):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <span id="v1">67.5</span></td>
-<td style="width:25%">Heating (W):&nbsp;&nbsp;&nbsp;<span id="v6">67.5</span></td>
-<td style="width:25%">COP:&nbsp;&nbsp;<span id="v7">67.5</span></td>
-<td style="width:15%">LMTD/Target dT:&nbsp;&nbsp; <span id="v9">67.5</span> / <span id="v12">67.5</span></td>
-<td style="width:10%">Eff (%):&nbsp;&nbsp; <span id="v11">67.5</span></td
+<td style="width:25%">Input (W):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <span id="v1">67.5</span></td>
+<td style="width:25%">Heating (W):&nbsp;&nbsp;&nbsp;<span id="v7">67.5</span></td>
+<td style="width:15%">COP:&nbsp;&nbsp;&nbsp;<span id="v8">67.5</span></td>
+<td style="width:23%">LMTD/Target dT:&nbsp;&nbsp; <span id="v10">67.5</span> / <span id="v13">67.5</span></td>
+<td style="width:12%">Eff (%):&nbsp;&nbsp; <span id="v12">67.5</span></td>
 </tr>
-
-
+</table><br><br>
+<div id="chartContainer" style="height: 300px; width: 100%;">
+</div>
 <script type="text/javascript" language="javascript">
  
 
 
+var alreadyrun=false;
+var v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13;
+var URLext = "https://amnon.dyndns.org/";
+var URLint = "http://192.168.0.176";
+var URL = "http://192.168.0.176/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
-
-var alreadyrun;
-var v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12;
-var URL = "https://amnon.dyndns.org/api/rest/v1/protocols/bacnet/local/objects/read-property-multiple";
 
 function send(){
 var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
+xmlhttp.onreadystatechange = function() {
+
+if (this.readyState == 4 && this.status == 200) {
 var myArr = JSON.parse(xmlhttp.responseText);
 
  var i;for (i = 0; i < myArr.length; i++) {
@@ -76,19 +75,23 @@ document.getElementById("v3").innerHTML =precisionRound(myArr[2].value,1);
 document.getElementById("v4").innerHTML =precisionRound(myArr[3].value,1);
 document.getElementById("v5").innerHTML =precisionRound(myArr[4].value,1);
 document.getElementById("v6").innerHTML =precisionRound(myArr[5].value,1);
-document.getElementById("v7").innerHTML =precisionRound(myArr[6].value,2);
-document.getElementById("v8").innerHTML =precisionRound(myArr[7].value,3);
-document.getElementById("v9").innerHTML =precisionRound(myArr[8].value,1);
-document.getElementById("v10").innerHTML =precisionRound(myArr[9].value,2);
-document.getElementById("v11").innerHTML =precisionRound(myArr[10].value,1);
+document.getElementById("v7").innerHTML =precisionRound(myArr[6].value,1);
+document.getElementById("v8").innerHTML =precisionRound(myArr[7].value,2);
+document.getElementById("v9").innerHTML =precisionRound(myArr[8].value,3);
+document.getElementById("v10").innerHTML =precisionRound(myArr[9].value,1);
+document.getElementById("v11").innerHTML =precisionRound(myArr[10].value,2);
 document.getElementById("v12").innerHTML =precisionRound(myArr[11].value,1);
+document.getElementById("v13").innerHTML =precisionRound(myArr[12].value,1);
 }     
 
-    
-    
-setTimeout('send()', 1500);    
    
-      }};    
+    
+setTimeout('send()', 2000);    
+   
+      }else if(!alreadyrun){}
+      };    
+ 
+
 
     xmlhttp.open("POST", URL, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -98,6 +101,7 @@ setTimeout('send()', 1500);
 
 
 {"type": "analogValue","instance": 55,"property": "presentValue"},//INPUT W
+{"type": "analogValue","instance": 56,"property": "presentValue"},//Room T
 {"type": "analogValue","instance": 57,"property": "presentValue"},//COND LWT
 {"type": "analogValue","instance": 58,"property": "presentValue"},//COND EWT
 {"type": "analogValue","instance": 59,"property": "presentValue"},//EVAP LWT
@@ -116,7 +120,11 @@ setTimeout('send()', 1500);
 xmlhttp.send(JSON.stringify(params));
 
 }
+
 send();
+
+
+
 
 function precisionRound(number, precision) {
   var factor = Math.pow(10, precision);
@@ -124,7 +132,72 @@ function precisionRound(number, precision) {
 }
 
 
+function processdata(){	
 
+var item = "analog-value/57"
+var item1 = "analog-value/58"
+var item2 = "analog-value/59"
+var item3 = "analog-value/60"
+var dataSeries = {type: "line",markerType: "none",xValueType: "dateTime",showInLegend: true,name: "COND LWT"};
+var data1Series = {type: "line",markerType: "none",xValueType: "dateTime",showInLegend: true,name: "COND EWT"};
+var data2Series = {type: "line",markerType: "none",xValueType: "dateTime",showInLegend: true,name: "EVAP LWT"};
+var data3Series = {type: "line",markerType: "none",xValueType: "dateTime",showInLegend: true,name: "EVAP EWT"};
+var dataPoints = [];var data1Points = [];var data2Points = [];var data3Points = [];
+var data = [];var chart;
+
+function fetchtrend(var1){
+var URL = String("http://192.168.0.176/api/rest/v1/protocols/bacnet/local/objects/")+var1+String("/trend?encode=json&dataOnly=true&limit=60&descending=true");//576,864
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", URL, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.setRequestHeader('Authorization','Basic YWRtaW46U3luY2VsZWN0MjkxMQ==');
+    xmlhttp.send(null);
+    return json = JSON.parse(xmlhttp.responseText);
+}
+
+var json = fetchtrend(item);
+var time = json.map(item => item.timeStamp);
+var value = json.map(item => item.value);
+var y=0;
+for (var i = 0; i < time.length; i ++) {dataPoints.push({x: time[i],y: value[i]});}
+dataSeries.dataPoints = dataPoints;data.push(dataSeries); 
+
+var json1 = fetchtrend(item1);
+var time1 = json1.map(item1 => item1.timeStamp);
+var value1 = json1.map(item1 => item1.value);
+var y=0;
+for (var i = 0; i < time1.length; i ++) {data1Points.push({x: time1[i],y: value1[i]});}
+data1Series.dataPoints = data1Points;data.push(data1Series); 
+
+var json2 = fetchtrend(item2);
+var time2 = json2.map(item2 => item2.timeStamp);
+var value2 = json2.map(item2 => item2.value);
+var y=0;
+for (var i = 0; i < time2.length; i ++) {data2Points.push({x: time2[i],y: value2[i]});}
+data2Series.dataPoints = data2Points;data.push(data2Series); 
+
+var json3 = fetchtrend(item3);
+var time3 = json3.map(item3 => item3.timeStamp);
+var value3 = json3.map(item3 => item3.value);
+var y=0;
+for (var i = 0; i < time3.length; i ++) {data3Points.push({x: time3[i],y: value3[i]});}
+data3Series.dataPoints = data3Points;data.push(data3Series); 
+
+var chart = new CanvasJS.Chart("chartContainer", {
+  data:data,backgroundColor: "#000000", axisX:{labelFontColor: "white"},axisY:{labelFontColor: "white"},
+  legend:{	cursor: "pointer",fontSize: 16,  itemclick: toggleDataSeries  }	,toolTip:{enabled: true}});
+chart.render();
+ 
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;}else{e.dataSeries.visible = true;}
+chart.render();} 
+ 
+chart.render();
+setTimeout('processdata()', 30000);
+}
+setTimeout('processdata()', 4000); 
+
+alreadyrun =true; 
 </script>
 
 
